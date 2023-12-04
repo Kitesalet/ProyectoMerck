@@ -3,59 +3,70 @@
 <div style="background-color:aqua;">
     <div class="row justify-content-center">
         <div class="col-1"><i style="color: white; font-size: 2em; opacity:0.8" class="bi bi-chevron-left"></i></div>
-        <div class="col-7 offset-1 text-center align-self-center" style="color: white; font-size: 2em">Formulario</div>
-
+        <div class="col-7 offset-1 text-center align-self-center" style="color: white; font-size: 2em">Indicador</div>
         <div class="col-2">
-            <button>
                 <i style="color: white; font-size: 2em; opacity:0.8" class="bi bi-chevron-right"></i>
-            </button>
+        </div>
+
+        <div style="background-color:white; border-top-left-radius: 1000px; border-top-right-radius: 1000px; height: 50px">
         </div>
 
     </div>
 
-    <div style="background-color:white; border-top-left-radius: 20px; border-top-right-radius: 20px; height:20px; ">
-    </div>
 
 </div>
 
 <div style="background-color:white; border-top-left-radius: 20px; border-top-right-radius: 20px">
-    <div style="padding-top: 4em" class="row justify-content-center">
-        <div class="col-1 d-flex justify-content-center">
-            <i class="bi bi-person-standing-dress d-flex align-items-center" style="color:dimgrey; background-color:antiquewhite; border-radius:3px; font-size:4em"></i>
+
+    <div style="padding-top: 4em" class="row d-flex justify-content-center">
+        @if (Model.FertilityLevel == FertilityLevel.Low)
+        {
+            <div class="col-4">
+                <i class="bi bi-flower1 d-flex align-items-center" style="color:white; background-color: deeppink; border-radius:3px; font-size:4em"></i>
+            </div>
+            <div class="col-4">
+                <i class="bi bi-flower1 d-flex align-items-center" style="color:dimgray; background-color: darkgray; border-radius:3px; font-size:4em"></i>
+            </div>
+            <div class="col-4">
+                <i class="bi bi-flower1 d-flex align-items-center" style="color:dimgray; background-color: darkgray; border-radius:3px; font-size:4em"></i>
+            </div>
+        }
+        else if (Model.FertilityLevel == FertilityLevel.Medium)
+        {
+            <div class="col-4 d-flex justify-content-center">
+                <i class="bi bi-flower1 d-flex align-items-center" style="color:dimgray; background-color: darkgray; border-radius:3px; font-size:4em"></i>
+            </div>
+            <div class="col-4 d-flex justify-content-center">
+                <i class="bi bi-flower1 d-flex align-items-center" style="color:white; background-color: deeppink; border-radius:3px; font-size:4em"></i>
+            </div>
+            <div class="col-4 d-flex justify-content-center">
+                <i class="bi bi-flower1 d-flex align-items-center" style="color:dimgray; background-color: darkgray; border-radius:3px; font-size:4em"></i>
+            </div>
+        }
+        else
+        {
+            <div class="col-4 d-flex justify-content-center">
+                <i class="bi bi-flower1 d-flex align-items-center" style="color:dimgray; background-color: darkgray; border-radius:3px; font-size:4em"></i>
+            </div>
+            <div class="col-4 d-flex justify-content-center">
+                <i class="bi bi-flower1 d-flex align-items-center" style="color:dimgray; background-color: darkgray; border-radius:3px; font-size:4em"></i>
+            </div>
+            <div class="col-4 d-flex justify-content-center">
+                <i class="bi bi-flower1 d-flex align-items-center" style="color:white; background-color: deeppink; border-radius:3px; font-size:4em"></i>
+            </div>
+        }
+    </div>
+
+    <div style="padding-top: 0.5em" class="row d-flex justify-content-center">
+        <div class="col-4 d-flex justify-content-center">
+            <h3 style="@(Model.FertilityLevel == FertilityLevel.Low ? "color:black;" : "color:dimgray; opacity:0.8")">Bajo</h3>
         </div>
-        <div class="col-4">
-            <row>
-                <p style="color:blueviolet; text-align:center">Edad actual</p>
-            </row>
-            <row>
-
-                @Html.DropDownListFor(model => model.ActualAge, Enumerable.Range(12,45).Select(age =>
-                new SelectListItem() {
-                Value = age.ToString(),
-                Text = age.ToString()
-                })
-                , new {@class = "form-select form-select-lg mb-3", aria_label = ".form-select-lg example"})
-
-            </row>
+           <div class="col-4 d-flex justify-content-center">
+            <h3 style="@(Model.FertilityLevel == FertilityLevel.Medium ? "color:black" : "color:dimgray; opacity:0.8")">Medio</h3>
+        </div>
+        <div class="col-4 d-flex justify-content-center">
+            <h3 style="@(Model.FertilityLevel == FertilityLevel.High ? "color:black" : "color:dimgray; opacity:0.8")">Alto</h3>
         </div>
     </div>
-</div>
 
-<div style="padding-top: 2em; background-color:white" class="row justify-content-center">
-    <div class="col-1 d-flex justify-content-center">
-        <i class="bi bi-person-standing-dress d-flex align-items-center" style="color:dimgrey; background-color:antiquewhite; border-radius:3px; font-size:4em"></i>
-    </div>
-    <div class="col-4">
-        <row>
-            <p style="color:deeppink; text-align:center">Edad primera menstruacion</p>
-        </row>
-        <row>
-            @Html.DropDownListFor(model => model.FirstAge,
-            Enumerable.Range(12,45).Select(age => new SelectListItem() {
-            Text = age.ToString(),
-            Value = age.ToString()
-            }
-            ) , new {@class = "form-select form-select-lg mb-3", aria_label = ".form-select-lg example"})
-        </row>
-    </div>
 </div>

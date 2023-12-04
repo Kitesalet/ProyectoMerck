@@ -33,11 +33,11 @@ namespace ProyectoMerck.Controllers
                 model.FertilityLevel = FertilityLevel.Low;
             }else if(fertilityMeter < 15)
             {
-                model.FertilityLevel = FertilityLevel.Medium;
+                model.FertilityLevel = FertilityLevel.High;
             }
             else
             {
-                model.FertilityLevel = FertilityLevel.High;
+                model.FertilityLevel = FertilityLevel.Medium;
             }
 
             return RedirectToAction("Indicator", model);
