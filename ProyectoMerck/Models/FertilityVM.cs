@@ -5,7 +5,9 @@
 
         public int ActualAge { get;set; }
 
-        public int FirstAge { get;set; }    
+        public int FirstAge { get;set; }   
+        
+        public FertilityLevel FertilityLevel { get;set; }
 
 
     }
