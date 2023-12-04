@@ -28,10 +28,10 @@ namespace ProyectoMerck.Controllers
 
             int fertilityMeter = model.ActualAge - model.FirstAge;
 
-            if(fertilityMeter > 30)
+            if(fertilityMeter >= 25)
             {
                 model.FertilityLevel = FertilityLevel.Low;
-            }else if(fertilityMeter > 20)
+            }else if(fertilityMeter < 15)
             {
                 model.FertilityLevel = FertilityLevel.Medium;
             }
