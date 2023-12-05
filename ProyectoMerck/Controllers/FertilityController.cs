@@ -3,6 +3,8 @@ using ProyectoMerck.Models;
 
 namespace ProyectoMerck.Controllers
 {
+
+
     public class FertilityController : Controller
     {
         public IActionResult Index()
