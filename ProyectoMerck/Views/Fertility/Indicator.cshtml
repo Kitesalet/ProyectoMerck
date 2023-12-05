@@ -1,5 +1,28 @@
 ﻿@model ProyectoMerck.Models.FertilityVM
 
+
+<header style="@(Model.FertilityLevel != FertilityLevel.High ? "background-color:#2EBDCD ;" : "background-color:#EC3B96; ")">
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light mb-3">
+        <div class="container-fluid">
+            <a href="@Url.Action("Index", "Fertility")" class="btn">
+                <i style="color: white; font-size: 1.5em" class="bi bi-chevron-left"></i>
+            </a>
+            <button style="color: white; font-size: 2em" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <i class="bi bi-list" style="color:white"></i>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a style="color:white" class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <h1 style="color: white; text-align:center; margin-bottom: 0px">Merck Fertilidad</h1>
+</header>
+
 <div style="@(Model.FertilityLevel != FertilityLevel.High ? "background-color:#2EBDCD;" : "background-color:#EC3B96;")">
     <div class="row justify-content-center">
             <div class="col-1">
@@ -76,8 +99,11 @@
 
         <h3 class="text-center">Estas son las clínicas</h3>
 
-        <div id="mapper" style="width: 100%; height: 400px; margin-top:3em ; border-top-right-radius: 20px; border-top-left-radius: 20px;">
-        </div>
+            <div style=" margin-top: 50px ;border-top-right-radius: 40px; border-top-left-radius: 40px; overflow: hidden;">
+                <div id="mapper" style="width: 100%; height: 400px; background-color: lightblue;">
+                </div>
+            </div>
+        
     }
 
 

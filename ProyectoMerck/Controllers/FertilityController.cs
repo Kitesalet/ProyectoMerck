@@ -20,7 +20,6 @@ namespace ProyectoMerck.Controllers
         public IActionResult Indicator(FertilityVM model)
         {
 
-
             return View(model);
         }
 
@@ -29,6 +28,12 @@ namespace ProyectoMerck.Controllers
         {
 
             int fertilityMeter = model.ActualAge - model.FirstAge;
+
+            if(fertilityMeter < 0)
+            {
+                TempData["FertError"] = "Las edades ingresadas son invalidas!";
+                return RedirectToAction("Index");
+            }
 
             if(fertilityMeter >= 30)
             {
@@ -44,7 +49,7 @@ namespace ProyectoMerck.Controllers
 
             model.OvuleCount = (-1 * fertilityMeter + 100);
 
-            return RedirectToAction("Indicator", model);
+            return RedirectToAction("Indicator",model);
 
         }
     }
