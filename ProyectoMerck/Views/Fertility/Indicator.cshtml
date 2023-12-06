@@ -20,7 +20,7 @@
             </div>
         </div>
     </nav>
-    <h1 style="color: white; text-align:center; margin-bottom: 0px">Merck Fertilidad</h1>
+    <img style="display:block; margin-left:auto; margin-right:auto" src="~/images/@(Model.FertilityLevel == FertilityLevel.High ? "MerckHighFert" : "MerckFertilidad").JPG" />
 </header>
 
 <div style="@(Model.FertilityLevel != FertilityLevel.High ? "background-color:#2EBDCD;" : "background-color:#EC3B96;")">
@@ -34,7 +34,7 @@
 
         <div class="col-7 offset-1 text-center align-self-center" style="color: white; font-size: 2em">@(Model.FertilityLevel != FertilityLevel.High ? "Indicador" : "")</div>
         <div class="col-2">
-                <i style="color: white; font-size: 2em; opacity:0.8" class="bi bi-chevron-right"></i>
+            <i style="color: white; font-size: 2em; opacity:0.8" class="@(Model.FertilityLevel == FertilityLevel.High ? "" : "bi bi-chevron-right")"></i>
         </div>
 
         @if(Model.FertilityLevel == FertilityLevel.High)
@@ -109,5 +109,13 @@
 
 
 </div>
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', async () => {
+        const map = await GetMap()
+    });
+
+</script>
 
 <script src="~/js/mapper.js"></script>

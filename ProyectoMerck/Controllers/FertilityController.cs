@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ProyectoMerck.Helpers;
 using ProyectoMerck.Models;
 
 namespace ProyectoMerck.Controllers
@@ -7,16 +8,25 @@ namespace ProyectoMerck.Controllers
 
     public class FertilityController : Controller
     {
+
+        private string ClientId { get; } = "596993924917-cami1o35mfiup4onvk9ara225sbii8c4.apps.googleusercontent.com";
+        private string ClientSecret { get; } = "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";
+        private string RedirectUrl { get; } = "";
+        private string FileId { get; }  = "1P6_hfHWoKNW8rAiKnthiCUxl2oH5Zm5_\r\n";
+
+        [HttpGet]
         public IActionResult Index()
         {
 
             FertilityVM model = new FertilityVM();
 
+
+
+
             return View(model);
         }
 
         [HttpGet]
-
         public IActionResult Indicator(FertilityVM model)
         {
 
@@ -27,29 +37,29 @@ namespace ProyectoMerck.Controllers
         public IActionResult CalculateFertility(FertilityVM model)
         {
 
-            int fertilityMeter = model.ActualAge - model.FirstAge;
-
-            if(fertilityMeter < 0)
+            if (!ModelState.IsValid)
             {
-                TempData["FertError"] = "Las edades ingresadas son invalidas!";
-                return RedirectToAction("Index");
-            }
-
-            if(fertilityMeter >= 30)
-            {
-                model.FertilityLevel = FertilityLevel.Low;
-            }else if(fertilityMeter < 20)
-            {
-                model.FertilityLevel = FertilityLevel.High;
+                return View("Index");
             }
             else
             {
-                model.FertilityLevel = FertilityLevel.Medium;
+
+                int fertilityMeter = FertilityCalculator.FertilityMeter(model.ActualAge, model.FirstAge);
+
+                if (fertilityMeter < 0)
+                {
+                    TempData["FertError"] = "Las edades ingresadas son invalidas!";
+                    return RedirectToAction("Index");
+                }
+
+                model.FertilityLevel = FertilityCalculator.LevelCalculator(fertilityMeter);
+
+                model.OvuleCount = FertilityCalculator.OvuleCalculator(fertilityMeter);
+
+                return RedirectToAction("Indicator", model);
+
             }
-
-            model.OvuleCount = (-1 * fertilityMeter + 100);
-
-            return RedirectToAction("Indicator",model);
+            
 
         }
     }

@@ -6,4 +6,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Google.Apis" Version="1.64.0" />
+    <PackageReference Include="Google.Apis.Drive.v3" Version="1.64.0.3245" />
+  </ItemGroup>
+
 </Project>

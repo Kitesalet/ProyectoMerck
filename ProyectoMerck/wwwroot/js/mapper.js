@@ -24,11 +24,15 @@ async function GetMap() {
 
         var location = new Microsoft.Maps.Location(fertLocations[i].latitude, fertLocations[i].longitude);
 
+
         var pin = new Microsoft.Maps.Pushpin(location,
             {
                 title: fertLocations[i].title,
                 subTitle: fertLocations[i].subTitle,
-                text: i
+                text: i,
+                icon: 'https://gcdnb.pbrd.co/images/QZBmUGUTPzhr.png',
+                size: new Microsoft.Maps.Point(30, 30), 
+                anchor: new Microsoft.Maps.Point(12, 39)
             });
 
         
@@ -41,6 +45,3 @@ async function GetMap() {
 
 }
 
-document.addEventListener('DOMContentLoaded', async () => {
-    const map = await GetMap()
-});
