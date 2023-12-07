@@ -115,7 +115,6 @@
 
 <script>
     window.initializeBingMap = () => {
-        console.log('Bing Maps API initialized!');
             const locationsJson = @Html.Raw(Json.Serialize(Model.Locations));
             GetMap(locationsJson);
        
