@@ -1,6 +1,6 @@
 
 
-async function initializeMap(locations) {
+async function GetMap(locations) {
     var map = new Microsoft.Maps.Map(document.getElementById('mapper'), {
         credentials: 'Ans7MhY4N2wow6lyrbE9gL7eXhZJAjTIp76MkysYSWln1kmnzP43uDzPT_jd7yHu',
         center: new Microsoft.Maps.Location(-34.600677504040895, -58.387263729958455)
