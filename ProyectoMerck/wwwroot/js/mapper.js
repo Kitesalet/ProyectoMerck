@@ -14,8 +14,8 @@ async function GetMap(locations) {
 
         var pin = new Microsoft.Maps.Pushpin(location, {
             title: fertLocations[i].Title,
-            subTitle: fertLocations[i].Subtitle, // Corrected property name to 'subtitle'
-            text: i.toString(), // Ensure 'text' is a string
+            subTitle: fertLocations[i].Subtitle, 
+            text: i.toString(), 
             icon: 'https://gcdnb.pbrd.co/images/QZBmUGUTPzhr.png',
             size: new Microsoft.Maps.Point(30, 30),
             anchor: new Microsoft.Maps.Point(12, 39)

@@ -112,14 +112,14 @@
 
 <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?key=Ans7MhY4N2wow6lyrbE9gL7eXhZJAjTIp76MkysYSWln1kmnzP43uDzPT_jd7yHu&callback=initializeBingMap' async defer></script>
 
-<script src="~/js/mapper.js"></script>
 
 <script>
     window.initializeBingMap = () => {
         console.log('Bing Maps API initialized!');
-        document.addEventListener('DOMContentLoaded', async function () {
             const locationsJson = @Html.Raw(Json.Serialize(Model.Locations));
-            await GetMap(locationsJson);
-        });
+            GetMap(locationsJson);
+       
     }
 </script>
+
+<script src="~/js/mapper.js"></script>

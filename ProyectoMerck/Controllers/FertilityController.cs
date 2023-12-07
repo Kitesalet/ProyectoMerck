@@ -6,6 +6,7 @@ using ProyectoMerck.Helpers;
 using ProyectoMerck.Models;
 using System.Globalization;
 using System.Net;
+using System.Security.Cryptography;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ProyectoMerck.Controllers
@@ -36,36 +37,51 @@ namespace ProyectoMerck.Controllers
         [HttpPost]
         public async Task<IActionResult> CalculateFertility(FertilityVM model)
         {
-
-            if (!ModelState.IsValid)
-            {
-                return View("Index");
-            }
-            else
+            try
             {
 
-                int fertilityMeter = FertilityCalculator.FertilityMeter(model.ActualAge, model.FirstAge);
-
-                if (fertilityMeter < 0)
+                if (!ModelState.IsValid)
                 {
-                    TempData["FertError"] = "Las edades ingresadas son invalidas!";
-                    return RedirectToAction("Index");
+                    return View("Index");
+                }
+                else
+                {
+
+                    int fertilityMeter = FertilityCalculator.FertilityMeter(model.ActualAge, model.FirstAge);
+
+                    if (fertilityMeter < 0)
+                    {
+                        TempData["FertError"] = "Las edades ingresadas son invalidas!";
+                        return RedirectToAction("Index");
+                    }
+
+                    string data = HttpClientHelper.StringFromUrl(FertilityUrl);
+
+                    List<Location> locations = ReadCsvLocationData(data);
+
+                    model.Locations = JsonConvert.SerializeObject(locations, Formatting.Indented);
+
+                    model.FertilityLevel = FertilityCalculator.LevelCalculator(fertilityMeter);
+
+                    model.OvuleCount = FertilityCalculator.OvuleCalculator(fertilityMeter);
+
+                    return RedirectToAction("Indicator", model);
+
                 }
 
-                string data = HttpClientHelper.StringFromUrl(FertilityUrl);
-
-                List<Location> locations = ReadCsvLocationData(data);
-
-                model.Locations = JsonConvert.SerializeObject(locations, Formatting.Indented);
-
-                model.FertilityLevel = FertilityCalculator.LevelCalculator(fertilityMeter);
-
-                model.OvuleCount = FertilityCalculator.OvuleCalculator(fertilityMeter);
-
-                return RedirectToAction("Indicator", model);
 
             }
-            
+            catch(Exception ex)
+            {
+
+                Console.WriteLine(ex);
+
+                TempData["FertError"] = "Ha ocurrido un error!";
+
+                return RedirectToAction("Index");
+
+            }
+           
 
         }
 
