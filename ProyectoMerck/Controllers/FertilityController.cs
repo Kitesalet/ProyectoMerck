@@ -6,6 +6,7 @@ using ProyectoMerck.Helpers;
 using ProyectoMerck.Models;
 using System.Globalization;
 using System.Net;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ProyectoMerck.Controllers
 {
@@ -13,6 +14,8 @@ namespace ProyectoMerck.Controllers
 
     public class FertilityController : Controller
     {
+
+        private const string FertilityUrl = "https://raw.githubusercontent.com/Kitesalet/FertLocations/main/FertLocations.csv";
 
         [HttpGet]
         public IActionResult Index()
@@ -31,7 +34,7 @@ namespace ProyectoMerck.Controllers
         }
 
         [HttpPost]
-        public IActionResult CalculateFertility(FertilityVM model)
+        public async Task<IActionResult> CalculateFertility(FertilityVM model)
         {
 
             if (!ModelState.IsValid)
@@ -49,15 +52,11 @@ namespace ProyectoMerck.Controllers
                     return RedirectToAction("Index");
                 }
 
-                using(var httpClient = new HttpClient())
-                {
-                    string data = httpClient.GetStringAsync("https://raw.githubusercontent.com/Kitesalet/FertLocations/main/FertLocations.csv").Result;
+                string data = HttpClientHelper.StringFromUrl(FertilityUrl);
 
-                    List<Location> locations = ReadCsvLocationData(data);
+                List<Location> locations = ReadCsvLocationData(data);
 
-                    model.Locations = JsonConvert.SerializeObject(locations, Formatting.Indented);
-
-                }
+                model.Locations = JsonConvert.SerializeObject(locations, Formatting.Indented);
 
                 model.FertilityLevel = FertilityCalculator.LevelCalculator(fertilityMeter);
 
