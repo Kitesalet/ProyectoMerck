@@ -85,6 +85,17 @@ namespace ProyectoMerck.Controllers
 
         }
 
+        public IActionResult Clinics(FertilityVM mod)
+        {
+
+            FertilityVM model = new FertilityVM();
+
+
+
+            return View(model);
+
+        }
+
         public static List<Location> ReadCsvLocationData(string csvData)
         {
 
