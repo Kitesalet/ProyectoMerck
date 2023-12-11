@@ -1,6 +1,19 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using CsvHelper;
+using CsvHelper.Configuration;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using ProyectoMerck.DAL;
 using ProyectoMerck.Helpers;
 using ProyectoMerck.Models;
+using ProyectoMerck.Models.Dtos;
+using ProyectoMerck.Models.Entities;
+using ProyectoMerck.Models.Interfaces;
+using System.Globalization;
+using System.Net;
+using System.Security.Cryptography;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ProyectoMerck.Controllers
 {
@@ -9,19 +22,25 @@ namespace ProyectoMerck.Controllers
     public class FertilityController : Controller
     {
 
-        private string ClientId { get; } = "596993924917-cami1o35mfiup4onvk9ara225sbii8c4.apps.googleusercontent.com";
-        private string ClientSecret { get; } = "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";
-        private string RedirectUrl { get; } = "";
-        private string FileId { get; }  = "1P6_hfHWoKNW8rAiKnthiCUxl2oH5Zm5_\r\n";
+        private const string FertilityUrl = "https://raw.githubusercontent.com/Kitesalet/FertLocations/main/FertLocations.csv";
+        private readonly IEmailService _EmailService;
+        private readonly IConfiguration _configuration;
+        private readonly AppDbContext _context;
+        private readonly IMapper _mapper;
+
+        public FertilityController(IEmailService mail, IConfiguration config, AppDbContext context, IMapper mapper)
+        {
+            _EmailService = mail;
+            _configuration = config;
+            _context = context;
+            _mapper = mapper;
+        }
 
         [HttpGet]
         public IActionResult Index()
         {
 
             FertilityVM model = new FertilityVM();
-
-
-
 
             return View(model);
         }
@@ -34,33 +53,125 @@ namespace ProyectoMerck.Controllers
         }
 
         [HttpPost]
-        public IActionResult CalculateFertility(FertilityVM model)
+        public async Task<IActionResult> CalculateFertility(FertilityVM model)
         {
-
-            if (!ModelState.IsValid)
-            {
-                return View("Index");
-            }
-            else
+            try
             {
 
-                int fertilityMeter = FertilityCalculator.FertilityMeter(model.ActualAge, model.FirstAge);
-
-                if (fertilityMeter < 0)
+                if (!ModelState.IsValid)
                 {
-                    TempData["FertError"] = "Las edades ingresadas son invalidas!";
-                    return RedirectToAction("Index");
+                    return View("Index");
+                }
+                else
+                {
+
+                    int fertilityMeter = FertilityCalculator.FertilityMeter(model.ActualAge, model.FirstAge);
+
+                    if (fertilityMeter < 0)
+                    {
+                        TempData["FertError"] = "Las edades ingresadas son invalidas!";
+                        return RedirectToAction("Index");
+                    }
+
+                    model.FertilityLevel = FertilityCalculator.LevelCalculator(fertilityMeter);
+
+                    model.OvuleCount = FertilityCalculator.OvuleCalculator(fertilityMeter);
+
+                    return RedirectToAction("Indicator", model);
+
                 }
 
-                model.FertilityLevel = FertilityCalculator.LevelCalculator(fertilityMeter);
-
-                model.OvuleCount = FertilityCalculator.OvuleCalculator(fertilityMeter);
-
-                return RedirectToAction("Indicator", model);
 
             }
-            
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex);
+
+                TempData["FertError"] = "Ha ocurrido un error!";
+
+                return RedirectToAction("Index");
+
+            }
+
 
         }
+
+        [HttpGet]
+
+        public IActionResult ConsultFinish()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Consult(FertilityVM model)
+        {
+            try
+            {
+                var locations = _mapper.Map<List<LocationDto>>(JsonConvert.DeserializeObject<List<Location>>(model.Locations));
+
+                string testMail = _configuration["Email:FromAddress"];
+
+                string mailBody = $"<h1 style='text-align:center'>Merck Fertilidad</h1>" +
+                    $"              <hr />" +
+                    $"              <p style='text-align:center'>Clínica elegida: {locations[model.SelectedLocationIndex].Title}</p>" +
+                    $"              <br />" +
+                    $"              <p style='text-align:center'>Email del usuario: {model.UserEmail}" +
+                    $"              <br />" +
+                    $"              <p style='text-align:center'>Mensaje: {model.ConsultMotive}</p>" +
+                    $"              <hr />";
+
+                _EmailService.SendEmailAsync(testMail, $"New Consult N#{new Random().Next(10000000, 99999999)}", mailBody);
+
+                return RedirectToAction("ConsultFinish");
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex);
+                return RedirectToAction("Index");
+            }
+         
+
+        }
+
+        public async Task<IActionResult> Clinics(FertilityVM mod)
+        {
+
+            FertilityVM model = new FertilityVM();
+
+            #region This is the way you have to go to use a CVS file for location data
+            string data = HttpClientHelper.StringFromUrl(FertilityUrl);
+
+            List<Location> locations = ReadCsvLocationData(data);
+
+            var locationsDto = _mapper.Map<List<LocationDto>>(locations);
+            #endregion
+
+            #region This is the way you have to go to consume consume the data from a database
+            //var locations = await _context.Locations.ToListAsync();
+
+            //var locationsDto = _mapper.Map<List<LocationDto>>(locations);
+            #endregion
+
+            model.LocationsList = locationsDto;
+
+            model.Locations = JsonConvert.SerializeObject(locationsDto, Formatting.Indented);
+
+            return View(model);
+
+        }
+
+        public static List<Location> ReadCsvLocationData(string csvData)
+        {
+
+            using (var reader = new StringReader(csvData))
+            using ( var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)))
+            {
+                return csv.GetRecords<Location>().ToList();
+            }
+
+        }
+
     }
 }
