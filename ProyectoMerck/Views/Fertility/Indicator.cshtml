@@ -1,10 +1,9 @@
 ﻿@model ProyectoMerck.Models.FertilityVM
 
-
 <header style="@(Model.FertilityLevel != FertilityLevel.High ? "background-color:#2EBDCD ;" : "background-color:#EC3B96; ")">
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light mb-3">
         <div class="container-fluid">
-            <a href="@Url.Action("Index", "Fertility", new {Locations = @Model.Locations})" class="btn">
+            <a href="@Url.Action("Index", "Fertility", new {Locations = "Hola"})" class="btn">
                 <i style="color: white; font-size: 1.5em" class="bi bi-chevron-left"></i>
             </a>
             <button style="color: white; font-size: 2em" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -109,10 +108,22 @@ else
         </div>
     </div>*@
 
-
+    <div class="container-fluid" style="overflow:hidden">
     <div id="curveChart"></div>
+    </div>
 
 
+<h3 style="text-align:center; color:#2EBDCD">EL PUNTO REPRESENTA SUS ÓVULOS ACTUALES</h3>
+
+@if(Model.FertilityLevel != FertilityLevel.High)
+{
+    <h3 style="text-align:center; color:#EC3B96">HAZ CLICK EN LA FLECHA A LA DERECHA</h3>
+}
+else
+{
+    <h3 style="text-align:center; color:#2EBDCD">HAZ CLICK EN LA FLECHA A LA IZQUIERDA</h3>
+
+}
 
 
 <script>
@@ -147,7 +158,8 @@ else
             crosshair:{
                 color: '#2EBDCD',
                 trigger:'selection'
-            }
+            },
+            width: '100%'
         };
 
         var chart = new google.visualization.LineChart(document.getElementById('curveChart'));
