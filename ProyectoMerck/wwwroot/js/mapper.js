@@ -20,7 +20,7 @@ async function initializeMap(locations) {
             size: new Microsoft.Maps.Point(30, 30),
             anchor: new Microsoft.Maps.Point(12, 39)
         });
-
+        /////
         map.entities.push(pin);
     }
 
