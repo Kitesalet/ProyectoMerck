@@ -15,6 +15,7 @@ builder.Services.AddAutoMapper(typeof(MapperHelper));
 
 builder.Services.AddScoped<IEmailService, EmailService>();
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
