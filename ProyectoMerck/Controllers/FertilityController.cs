@@ -143,7 +143,7 @@ namespace ProyectoMerck.Controllers
             #region This is the way you have to go to use a CVS file for location data
             string data = HttpClientHelper.StringFromUrl(FertilityUrl);
 
-            List<Location> locations = ReadCsvLocationData(data);
+            List<LocationDto> locations = ReadCsvLocationData(data);
 
             var locationsDto = _mapper.Map<List<LocationDto>>(locations);
             #endregion
@@ -162,13 +162,13 @@ namespace ProyectoMerck.Controllers
 
         }
 
-        public static List<Location> ReadCsvLocationData(string csvData)
+        public static List<LocationDto> ReadCsvLocationData(string csvData)
         {
 
             using (var reader = new StringReader(csvData))
             using ( var csv = new CsvReader(reader, new CsvConfiguration(CultureInfo.InvariantCulture)))
             {
-                return csv.GetRecords<Location>().ToList();
+                return csv.GetRecords<LocationDto>().ToList();
             }
 
         }
