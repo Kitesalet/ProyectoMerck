@@ -1,7 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using ProyectoMerck.DAL;
+using ProyectoMerck.DAL.Repositories;
 using ProyectoMerck.Helpers;
+using ProyectoMerck.Models.Entities;
 using ProyectoMerck.Models.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,9 +13,15 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<AppDbContext>(c => c.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 
+builder.Services.AddScoped<IGenericRepository<Location>, GenericRepository<Location>>();
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
 builder.Services.AddAutoMapper(typeof(MapperHelper));
 
 builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IFertilityService, IFertilityService>();
+
 
 
 var app = builder.Build();

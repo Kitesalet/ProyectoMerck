@@ -21,7 +21,7 @@ namespace ProyectoMerck.Helpers
             _configuration = configuration;
         }
 
-        public async Task SendEmailAsync(string to, string subject, string body)
+        public async Task<bool> SendEmailAsync(string to, string subject, string body)
         {
             var apiKey = _configuration["SendGrid:ApiKey"];
             var client = new SendGridClient(apiKey);
@@ -32,7 +32,31 @@ namespace ProyectoMerck.Helpers
             var htmlContent = body;
 
             var msg = MailHelper.CreateSingleEmail(from, toAddress, subject, plainTextContent, htmlContent);
-            var response = await client.SendEmailAsync(msg);
+
+            try
+            {
+                var response = await client.SendEmailAsync(msg);
+
+                if(response.IsSuccessStatusCode == true)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+            }
+            catch(Exception ex)
+            {
+
+                Console.WriteLine(ex);
+                
+                return false;
+
+            }
+
+            
         }
 
     }

@@ -21,3 +21,8 @@ body {
   margin-bottom: 60px;
 }
 
+.merck-img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto
+}

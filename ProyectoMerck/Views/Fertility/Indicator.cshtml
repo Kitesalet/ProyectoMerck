@@ -19,7 +19,7 @@
             </div>
         </div>
     </nav>
-    <img style="display:block; margin-left:auto; margin-right:auto" src="~/images/@(Model.FertilityLevel == FertilityLevel.High ? "MerckHighFert" : "MerckFertilidad").JPG" />
+    <img class="merck-img" src="~/images/@(Model.FertilityLevel == FertilityLevel.High ? "MerckHighFert" : "MerckFertilidad").JPG" />
 </header>
 
 <div style="@(Model.FertilityLevel != FertilityLevel.High ? "background-color:#2EBDCD;" : "background-color:#EC3B96;")">
@@ -135,17 +135,8 @@ else
         var array = [['Estado','Ovulos']]
 
         for (var x = 450; x >= 0; x--) {
-            var label
-
-            if (x === 450) {
-                label = 'Alto';
-            } else if (x === 300) {
-                label = 'Medio';
-            } else if (x === 100) {
-                label = 'Bajo';
-            } else {
-                label = '';
-            }
+            var label;
+            label = '';
             array.push([label, x]);
         }
 
