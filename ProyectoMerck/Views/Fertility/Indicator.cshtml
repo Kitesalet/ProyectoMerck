@@ -1,6 +1,6 @@
 ﻿@model ProyectoMerck.Models.FertilityVM
 
-<header style="@(Model.FertilityLevel != FertilityLevel.High ? "background-color:#2EBDCD ;" : "background-color:#EC3B96; ")">
+<header style="background-color:#EC3B96; ">
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light mb-3">
         <div class="container-fluid">
             <a href="@Url.Action("Index", "Fertility", new {Locations = "Hola"})" class="btn">
@@ -19,30 +19,20 @@
             </div>
         </div>
     </nav>
-    <img class="merck-img" src="~/images/@(Model.FertilityLevel == FertilityLevel.High ? "MerckHighFert" : "MerckFertilidad").JPG" />
+    <img class="merck-img" src="~/images/MerckHighFert.JPG" />
 </header>
 
-<div style="@(Model.FertilityLevel != FertilityLevel.High ? "background-color:#2EBDCD;" : "background-color:#EC3B96;")">
+<div style="background-color:#EC3B96;">
     <div class="row justify-content-center">
             <div class="col-1">
-                <a href="@Url.Action("Index", "Fertility")" class="btn btn-danger">
-                    <i style="color: white; font-size: 2em; opacity:0.8" class="bi bi-chevron-left"></i>
-                </a>
             </div>
 
 
         <div class="col-7 offset-1 text-center align-self-center" style="color: white; font-size: 2em">@(Model.FertilityLevel != FertilityLevel.High ? "Indicador" : "")</div>
         <div class="col-2">
-            @if(Model.FertilityLevel != FertilityLevel.High)
-            {
-                <a href="@Url.Action("Clinics", "Fertility")" class="btn btn-danger">
-                    <i style="color: white; font-size: 2em; opacity:0.8" class="bi bi-chevron-right"></i>
-                </a>
-            }
         </div>
 
-        @if(Model.FertilityLevel == FertilityLevel.High)
-        {
+
             <div style="color:white; text-align:center;">
                 <br>
                 <h4 style="font-weight:bold">EDAD ACTUAL:</h4>
@@ -50,11 +40,11 @@
                 <br />
                 <h4 style="font-weight:bold">1ERA MENSTRUACIÓN:</h4>
                 <h4>A LOS @Model.FirstAge AÑOS</h4>
-                <br>
-                <br>
-                <br>
             </div>
-        }
+
+        <div class="text-center d-flex justify-content-center">
+            <a class="btn col-4 p-1 my-5 border-light" style="color:white; border-radius: 50px; background-color:darkcyan;" href="@Url.Action("Information","Fertility")">Quiero saber mas!</a>
+        </div>
 
 
         <div style="background-color:white; border-top-left-radius: 1000px; border-top-right-radius: 1000px; height: 50px">
@@ -66,64 +56,11 @@
 </div>
 
 
-@if(Model.FertilityLevel == FertilityLevel.High)
-{
-    <h4 style="font-weight:bold; color:@(Model.FertilityLevel == FertilityLevel.High ? "#EC3B96" : "#2EBDCD"); text-align:center">RESERVA OVÁRICA: <span style="color:#2EBDCD">ALTA</span></h4>
-
-}else if(Model.FertilityLevel == FertilityLevel.Medium)
-{
-    <h4 style="font-weight:bold; color:@(Model.FertilityLevel == FertilityLevel.High ? "#EC3B96" : "#2EBDCD"); text-align:center">RESERVA OVÁRICA: <span style="color:#EC3B96">MEDIA</span></h4>
-
-}
-else
-{
-    <h4 style="font-weight:bold; color:@(Model.FertilityLevel == FertilityLevel.High ? "#EC3B96" : "#2EBDCD"); text-align:center">RESERVA OVÁRICA: <span style="color:#EC3B96">BAJA</span></h4>
-
-}
-
-@*<div style="background-color:white; border-top-left-radius: 20px; border-top-right-radius: 20px">
-
-    <div style="padding-top: 4em" class="row d-flex justify-content-center">
-            <div class="col-4 d-flex justify-content-center">
-            <i class="bi bi-flower1 d-flex align-items-center" style="@(Model.FertilityLevel == FertilityLevel.Low ? "color:white; background-color: #EC3B96; border-radius:3px; font-size:4em ; box-shadow: 5px 5px 5px gray;" : "color:#8C92AC; background-color:#E4E7F8; border-radius:3px; font-size:4em")"></i>
-            </div>
-            <div class="col-4 d-flex justify-content-center">
-            <i class="bi bi-flower1 d-flex align-items-center" style="@(Model.FertilityLevel == FertilityLevel.Medium ? "color:white; background-color: #EC3B96; border-radius:3px; font-size:4em;  box-shadow: 5px 5px 5px gray;" : "color:#8C92AC; background-color: #E4E7F8; border-radius:3px; font-size:4em")"></i>
-            </div>
-            <div class="col-4 d-flex justify-content-center">
-            <i class="bi bi-flower1 d-flex align-items-center" style="@(Model.FertilityLevel == FertilityLevel.High ? "color:white; background-color: #2EBDCD; border-radius:3px; font-size:4em; box-shadow: 5px 5px 5px gray;" : "color:#8C92AC; background-color: #E4E7F8; border-radius:3px; font-size:4em")"></i>
-            </div>
- 
-    </div>
-
-    <div style="padding-top: 0.5em; padding-bottom:1em" class="row d-flex justify-content-center">
-        <div class="col-4 d-flex justify-content-center">
-            <h3 style="@(Model.FertilityLevel == FertilityLevel.Low ? "color:black;" : "color:#A7A7B5; opacity:0.3")">Bajo</h3>
-        </div>
-           <div class="col-4 d-flex justify-content-center">
-            <h3 style="@(Model.FertilityLevel == FertilityLevel.Medium ? "color:black" : "color:#A7A7B5; opacity:0.3")">Medio</h3>
-        </div>
-        <div class="col-4 d-flex justify-content-center">
-            <h3 style="@(Model.FertilityLevel == FertilityLevel.High ? "color:black" : "color:#A7A7B5; opacity:0.3")">Alto</h3>
-        </div>
-    </div>*@
-
     <div class="container-fluid" style="overflow:hidden">
     <div id="curveChart"></div>
     </div>
 
 
-<h3 style="text-align:center; color:#2EBDCD">EL PUNTO REPRESENTA SUS ÓVULOS ACTUALES</h3>
-
-@if(Model.FertilityLevel != FertilityLevel.High)
-{
-    <h3 style="text-align:center; color:#EC3B96">HAZ CLICK EN LA FLECHA A LA DERECHA</h3>
-}
-else
-{
-    <h3 style="text-align:center; color:#2EBDCD">HAZ CLICK EN LA FLECHA A LA IZQUIERDA</h3>
-
-}
 
 
 <script>
@@ -143,7 +80,7 @@ else
         var data = google.visualization.arrayToDataTable(array);
 
         var options = {
-            title: 'Indicador Ovular',
+            title: 'Tasa de Fertilidad',
             curveType: 'function',
             legend: { position: 'bottom' },
             crosshair:{

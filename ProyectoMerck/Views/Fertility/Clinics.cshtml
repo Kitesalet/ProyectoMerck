@@ -23,8 +23,9 @@
 <div style="background-color:#2EBDCD;">
     <div class="row justify-content-center">
         <div class="col-1"><i style="color: white; font-size: 2em; opacity:0.8" class="bi bi-chevron-left"></i></div>
-        <div class="col-7 offset-1 text-center align-self-center" style="color: white; font-size: 2em">Clinicas</div>
+        <div class="col-7 offset-1 text-center align-self-center" style="color: white; font-size: 2em">Formulario</div>
         <div class="col-2">
+            <i style="color: white; font-size: 2em; opacity:0.8" class="bi bi-chevron-right"></i>
         </div>
 
         <div style="background-color:white; border-top-left-radius: 1000px; border-top-right-radius: 1000px; height: 50px">
@@ -32,51 +33,74 @@
     </div>
 </div>
 
-<h3 class="text-center" style="font-weight: bold; color:#2EBDCD">ESTAS SON LAS CLÍNICAS</h3>
 
-<div style=" margin-top: 50px ;border-radius:40px; overflow: hidden; margin-bottom:30px">
-    <div id="mapper" style="width: 100%; height: 400px; background-color: lightblue;">
-    </div>
-</div>
 
 @using (Html.BeginForm("Consult", "Fertility", FormMethod.Post))
 {
     @Html.HiddenFor(c => c.Locations)
 
-    <div class="container" style="border:5px #2EBDCD solid; border-radius:10px; box-shadow:5px 5px 5px 5px ; padding-bottom:10px">
-        <div class="row">
-            <div>
-                <h3 class="text-center" style="color:#EC3B96">ESCRIBA SU EMAIL</h3>
-                @Html.TextBoxFor(m => m.UserEmail, new {@class = "form-control"})
-                <h3 class="text-center my-3" style="color:#2EBDCD; ">SELECCIONE SU CLÍNICA PREDILECTA</h3>
-                @Html.DropDownListFor(m => m.SelectedLocationIndex, Enumerable.Range(0,Model.LocationsList.Count).Select(index => new SelectListItem(){
-            Value = index.ToString(),
-            Text = Model.LocationsList[index].Title.ToString()
-            }),new {@class = "form-select form-select-lg mb-3", aria_label = ".form-select-lg example"})                
-                <h3 class="text-center" style="color:#EC3B96">POR FAVOR, ESCRIBA SU CONSULTA EN EL FORMULARIO</h3>
-                @Html.TextAreaFor(c => c.ConsultMotive, new {@class="form-control", rows=4})
-                <br />
-                <button type="submit" class="btn btn-success form-control">Enviar</button>
+    <div class="container">
+
+        <div class="row border-bottom">
+            <div class="col-2 offset-2">
+                <i class="bi bi-pin" style="font-size: 3.6rem;color:#583B93; background-color:#E3E7F8; border-radius:5px "></i>
+            </div>
+            <div class="col-4">
+                <row>
+                    <div class="col-6 align-self-bottom" style="color:#583B93">
+                        <h5>Provincia</h5>
+                    </div>
+                </row>
+                <row class="d-flex align-self-end">
+                    @Html.DropDownListFor(p => p.ConsultMotive, Enumerable.Range(0,15).Select(num => 
+                    new SelectListItem(){
+                        Value = "",
+                        Text = ""
+                    }),
+                    new {@class = "form-select form-select-lg mb-3", aria_label = ".form-select-lg example"})
+                </row>
             </div>
         </div>
+        <div class="row border-bottom my-2">
+            <div class="col-2 offset-2">
+                <i class="bi bi-journal" style="font-size: 3.6rem;color:#EA3B95; background-color:#E3E7F8; border-radius:5px "></i>
+            </div>
+            <div class="col-4">
+                <row>
+                    <div class="col-6 align-self-bottom" style="color:#EA3B95">
+                        <h5>Motivo Consulta</h5>
+                    </div>
+                </row>
+                <row class="d-flex align-self-end">
+                    @Html.DropDownListFor(p => p.ConsultMotive, Enumerable.Range(0,15).Select(num =>
+                new SelectListItem(){
+                Value = "",
+                Text = ""
+                }),
+                new {@class = "form-select form-select-lg mb-3", aria_label = ".form-select-lg example"})
+                </row>
+            </div>
+        </div>
+        <div class="row border-bottom">
+            <div class="col-2 offset-2">
+                <i class="bi bi-pin" style="font-size: 3.6rem;color:#EA3B95; background-color:#E3E7F8; border-radius:5px "></i>
+            </div>
+            <div class="col-4">
+                <row>
+                    <div class="col-6 align-self-bottom" style="color:#EA3B95">
+                        <h5>Mail Contacto</h5>
+                    </div>
+                </row>
+                <row class="d-flex align-self-end">
+                    @Html.EditorFor(p => p.ConsultMotive,
+                new {@class = "form-control"})
+                </row>
+            </div>
+        </div>
+
     </div>
 
 
 }
-
-
-
-
-<script>
-    window.initializeBingMap = () => {
-        const locationsJson = @Html.Raw(Json.Serialize(Model.Locations));
-        GetMap(locationsJson);
-
-    }
-</script>
-
-<script src="~/js/mapper.js"></script>
-
-
 
 <script src="~/js/index.js"></script>

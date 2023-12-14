@@ -23,6 +23,11 @@ namespace ProyectoMerck.Controllers
             _service = service;
         }
 
+        public IActionResult Presentation()
+        {
+            return View("Presentation");
+        }
+
         [HttpGet]
         public IActionResult Index()
         {
@@ -37,6 +42,13 @@ namespace ProyectoMerck.Controllers
         {
 
             return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult Information()
+        {
+
+            return View();
         }
 
         [HttpPost]
