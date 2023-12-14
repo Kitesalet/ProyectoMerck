@@ -80,6 +80,8 @@ namespace ProyectoMerck.Services
                     $"              <p style='text-align:center'>Mensaje: {model.ConsultMotive}</p>" +
                     $"              <hr />";
 
+                var response = await _EmailService.SendEmailAsync(testMail, "xxx", mailBody);
+
                 bool result = await _EmailService.SendEmailAsync(testMail, $"New Consult N#{new Random().Next(10000000, 99999999)}", mailBody);
 
                 return result;

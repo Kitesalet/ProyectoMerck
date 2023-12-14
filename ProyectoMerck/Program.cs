@@ -5,6 +5,7 @@ using ProyectoMerck.DAL.Repositories;
 using ProyectoMerck.Helpers;
 using ProyectoMerck.Models.Entities;
 using ProyectoMerck.Models.Interfaces;
+using ProyectoMerck.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +21,7 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddAutoMapper(typeof(MapperHelper));
 
 builder.Services.AddScoped<IEmailService, EmailService>();
-builder.Services.AddScoped<IFertilityService, IFertilityService>();
+builder.Services.AddScoped<IFertilityService, FertilityService>();
 
 
 
