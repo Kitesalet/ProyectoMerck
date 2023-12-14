@@ -98,13 +98,29 @@
         </div>
 
         <div class="container">
+            <div class="row m-2">
 
-            @for(int i = 0; i < Model.LocationsList.Count; i++)
-            {
-                <div class="col-8">@Model.LocationsList[i].Longitude</div>
-            }
+                @for (int i = 0; i < Model.LocationsList.Count; i++)
+                {
+                    <div class="col-4 my-2 d-flex flex-column align-items-center">
+                        <i class="bi bi-flower1 d-flex" style="@(Model.FertilityLevel == FertilityLevel.Medium ? "color:white; background-color: #EC3B96; border-radius:8px; font-size:4em;  box-shadow: 5px 5px 5px gray;" : "color:#8C92AC; background-color: #E4E7F8; border-radius:10px; font-size:4em")"></i>
+                        <p>@Model.LocationsList[i].Title</p>
+                    </div>
+
+                }
+
+            </div>
+
+            <div class="text-center d-flex justify-content-center">
+                <a class="btn form-control p-1 my-5 border-light" style="color:white; border-radius: 50px; background-color:darkcyan;" href="@Url.Action("ConsultFinish","Fertility")">Enviar</a>
+            </div>
+
 
         </div>
+
+
+
+
 
     </div>
 
