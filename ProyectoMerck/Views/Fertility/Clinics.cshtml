@@ -40,9 +40,8 @@
     @Html.HiddenFor(c => c.Locations)
 
     <div class="container">
-
         <div class="row border-bottom">
-            <div class="col-2 offset-2">
+            <div class="col-2 offset-2 d-flex align-items-center justify-content-center">
                 <i class="bi bi-pin" style="font-size: 3.6rem;color:#583B93; background-color:#E3E7F8; border-radius:5px "></i>
             </div>
             <div class="col-4">
@@ -62,12 +61,12 @@
             </div>
         </div>
         <div class="row border-bottom my-2">
-            <div class="col-2 offset-2">
-                <i class="bi bi-journal" style="font-size: 3.6rem;color:#EA3B95; background-color:#E3E7F8; border-radius:5px "></i>
+            <div class="col-2 offset-2 d-flex align-items-center justify-content-center">
+                <i class="bi bi-journal justify-content-center" style="font-size: 3.6rem;color:#EA3B95; background-color:#E3E7F8; border-radius:5px "></i>
             </div>
             <div class="col-4">
                 <row>
-                    <div class="col-6 align-self-bottom" style="color:#EA3B95">
+                    <div class="col-10 align-self-bottom" style="color:#EA3B95">
                         <h5>Motivo Consulta</h5>
                     </div>
                 </row>
@@ -81,21 +80,30 @@
                 </row>
             </div>
         </div>
-        <div class="row border-bottom">
-            <div class="col-2 offset-2">
-                <i class="bi bi-pin" style="font-size: 3.6rem;color:#EA3B95; background-color:#E3E7F8; border-radius:5px "></i>
+        <div class="row border-bottom my-2">
+            <div class="col-2 offset-2 d-flex align-items-center justify-content-center">
+                <i class="bi bi-envelope justify-content-center" style="font-size: 3.6rem;color:#EA3B95; background-color:#E3E7F8; border-radius:5px "></i>
             </div>
             <div class="col-4">
                 <row>
-                    <div class="col-6 align-self-bottom" style="color:#EA3B95">
+                    <div class="col-10 align-self-bottom" style="color:#EA3B95">
                         <h5>Mail Contacto</h5>
                     </div>
                 </row>
                 <row class="d-flex align-self-end">
-                    @Html.EditorFor(p => p.ConsultMotive,
+                    @Html.TextBoxFor(p => p.ConsultMotive,
                 new {@class = "form-control"})
                 </row>
             </div>
+        </div>
+
+        <div class="container">
+
+            @for(int i = 0; i < Model.LocationsList.Count; i++)
+            {
+                <div class="col-8">@Model.LocationsList[i].Longitude</div>
+            }
+
         </div>
 
     </div>
