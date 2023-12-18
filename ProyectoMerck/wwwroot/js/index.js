@@ -14,64 +14,42 @@
 
 
 
+console.log('Hola!')
+// Function to filter clinics based on selected Provincia
+document.getElementById('provincelocationDropdown').addEventListener('change', function () {
+    var selectedProvincia = parseInt(this.value) + 1;
 
-const AgeSubmitHandler = () => {
-    var form = document.getElementById('CalculateFertilityForm');
+    document.querySelectorAll('.clinic-icon, .clinic-text').forEach(function (element) {
+        element.classList.add('d-none');
+    });
 
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
+    document.querySelectorAll('.clinic-icon[data-provincia="' + selectedProvincia + '"]').forEach(function (icon) {
+        icon.classList.remove('d-none');
+    });
 
-        var formData = new FormData(form);
+    document.querySelectorAll('.clinic-text[data-provincia="' + selectedProvincia + '"]').forEach(function (textElement) {
+        textElement.classList.remove('d-none');
+    });
+});
 
-        // Creation of JSON object from form data
-        var jsonData = {};
-        formData.forEach((value, key) => {
-            jsonData[key] = value;
+document.querySelectorAll('.clinic-icon').forEach(function (icon) {
+    icon.classList.add('nonselected-clinic');
+
+    icon.addEventListener('click', function () {
+        document.querySelectorAll('.clinic-icon').forEach(function (otherIcon) {
+            otherIcon.classList.remove('selected-clinic');
+            otherIcon.classList.add('nonselected-clinic');
         });
 
-        var json = JSON.stringify(jsonData);
-
-        // Post using AJAX
-
-
-        fetch('Fertility/CalculateFertility', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: new URLSearchParams(new FormData(this))
-        })
-            .then(response => {
-                if (!response.ok) {
-                    return response.json().then(error => Promise.reject(error));
-                }
-                return response.json();
-            })
-            .then(data => {
-                // Check for a successful response and redirect if needed
-                if (data.redirectUrl) {
-                    window.location.href = data.redirectUrl;
-                } else {
-                    // Handle other cases as needed
-                }
-            })
-            .catch(error => {
-                // Handle the BadRequest response
-                if (error && error.message) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: error.message
-                    });
-                } else {
-                    // Handle other errors
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: 'An unexpected error occurred.'
-                    });
-                }
-            });
-        
+        this.classList.remove('nonselected-clinic');
+        this.classList.add('selected-clinic');
+        updateHiddenField();
     });
-};
+});
+
+// Function to update hidden field based on selected clinic
+function updateHiddenField() {
+    var selectedProvincia = parseInt(document.querySelector('.selected-clinic').id) + 1;
+    document.getElementById('SelectedLocationIndex').value = selectedProvincia || '';
+}
+

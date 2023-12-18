@@ -11,5 +11,8 @@ namespace ProyectoMerck.Models.Interfaces
 
         FertilityVM CalculateFertility(FertilityVM model);
 
+        Task<FertilityVM> GetLists(FertilityVM model);
+
+
     }
 }

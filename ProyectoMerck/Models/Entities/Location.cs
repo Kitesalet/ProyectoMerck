@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProyectoMerck.Models.Entities
 {
@@ -14,5 +15,9 @@ namespace ProyectoMerck.Models.Entities
 
         public string Subtitle { get; set; }
 
+
+        [ForeignKey(nameof(ProvinceLocation))]
+        public int ProvinceLocationId { get; set; }
+        public ProvinceLocation ProvinceLocation { get; set; }
     }
 }

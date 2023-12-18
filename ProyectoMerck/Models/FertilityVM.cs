@@ -15,7 +15,22 @@ namespace ProyectoMerck.Models
         public int FirstAge { get; set; }
         public int OvuleCount { get; set; }
         public FertilityLevel FertilityLevel { get; set; }
+
         public List<LocationDto> LocationsList { get; set; } = new List<LocationDto>();
+
+        public List<ProvinceDto> ProvinceList { get; set; } = new List<ProvinceDto>();
+
+        public List<CountryDto> CountryList { get; set; } = new List<CountryDto>();
+
+
+        public List<ProvinceLocationDto> ProvinceLocationList = new List<ProvinceLocationDto>();
+
+        public int SelectedCountry { get; set; }
+
+        public int SelectedProvince { get; set; }
+
+        public int SelectedProvinceLocation { get; set; }   
+
         public string? Locations { get; set; } 
         public string? ConsultMotive { get; set; }
 

@@ -8,12 +8,21 @@ namespace ProyectoMerck.DAL
         private readonly AppDbContext _context;
         public LocationRepository LocationRepository { get; }
 
+        public CountryRepository CountryRepository { get; }
+
+        public ProvinceRepository ProvinceRepository { get; }
+
+        public ProvinceLocationRepository ProvinceLocationRepository { get; }
+
         public UnitOfWork(AppDbContext context)
         {
 
             _context = context;
 
             LocationRepository = new LocationRepository(context);
+            CountryRepository = new CountryRepository(context);
+            ProvinceRepository = new ProvinceRepository(context);
+            ProvinceLocationRepository = new ProvinceLocationRepository(context);   
 
         }
 

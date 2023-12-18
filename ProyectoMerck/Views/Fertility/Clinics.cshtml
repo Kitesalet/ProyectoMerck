@@ -38,6 +38,8 @@
 @using (Html.BeginForm("Consult", "Fertility", FormMethod.Post))
 {
     @Html.HiddenFor(c => c.Locations)
+    @Html.HiddenFor(c => c.SelectedLocationIndex, new { id = "SelectedLocationIndex" })
+
 
     <div class="container">
         <div class="row border-bottom">
@@ -47,17 +49,26 @@
             <div class="col-4">
                 <row>
                     <div class="col-6 align-self-bottom" style="color:#583B93">
-                        <h5>Provincia</h5>
+                        <h5>Pais</h5>
                     </div>
                 </row>
-                <row class="d-flex align-self-end">
-                    @Html.DropDownListFor(p => p.ConsultMotive, Enumerable.Range(0,15).Select(num => 
-                    new SelectListItem(){
-                        Value = "",
-                        Text = ""
-                    }),
-                    new {@class = "form-select form-select-lg mb-3", aria_label = ".form-select-lg example"})
-                </row>
+                <div class="row d-flex align-self-end">
+                    @Html.DropDownListFor(p => p.SelectedCountry, Model.CountryList.Select(c =>
+                new SelectListItem()
+                {
+                Value = c.Id.ToString(),
+                Text = c.Name
+                }),
+                new { @class = "form-select form-select-lg mb-3", aria_label = ".form-select-lg example", id = "countryDropdown" })
+                </div>
+
+                <div class="row d-flex align-self-end">
+                    @Html.DropDownListFor(p => p.SelectedProvince, Enumerable.Empty<SelectListItem>(), new { @class = "form-select form-select-lg mb-3", aria_label = ".form-select-lg example", id = "provinceDropdown" })
+                </div>
+
+                <div class="row d-flex align-self-end">
+                    @Html.DropDownListFor(p => p.SelectedProvinceLocation, Enumerable.Empty<SelectListItem>(), new { @class = "form-select form-select-lg mb-3", aria_label = ".form-select-lg example", id = "provinceLocationDropdown" })
+                </div>
             </div>
         </div>
         <div class="row border-bottom my-2">
@@ -98,21 +109,24 @@
         </div>
 
         <div class="container">
-            <div class="row m-2">
+            <div class="row m-2 d-flex">
 
                 @for (int i = 0; i < Model.LocationsList.Count; i++)
                 {
+                    
                     <div class="col-4 my-2 d-flex flex-column align-items-center">
-                        <i class="bi bi-flower1 d-flex" style="@(Model.FertilityLevel == FertilityLevel.Medium ? "color:white; background-color: #EC3B96; border-radius:8px; font-size:4em;  box-shadow: 5px 5px 5px gray;" : "color:#8C92AC; background-color: #E4E7F8; border-radius:10px; font-size:4em")"></i>
-                        <p>@Model.LocationsList[i].Title</p>
+                        <i data-provincia="@Model.LocationsList[i].LocationId" id="@i" class="clinic-icon bi bi-flower1 d-flex"></i>
+                        <p data-provincia="@Model.LocationsList[i].LocationId" class="clinic-text">@Model.LocationsList[i].Title</p>
                     </div>
 
+
                 }
+
 
             </div>
 
             <div class="text-center d-flex justify-content-center">
-                <a class="btn form-control p-1 my-5 border-light" style="color:white; border-radius: 50px; background-color:darkcyan;" href="@Url.Action("ConsultFinish","Fertility")">Enviar</a>
+                <button class="btn form-control p-1 my-5 border-light" style="color:white; border-radius: 50px; background-color:darkcyan;">Enviar</button>
             </div>
 
 
@@ -121,10 +135,61 @@
 
 
 
-
     </div>
 
 
 }
+
+<script>
+
+    console.log('Hola!')
+    // Function to filter clinics based on selected Provincia
+        document.getElementById('provinceLocationDropdown').addEventListener('change', function () {
+            var selectedProvincia = parseInt(this.value) + 1;
+
+            document.querySelectorAll('.clinic-icon, .clinic-text').forEach(function (element) {
+                element.classList.add('d-none'); 
+            });
+
+            document.querySelectorAll('.clinic-icon[data-provincia="' + selectedProvincia + '"]').forEach(function (icon) {
+                icon.classList.remove('d-none'); 
+            });
+
+            document.querySelectorAll('.clinic-text[data-provincia="' + selectedProvincia + '"]').forEach(function (textElement) {
+                textElement.classList.remove('d-none'); 
+            });
+        });
+
+    document.querySelectorAll('.clinic-icon').forEach(function (icon) {
+        icon.classList.add('nonselected-clinic'); 
+
+        icon.addEventListener('click', function () {
+            document.querySelectorAll('.clinic-icon').forEach(function (otherIcon) {
+                otherIcon.classList.remove('selected-clinic');
+                otherIcon.classList.add('nonselected-clinic'); 
+            });
+
+            this.classList.remove('nonselected-clinic');
+            this.classList.add('selected-clinic'); 
+            updateHiddenField();
+        });
+    });
+
+    // Function to update hidden field based on selected clinic
+    function updateHiddenField() {
+        var selectedProvincia = parseInt(document.querySelector('.selected-clinic').id) + 1;
+        document.getElementById('SelectedLocationIndex').value = selectedProvincia || '';
+    }
+
+    document.getElementById('countryDropdown').addEventListener('change', function(country){
+
+        @Model.SelectedCountry = parseInt(this.value);
+
+        var filteredProvincias = Html.Raw(Json.Encode(@Model.ProvinceList.Where(p => p.CountryId == Model.SelectedCountry));
+    })
+
+
+
+</script>
 
 <script src="~/js/index.js"></script>

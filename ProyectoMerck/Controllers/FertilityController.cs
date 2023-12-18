@@ -121,6 +121,8 @@ namespace ProyectoMerck.Controllers
 
             model = await _service.ClinicLocations(model);
 
+            model = await _service.GetLists(model);
+
             return View(model);
 
         }

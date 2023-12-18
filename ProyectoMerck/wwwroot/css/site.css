@@ -26,3 +26,29 @@ body {
     margin-left: auto;
     margin-right: auto
 }
+
+.nonselected-clinic {
+    color: #8C92AC;
+    background-color: #E4E7F8;
+    border-radius: 10px;
+    font-size: 4em;
+    cursor: pointer;
+}
+
+.selected-clinic {
+    color: white;
+    background-color: #EC3B96;
+    border-radius: 8px;
+    font-size: 4em;
+    box-shadow: 5px 5px 5px gray;
+}
+
+.hidden-icon {
+    display: none;
+}
+
+.visible-icon {
+    display: block;
+}
+
+

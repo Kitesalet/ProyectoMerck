@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Google.Apis.Drive.v3.Data;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using ProyectoMerck.DAL;
 using ProyectoMerck.Helpers;
@@ -27,6 +28,17 @@ namespace ProyectoMerck.Services
 
         }
 
+        public async Task<FertilityVM> GetLists(FertilityVM model)
+        {
+
+            model.CountryList = _mapper.Map<List<CountryDto>>(await _context.CountryRepository.GetAll());
+            model.ProvinceList = _mapper.Map<List<ProvinceDto>>(await _context.ProvinceRepository.GetAll());
+            model.ProvinceLocationList = _mapper.Map<List<ProvinceLocationDto>>(await _context.ProvinceLocationRepository.GetAll());
+
+            return model;
+
+        }
+
         public FertilityVM CalculateFertility(FertilityVM model)
         {
             int fertilityMeter = FertilityCalculator.FertilityMeter(model.ActualAge, model.FirstAge);
@@ -42,17 +54,17 @@ namespace ProyectoMerck.Services
         {
 
             #region This is the way you have to go to use a CVS file for location data
-            string data = HttpClientHelper.StringFromUrl(FertilityUrl);
+            //string data = HttpClientHelper.StringFromUrl(FertilityUrl);
 
-            List<LocationDto> locations = CsvMethodHelper.ReadCsvLocationData(data);
+            //List<LocationDto> locations = CsvMethodHelper.ReadCsvLocationData(data);
 
-            var locationsDto = _mapper.Map<List<LocationDto>>(locations);
+            //var locationsDto = _mapper.Map<List<LocationDto>>(locations);
             #endregion
 
             #region This is the way you have to go to consume consume the data from a database
-            //var locations = await _context.Locations.ToListAsync();
+            var locations = await _context.LocationRepository.GetAll();
 
-            //var locationsDto = _mapper.Map<List<LocationDto>>(locations);
+            var locationsDto = _mapper.Map<List<LocationDto>>(locations);
             #endregion
 
 
