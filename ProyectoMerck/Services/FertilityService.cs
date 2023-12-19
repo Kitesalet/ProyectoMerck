@@ -28,7 +28,7 @@ namespace ProyectoMerck.Services
 
         }
 
-        public async Task<FertilityVM> GetLists(FertilityVM model)
+        public async Task<FertilitySubmitVM> GetLists(FertilitySubmitVM model)
         {
 
             model.CountryList = _mapper.Map<List<CountryDto>>(await _context.CountryRepository.GetAll());
@@ -51,7 +51,7 @@ namespace ProyectoMerck.Services
             return model;
         }
 
-        public async Task<FertilityVM> ClinicLocations(FertilityVM model)
+        public async Task<FertilitySubmitVM> ClinicLocations(FertilitySubmitVM model)
         {
 
             #region This is the way you have to go to use a CVS file for location data
@@ -76,7 +76,7 @@ namespace ProyectoMerck.Services
 
         }
 
-        public async Task<bool> ConsultMailAsync(FertilityVM model)
+        public async Task<bool> ConsultMailAsync(FertilitySubmitVM model)
         {
             try
             {
@@ -92,8 +92,6 @@ namespace ProyectoMerck.Services
                     $"              <br />" +
                     $"              <p style='text-align:center'>Motivo de Consulta: {model.ConsultMotiveMessage}</p>" +
                     $"              <hr />";
-
-                var response = await _EmailService.SendEmailAsync(testMail, "xxx", mailBody);
 
                 bool result = await _EmailService.SendEmailAsync(testMail, $"New Consult N#{new Random().Next(10000000, 99999999)}", mailBody);
 

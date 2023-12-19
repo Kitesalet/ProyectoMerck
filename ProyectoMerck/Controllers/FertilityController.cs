@@ -2,12 +2,14 @@
 using CsvHelper;
 using CsvHelper.Configuration;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using ProyectoMerck.DAL;
 using ProyectoMerck.Helpers;
 using ProyectoMerck.Models;
 using ProyectoMerck.Models.Interfaces;
+using System.Globalization;
 
 namespace ProyectoMerck.Controllers
 {
@@ -70,7 +72,7 @@ namespace ProyectoMerck.Controllers
 
                     FertilityVM finalModel = _service.CalculateFertility(model);
 
-                    if (finalModel.FertilityLevel < 0)
+                    if (model.FirstAge > model.ActualAge)
                     {
                         TempData["FertError"] = "Las edades ingresadas son invalidas!";
                         return RedirectToAction("Index");
@@ -89,14 +91,34 @@ namespace ProyectoMerck.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Consult(FertilityVM model)
+        public async Task<IActionResult> Consult(FertilitySubmitVM model)
         {
+            bool validMail = false;
+
+            if (!String.IsNullOrEmpty(model.UserEmail))
+            {
+                validMail = RegexHelper.IsMailValid(model.UserEmail);
+            }
+
+            if (!validMail)
+            {
+                ModelState.AddModelError("UserEmail", "El email ingresado tiene un formato incorrecto!");
+            }
+
             if (!ModelState.IsValid)
             {
 
-                TempData["FertError"] = "Hubo un error inesperado!";
+                ModelState["SelectedCountry"].RawValue = 0;
+                ModelState["UserEmail"].RawValue = "";
+                ModelState["ConsultMotiveMessage"].RawValue = "";
 
-                return View("Index");
+                TempData["FertError"] = "Ha ocurrido un error!";
+
+                model = await _service.ClinicLocations(model);
+
+                model = await _service.GetLists(model);
+
+                return View("Clinics", model);
 
             }
             else
@@ -105,8 +127,19 @@ namespace ProyectoMerck.Controllers
 
                 if (mailSent == false)
                 {
+
+                    ModelState["SelectedCountry"].RawValue = 0;
+                    ModelState["UserEmail"].RawValue = "";
+                    ModelState["ConsultMotiveMessage"].RawValue = "";
+
+                    FertilitySubmitVM model1 = new FertilitySubmitVM();
+
+                    model1 = await _service.ClinicLocations(model);
+
+                    model1 = await _service.GetLists(model);
+
                     TempData["FertError"] = "Hubo un error, el email no pudo ser enviado!";
-                    return RedirectToAction("Index");
+                    return View("Clinics", model1);
                 }
 
                 return RedirectToAction("ConsultFinish");
@@ -117,7 +150,7 @@ namespace ProyectoMerck.Controllers
         [HttpGet]
         public async Task<IActionResult> Clinics()
         {
-            FertilityVM model = new FertilityVM();
+            FertilitySubmitVM model = new FertilitySubmitVM();
 
             model = await _service.ClinicLocations(model);
 

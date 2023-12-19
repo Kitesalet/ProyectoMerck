@@ -1,4 +1,4 @@
-﻿@model ProyectoMerck.Models.FertilityVM
+﻿@model ProyectoMerck.Models.FertilitySubmitVM
 
 <header style="background-color:#2EBDCD">
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light mb-3">
@@ -58,7 +58,7 @@
                 {
                 Value = c.Id.ToString(),
                 Text = c.Name
-                }),
+                }),"--- Seleccione una opción ---",
                 new { @class = "form-select form-select-lg mb-3", aria_label = ".form-select-lg example", id = "countryDropdown" })
                 </div>
                 <row>
@@ -67,7 +67,7 @@
                     </div>
                 </row>
                 <div class="row d-flex align-self-end">
-                    @Html.DropDownListFor(p => p.SelectedProvince, Enumerable.Empty<SelectListItem>(), new { @class = "form-select form-select-lg mb-3", aria_label = ".form-select-lg example", id = "provinceDropdown" })
+                    @Html.DropDownListFor(p => p.SelectedProvince, Enumerable.Empty<SelectListItem>(),"--- Seleccione una opción ---", new { @class = "form-select form-select-lg mb-3", aria_label = ".form-select-lg example", id = "provinceDropdown" })
                 </div>
                 <row>
                     <div class="col-6 align-self-bottom" style="color:#583B93">
@@ -75,7 +75,7 @@
                     </div>
                 </row>
                 <div class="row d-flex align-self-end">
-                    @Html.DropDownListFor(p => p.SelectedProvinceLocation, Enumerable.Empty<SelectListItem>(), new { @class = "form-select form-select-lg mb-3", aria_label = ".form-select-lg example", id = "provinceLocationDropdown" })
+                    @Html.DropDownListFor(p => p.SelectedProvinceLocation, Enumerable.Empty<SelectListItem>(),"--- Seleccione una opción ---", new { @class = "form-select form-select-lg mb-3", aria_label = ".form-select-lg example", id = "provinceLocationDropdown" })
                 </div>
             </div>
         </div>
@@ -92,11 +92,13 @@
                 <row class="d-flex align-self-end">
                     @Html.DropDownListFor(p => p.ConsultMotiveMessage, Enumerable.Range(0,Model.ConsultMotiveList.Count).Select(num =>
                 new SelectListItem(){
-                Value = Model.ConsultMotiveList[num].Id.ToString(),
+                Value = Model.ConsultMotiveList[num].ConsultMotiveX,
                 Text = Model.ConsultMotiveList[num].ConsultMotiveX
                 }),
+                "--- Seleccione una opción ---",
                 new {@class = "form-select form-select-lg mb-3", aria_label = ".form-select-lg example"})
                 </row>
+                @Html.ValidationMessageFor(p => p.ConsultMotiveMessage,"", new {@style="color:red; text-align:center"})
             </div>
         </div>
         <div class="row border-bottom my-2">
@@ -111,23 +113,14 @@
                 </row>
                 <row class="d-flex align-self-end">
                     @Html.TextBoxFor(p => p.UserEmail,
-                new {@class = "form-control"})
+                new {@class = "form-control"})               
                 </row>
+                @Html.ValidationMessageFor(m => m.UserEmail, "", new {@style="color:red"})
             </div>
         </div>
 
         <div class="container">
-            <div class="row m-2 d-flex">
-
-                @for (int i = 0; i < Model.LocationsList.Count; i++)
-                {
-                    
-                    <div class="col-4 my-2 d-flex flex-column align-items-center">
-                        <i data-provincia="@Model.LocationsList[i].ProvinceLocationId" id="@i" class="clinic-icon bi bi-flower1 d-flex d-none"></i>
-                        <p data-provincia="@Model.LocationsList[i].ProvinceLocationId" class="clinic-text d-none">@Model.LocationsList[i].Title</p>
-                    </div>
-
-                }
+            <div id="clinicContainer" class="row m-2 d-flex">
 
 
             </div>
@@ -149,50 +142,68 @@
 
 <script>
 
-    // Function to filter clinics based on selected Provincia
+    // Function to filter clinics based on selected ProvinceLocation
         document.getElementById('provinceLocationDropdown').addEventListener('change', function () {
             var selectedProvinceLocation = parseInt(this.value);
 
-            console.log(selectedProvinceLocation)
+            var submitButton = document.getElementById('submitter');
+            submitButton.classList.add('d-none');
 
-            document.querySelectorAll('.clinic-icon, .clinic-text').forEach(function (element) {
-                element.classList.add('d-none'); 
-                console.log(element);
+            var allLocations = @Html.Raw(Json.Serialize(Model.LocationsList));
+
+            var filteredLocations = allLocations.filter(function (location) {
+                return location.provinceLocationId == selectedProvinceLocation;
+            })
+
+            var container = document.getElementById('clinicContainer');
+            container.innerHTML = '';
+
+            var htmlString = '';
+
+            //Creates an HTML element for each location
+            filteredLocations.forEach(function (location) {
+                htmlString += '<div class="col-4 my-2 d-flex flex-column align-items-center">';
+                htmlString += '<i id="' + location.id + '" class="clinic-icon bi bi-flower1 d-flex"></i>';
+                htmlString += '<p class="clinic-text">' + location.title + '</p>';
+                htmlString += '</div>';
             });
 
-            document.querySelectorAll('.clinic-icon[data-provincia="' + selectedProvinceLocation + '"]').forEach(function (icon) {
-                icon.classList.remove('d-none'); 
+            container.innerHTML = htmlString;
+
+            //Gets all of the clinic-icons and adds a nonselected class
+            document.querySelectorAll('.clinic-icon').forEach(function (icon) {
+
+                icon.classList.add('nonselected-clinic');
+
+                    //If one of the icons shown is clicked
+                    icon.addEventListener('click', function () {
+                        //Removes every selected-clinic class from every button and adds the non-selected to every class
+                        document.querySelectorAll('.clinic-icon').forEach(function (otherIcon) {
+                            otherIcon.classList.remove('selected-clinic');
+                            otherIcon.classList.add('nonselected-clinic');
+                        });
+
+                        //Removes the nonselected class to the clicked button and adds the selected-clinic class
+                        this.classList.remove('nonselected-clinic');
+                        this.classList.add('selected-clinic');
+
+                        //Updates the value of the hidden for
+                        var selectedLocation = document.getElementById('SelectedLocationIndex');
+                        selectedLocation.value = this.id;
+
+
+                        var submitButton = document.getElementById('submitter');
+                        submitButton.classList.remove('d-none');
+                    });
             });
 
-            document.querySelectorAll('.clinic-text[data-provincia="' + selectedProvinceLocation + '"]').forEach(function (textElement) {
-                textElement.classList.remove('d-none'); 
-            });
         });
 
-    document.querySelectorAll('.clinic-icon').forEach(function (icon) {
-        icon.classList.add('nonselected-clinic'); 
-
-        icon.addEventListener('click', function () {
-            document.querySelectorAll('.clinic-icon').forEach(function (otherIcon) {
-                otherIcon.classList.remove('selected-clinic');
-                otherIcon.classList.add('nonselected-clinic'); 
-            });
-
-            this.classList.remove('nonselected-clinic');
-            this.classList.add('selected-clinic'); 
-            updateHiddenField();
-        });
-    });
-
-    // Function to update hidden field based on selected clinic
-    function updateHiddenField() {
-        var selectedProvincia = parseInt(document.querySelector('.selected-clinic').id) + 1;
-        document.getElementById('SelectedLocationIndex').value = selectedProvincia || '';
-
-        document.getElementById('submitter').classList.remove('d-none');
-    }
 
     document.getElementById('countryDropdown').addEventListener('change', function(country){
+
+        var submitButton = document.getElementById('submitter');
+        submitButton.classList.add('d-none');
 
         var selectedCountry = parseInt(this.value);
 
@@ -213,6 +224,8 @@
 
     document.getElementById('provinceDropdown').addEventListener('change',function(){
 
+        var submitButton = document.getElementById('submitter');
+        submitButton.classList.add('d-none');
 
         var selectedProvince = parseInt(this.value);
 
@@ -230,6 +243,8 @@
 
     })
 
+
+
     function updateDropdown(dropdownId, data){
         
         var dropdown = document.getElementById(dropdownId);
@@ -239,8 +254,6 @@
         defaultOption.value = 0;
         defaultOption.text = '--- Seleccione una opción ---';
         dropdown.add(defaultOption);
-
-        console.log(defaultOption);
 
         data.forEach(function (element){
             var option = document.createElement('option');

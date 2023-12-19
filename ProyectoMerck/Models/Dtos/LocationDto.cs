@@ -13,8 +13,7 @@ namespace ProyectoMerck.Models.Dtos
 
         public string Subtitle { get; set; }
 
-
-        public int LocationId { get; set; }
+        public int Id { get; set; }
 
 
         public int ProvinceLocationId { get; set; }

@@ -91,16 +91,6 @@
     </div>
 }
 
-@if (TempData["FertError"] != null)
-{
-    <script>
-        Swal.fire({
-            icon: "error",
-            title: "Ups...",
-            text: "@TempData["FertError"]",
-        });
 
-    </script>
-}
 
 <script src="~/js/index.js"></script>

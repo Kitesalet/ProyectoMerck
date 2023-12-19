@@ -5,13 +5,13 @@ namespace ProyectoMerck.Models.Interfaces
     public interface IFertilityService
     {
 
-        Task<bool> ConsultMailAsync(FertilityVM model);
+        Task<bool> ConsultMailAsync(FertilitySubmitVM model);
 
-        Task<FertilityVM> ClinicLocations(FertilityVM model);
+        Task<FertilitySubmitVM> ClinicLocations(FertilitySubmitVM model);
 
         FertilityVM CalculateFertility(FertilityVM model);
 
-        Task<FertilityVM> GetLists(FertilityVM model);
+        Task<FertilitySubmitVM> GetLists(FertilitySubmitVM model);
 
 
     }
