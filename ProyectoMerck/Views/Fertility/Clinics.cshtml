@@ -185,10 +185,38 @@
 
         @Model.SelectedCountry = parseInt(this.value);
 
-        var filteredProvincias = Html.Raw(Json.Encode(@Model.ProvinceList.Where(p => p.CountryId == Model.SelectedCountry));
+        var filteredProvincias = Html.Raw(Json.Encode(@Model.ProvinceList.Where(p => p.CountryId == Model.SelectedCountry).ToList());
+
+        updateDropdown('provinceDropdown', filteredProvincias);
+
     })
 
+    document.getElementById('provinceDropdown').addEventListener('change', function(province)){
 
+        @Model.SelectedProvince = parseInt(this.value);
+
+        var filteredLocations = @Model.ProvinceLocationList.Where(l => l.ProvinceId == Model.SelectedProvince).ToList();
+
+        updateDropdown('provinceLocationDropdown', filteredLocations);
+
+    }
+
+    function updateDropdown(dropdownId, data){
+        
+        var dropdown = document.getElementById(dropdownId);
+        dropdown.innerHTML = '';
+
+        data.forEach(function (element){
+            var option = document.createElement('option');
+
+            option.value = element.Id;
+            option.text = element.Name;
+
+            dropdown.add(option);
+
+        })
+
+    }
 
 </script>
 
