@@ -25,6 +25,9 @@ namespace ProyectoMerck.Models
 
         public List<ProvinceLocationDto> ProvinceLocationList = new List<ProvinceLocationDto>();
 
+        public List<ConsultMotiveDto> ConsultMotiveList { get; set; } = new List<ConsultMotiveDto>();
+
+        public string? ConsultMotiveMessage { get; set; }
         public int SelectedCountry { get; set; }
 
         public int SelectedProvince { get; set; }
@@ -32,8 +35,6 @@ namespace ProyectoMerck.Models
         public int SelectedProvinceLocation { get; set; }   
 
         public string? Locations { get; set; } 
-        public string? ConsultMotive { get; set; }
-
         public int SelectedLocationIndex { get; set; }
 
         public string? UserEmail { get; set; }

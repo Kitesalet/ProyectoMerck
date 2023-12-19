@@ -14,6 +14,7 @@ namespace ProyectoMerck.DAL
 
         public ProvinceLocationRepository ProvinceLocationRepository { get; }
 
+        public ConsultMotiveRepository ConsultMotiveRepository { get; set; }
         public UnitOfWork(AppDbContext context)
         {
 
@@ -22,7 +23,8 @@ namespace ProyectoMerck.DAL
             LocationRepository = new LocationRepository(context);
             CountryRepository = new CountryRepository(context);
             ProvinceRepository = new ProvinceRepository(context);
-            ProvinceLocationRepository = new ProvinceLocationRepository(context);   
+            ProvinceLocationRepository = new ProvinceLocationRepository(context);
+            ConsultMotiveRepository = new ConsultMotiveRepository(context);
 
         }
 

@@ -34,6 +34,7 @@ namespace ProyectoMerck.Services
             model.CountryList = _mapper.Map<List<CountryDto>>(await _context.CountryRepository.GetAll());
             model.ProvinceList = _mapper.Map<List<ProvinceDto>>(await _context.ProvinceRepository.GetAll());
             model.ProvinceLocationList = _mapper.Map<List<ProvinceLocationDto>>(await _context.ProvinceLocationRepository.GetAll());
+            model.ConsultMotiveList = _mapper.Map<List<ConsultMotiveDto>>(await _context.ConsultMotiveRepository.GetAll());
 
             return model;
 
@@ -89,7 +90,7 @@ namespace ProyectoMerck.Services
                     $"              <br />" +
                     $"              <p style='text-align:center'>Email del usuario: {model.UserEmail}" +
                     $"              <br />" +
-                    $"              <p style='text-align:center'>Mensaje: {model.ConsultMotive}</p>" +
+                    $"              <p style='text-align:center'>Motivo de Consulta: {model.ConsultMotiveMessage}</p>" +
                     $"              <hr />";
 
                 var response = await _EmailService.SendEmailAsync(testMail, "xxx", mailBody);

@@ -23,6 +23,8 @@ namespace ProyectoMerck.DAL
 
         public DbSet<ProvinceLocation> ProvinceLocations { get; set; }  
 
+        public DbSet<ConsultMotive> ConsultMotives { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -127,6 +129,19 @@ namespace ProyectoMerck.DAL
           new Province { Id = 24, Name = "Tierra del Fuego", CountryId = 2 },
           new Province { Id = 25, Name = "Tucumán", CountryId = 2 }
       );
+
+            modelBuilder.Entity<ConsultMotive>().HasData(
+                new ConsultMotive() { Id = 1, ConsultMotiveX = "Deseo de ser madre" },
+                new ConsultMotive() { Id = 2, ConsultMotiveX = "Problemas de fertilidad" },
+                new ConsultMotive() { Id = 3, ConsultMotiveX = "Planificación familiar" },
+                new ConsultMotive() { Id = 4, ConsultMotiveX = "Tratamientos de reproducción asistida" },
+                new ConsultMotive() { Id = 5, ConsultMotiveX = "Superar dificultades en la concepción" },
+                new ConsultMotive() { Id = 6, ConsultMotiveX = "Consultas preconcepcionales" },
+                new ConsultMotive() { Id = 7, ConsultMotiveX = "Evaluación de la salud reproductiva" },
+                new ConsultMotive() { Id = 8, ConsultMotiveX = "Seguimiento durante el embarazo" },
+                new ConsultMotive() { Id = 9, ConsultMotiveX = "Asesoramiento en técnicas de reproducción" },
+                new ConsultMotive() { Id = 10, ConsultMotiveX = "Preservación de la fertilidad" }
+            );
 
             modelBuilder.Entity<Location>().HasData(
                 new Location()
