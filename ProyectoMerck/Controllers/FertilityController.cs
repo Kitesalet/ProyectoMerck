@@ -36,21 +36,21 @@ namespace ProyectoMerck.Controllers
 
             FertilityVM model = new FertilityVM();
 
-            return View(model);
+            return View("Index",model);
         }
 
         [HttpGet]
         public IActionResult Indicator(FertilityVM model)
         {
 
-            return View(model);
+            return View("Indicator",model);
         }
 
         [HttpGet]
         public IActionResult Information()
         {
 
-            return View();
+            return View("Information");
         }
 
         [HttpPost]
@@ -87,7 +87,7 @@ namespace ProyectoMerck.Controllers
         [HttpGet]
         public IActionResult ConsultFinish()
         {
-            return View();
+            return View("ConsultFinish");
         }
 
         [HttpPost]
@@ -156,7 +156,7 @@ namespace ProyectoMerck.Controllers
 
             model = await _service.GetLists(model);
 
-            return View(model);
+            return View("Clinics",model);
 
         }
 
