@@ -1,107 +1,86 @@
 ﻿@model ProyectoMerck.Models.FertilityVM
 
-<header style="background-color:#EC3B96; ">
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light mb-3">
-        <div class="container-fluid">
-            <a href="@Url.Action("Index", "Fertility", new {Locations = "Hola"})" class="btn">
-                <i style="color: white; font-size: 1.5em" class="bi bi-chevron-left"></i>
-            </a>
-            <button style="color: white; font-size: 2em" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <i class="bi bi-list" style="color:white"></i>
-            </button>
-            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-                        <a style="color:white" class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Login</a>
-                    </li>
-                </ul>
+@Html.Partial("_LoadingSpinner")
+
+<div>
+    <header style="background-color:#EC3B96; ">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light mb-3">
+            <div class="container-fluid">
+                <a href="@Url.Action("Index", "Fertility", new {Locations = "Hola"})" class="btn">
+                    <i style="color: white; font-size: 1.5em" class="bi bi-chevron-left"></i>
+                </a>
+                <button style="color: white; font-size: 2em" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="bi bi-list" style="color:white"></i>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a style="color:white" class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Login</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </nav>
-    <img class="merck-img" src="~/images/MerckHighFert.JPG" />
-</header>
+        </nav>
+        <img class="merck-img" src="~/images/MerckHighFert.JPG" />
+    </header>
 
-<div style="background-color:#EC3B96;">
-    <div class="row justify-content-center">
-            <div class="col-1">
-            </div>
-
-
-        <div class="col-7 offset-1 text-center align-self-center" style="color: white; font-size: 2em">@(Model.FertilityLevel != FertilityLevel.High ? "Indicador" : "")</div>
-        <div class="col-2">
-        </div>
+    <div style="background-color:#EC3B96;">
+        <div class="row justify-content-center">
+                <div class="col-1">
+                </div>
 
 
-            <div style="color:white; text-align:center;">
-                <br>
-                <h4 style="font-weight:bold">EDAD ACTUAL:</h4>
-                <h4>@Model.ActualAge AÑOS</h4>
-                <br />
-                <h4 style="font-weight:bold">1ERA MENSTRUACIÓN:</h4>
-                <h4>A LOS @Model.FirstAge AÑOS</h4>
+            <div class="col-7 offset-1 text-center align-self-center" style="color: white; font-size: 2em">@(Model.FertilityLevel != FertilityLevel.High ? "Indicador" : "")</div>
+            <div class="col-2">
             </div>
 
-        <div class="text-center d-flex justify-content-center">
-            <a class="btn col-4 p-1 my-5 border-light" style="color:white; border-radius: 50px; background-color:darkcyan;" href="@Url.Action("Information","Fertility")">Quiero saber mas!</a>
-        </div>
+
+                <div style="color:white; text-align:center;">
+                    <br>
+                    <h4 style="font-weight:bold">EDAD ACTUAL:</h4>
+                    <h4>@Model.ActualAge AÑOS</h4>
+                    <br />
+                    <h4 style="font-weight:bold">1ERA MENSTRUACIÓN:</h4>
+                    <h4>A LOS @Model.FirstAge AÑOS</h4>
+                </div>
+
+            <div class="text-center d-flex justify-content-center">
+                <a id="clinicButton" class="btn col-4 p-1 my-5 border-light" style="color:white; border-radius: 50px; background-color:darkcyan;" href="@Url.Action("Information","Fertility")">Quiero saber mas!</a>
+            </div>
 
 
-        <div style="background-color:white; border-top-left-radius: 1000px; border-top-right-radius: 1000px; height: 50px">
+            <div style="background-color:white; border-top-left-radius: 1000px; border-top-right-radius: 1000px; height: 50px">
+            </div>
+
         </div>
+
 
     </div>
 
 
+        <div class="container-fluid" id="mainContent" style="overflow:hidden">
+        <div id="curveChart"></div>
+        </div>
 </div>
 
-
-    <div class="container-fluid" style="overflow:hidden">
-    <div id="curveChart"></div>
-    </div>
+<div id="loadingSpinner" class="loading-spinner"></div>
 
 
-
+<script src="~/js/charts.js"></script>
+<script src="/js/site.js"></script>
 
 <script>
 
-    google.charts.setOnLoadCallback(drawChart);
+    showLoadingSpinner();
 
-    function drawChart() {
+    var ovuleCount = @Model.OvuleCount;
 
-        var array = [['Estado','Ovulos']]
+    google.charts.setOnLoadCallback(function(){
+        drawChart(ovuleCount);
 
-        for (var x = 450; x >= 0; x--) {
-            var label;
-            label = '';
-            array.push([label, x]);
-        }
-
-        var data = google.visualization.arrayToDataTable(array);
-
-        var options = {
-            title: 'Tasa de Fertilidad',
-            curveType: 'function',
-            legend: { position: 'bottom' },
-            crosshair:{
-                color: '#2EBDCD',
-                trigger:'selection'
-            },
-            width: '100%'
-        };
-
-        var chart = new google.visualization.LineChart(document.getElementById('curveChart'));
-
-        chart.draw(data,options);
-
-        var ovulosReales = -1 * (-450 + @Model.OvuleCount)
-
-        chart.setSelection([{
-            row:ovulosReales,
-            column:1
-        }])
-
-    }
+        hideLoadingSpinner();
+    });
 
 </script>
 

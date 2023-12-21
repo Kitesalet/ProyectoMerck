@@ -180,7 +180,6 @@ namespace MerckAppUnitTesting
             };
             controller.ModelState.AddModelError("error", "rror");
 
-
             // Act
             var result = await controller.CalculateFertility(model);
 

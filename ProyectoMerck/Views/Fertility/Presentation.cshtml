@@ -23,6 +23,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - ProyectoMerck</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
 
 </head>
 
@@ -34,12 +36,15 @@
 
             <br />
 
-            <a class="btn col-11 offset-1 p-1 my-5 border-light " style="color:white; border-radius: 50px; background-color:darkcyan" href="@Url.Action("Index","Fertility")">Comenzar</a>
+            <a id="clinicButton" class="btn col-11 offset-1 p-1 my-5 border-light " style="color:white; border-radius: 50px; background-color:darkcyan" href="@Url.Action("Index","Fertility")">Comenzar</a>
 
 
         </div>
     </main>
 
+    <div id="loadingSpinner" class="loading-spinner"></div>
+
+    <script src="/js/site.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 

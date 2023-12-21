@@ -1,6 +1,4 @@
-google.charts.setOnLoadCallback(drawChart);
-
-function drawChart() {
+function drawChart(ovuleCount) {
 
     var array = [['Estado', 'Ovulos']]
 
@@ -13,7 +11,7 @@ function drawChart() {
     var data = google.visualization.arrayToDataTable(array);
 
     var options = {
-        title: 'Indicador Ovular',
+        title: 'Tasa de Fertilidad',
         curveType: 'function',
         legend: { position: 'bottom' },
         crosshair: {
@@ -27,7 +25,7 @@ function drawChart() {
 
     chart.draw(data, options);
 
-    var ovulosReales = -1 * (-450 + @Model.OvuleCount)
+    var ovulosReales = -1 * (-450 + ovuleCount);
 
     chart.setSelection([{
         row: ovulosReales,
