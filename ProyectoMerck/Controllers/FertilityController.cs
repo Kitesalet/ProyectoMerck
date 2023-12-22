@@ -152,9 +152,7 @@ namespace ProyectoMerck.Controllers
         {
             FertilitySubmitVM model = new FertilitySubmitVM();
 
-            model = await _service.ClinicLocations(model);
-
-            model = await _service.GetLists(model);
+            model = await _service.GetListsFromCsv(model);
 
             return View("Clinics",model);
 

@@ -8,12 +8,17 @@ using ProyectoMerck.Models;
 using ProyectoMerck.Models.Dtos;
 using ProyectoMerck.Models.Entities;
 using ProyectoMerck.Models.Interfaces;
+using System.Runtime.CompilerServices;
 
 namespace ProyectoMerck.Services
 {
     public class FertilityService : IFertilityService
     {
         private const string FertilityUrl = "https://raw.githubusercontent.com/Kitesalet/FertLocations/main/FertLocations.csv";
+        private const string CountryUrl = "https://raw.githubusercontent.com/Kitesalet/FertLocations/main/Countries.csv";
+        private const string ProvinceUrl = "https://raw.githubusercontent.com/Kitesalet/FertLocations/main/Provinces.csv";
+        private const string ProvinceLocationUrl = "https://raw.githubusercontent.com/Kitesalet/FertLocations/main/ProvinceLocations.csv";
+        private const string ConsultMotiveUrl = "https://raw.githubusercontent.com/Kitesalet/FertLocations/main/ConsultMotives.csv";
 
         private readonly IUnitOfWork _context;
         private readonly IEmailService _EmailService;
@@ -35,9 +40,41 @@ namespace ProyectoMerck.Services
             model.ProvinceList = _mapper.Map<List<ProvinceDto>>(await _context.ProvinceRepository.GetAll());
             model.ProvinceLocationList = _mapper.Map<List<ProvinceLocationDto>>(await _context.ProvinceLocationRepository.GetAll());
             model.ConsultMotiveList = _mapper.Map<List<ConsultMotiveDto>>(await _context.ConsultMotiveRepository.GetAll());
+            var locationsDto = _mapper.Map<List<LocationDto>>(await _context.LocationRepository.GetAll());
+
+            model.LocationsList = locationsDto;
+            model.Locations = JsonConvert.SerializeObject(locationsDto, Formatting.Indented);
+
 
             return model;
 
+        }
+
+        public async Task<FertilitySubmitVM> GetListsFromCsv(FertilitySubmitVM model)
+        {
+
+            string countryInfo = await HttpClientHelper.StringFromUrl(CountryUrl);
+            string provinceInfo = await HttpClientHelper.StringFromUrl(ProvinceUrl);
+            string provinceLocationInfo = await HttpClientHelper.StringFromUrl(ProvinceLocationUrl);
+            string consultMotiveInfo = await HttpClientHelper.StringFromUrl(ConsultMotiveUrl);
+            string fertilityInfo = await HttpClientHelper.StringFromUrl(FertilityUrl);
+
+            var countryList = CsvMethodHelper<CountryDto>.ReadCsvLocationData(countryInfo);
+            var provinceList = CsvMethodHelper<ProvinceDto>.ReadCsvLocationData(provinceInfo);
+            var provinceLocationList = CsvMethodHelper<ProvinceLocationDto>.ReadCsvLocationData(provinceLocationInfo);
+            var consultMotiveList = CsvMethodHelper<ConsultMotiveDto>.ReadCsvLocationData(consultMotiveInfo);
+            var fertilityList = CsvMethodHelper<LocationDto>.ReadCsvLocationData(fertilityInfo);
+
+            model.CountryList = countryList;
+            model.ProvinceList = provinceList;
+            model.ProvinceLocationList = provinceLocationList;
+            model.ConsultMotiveList = consultMotiveList;
+            model.LocationsList = fertilityList;
+
+
+            model.Locations = JsonConvert.SerializeObject(model.LocationsList, Formatting.Indented);
+
+            return model;
         }
 
         public FertilityVM CalculateFertility(FertilityVM model)
@@ -54,19 +91,12 @@ namespace ProyectoMerck.Services
         public async Task<FertilitySubmitVM> ClinicLocations(FertilitySubmitVM model)
         {
 
-            #region This is the way you have to go to use a CVS file for location data
-            //string data = HttpClientHelper.StringFromUrl(FertilityUrl);
 
-            //List<LocationDto> locations = CsvMethodHelper.ReadCsvLocationData(data);
 
-            //var locationsDto = _mapper.Map<List<LocationDto>>(locations);
-            #endregion
-
-            #region This is the way you have to go to consume consume the data from a database
             var locations = await _context.LocationRepository.GetAll();
 
             var locationsDto = _mapper.Map<List<LocationDto>>(locations);
-            #endregion
+
 
 
             model.LocationsList = locationsDto;

@@ -79,19 +79,10 @@ body {
         animation: spin 1s linear infinite;
     }
 
-@media only screen and (max-width: 767px) {
-    .loading-spinner {
-        width: 80vw;
-        height: 50vh;
-        padding: 100px; 
-    }
-
-        .loading-spinner::after {
-            width: 30px; 
-            height: 30px;
-            border: 20px solid transparent;
-            border-top: 20px solid #EA3B95;
-        }
+.clinic-container{
+    height: 6rem;
+    border-radius: 10px;
+    background-color: #583B93;
 }
 
 @keyframes spin {

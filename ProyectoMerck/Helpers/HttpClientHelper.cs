@@ -3,14 +3,16 @@
     public static class HttpClientHelper
     {
 
-        public static string StringFromUrl(string url)
+        public static async Task<string> StringFromUrl(string url)
         {
 
             try
             {
                 using (var httpClient = new HttpClient())
                 {
-                    return httpClient.GetStringAsync(url).Result;
+                    var result = await httpClient.GetStringAsync(url);
+
+                    return result;
                 }
             }
             catch(Exception ex)

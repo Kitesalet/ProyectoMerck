@@ -14,6 +14,7 @@ namespace ProyectoMerck.DAL
         }
 
 
+
         //Tables
         public DbSet<Location> Locations { get; set; }
 

@@ -16,7 +16,12 @@ namespace ProyectoMerck.Models.Entities
         public int ProvinceId { get; set; }
 
         public Province Province { get; set; }
-        
+
+
 
     }
+
+
+
+
 }

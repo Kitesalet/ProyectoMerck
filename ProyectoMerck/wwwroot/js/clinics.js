@@ -1,7 +1,11 @@
     function countryHandler(provincias, value) {
 
     var submitButton = document.getElementById('submitter');
-    submitButton.classList.add('d-none');
+        submitButton.classList.add('d-none');
+
+    var container = document.getElementById('clinicContainer');
+
+    container.classList.add('clinic-container');
 
     var selectedCountry = parseInt(value);
 
@@ -17,7 +21,14 @@
                 title: "Ups...",
                 text: "No hay clinicas disponibles en el pais seleccionado! Por favor, elija otro pais",
             });
+
+            container.innerHTML = '<h2 class="text-center text-light align-self-center">Por favor, seleccione otro Pais</h2>'
+
         }
+        else {
+            container.innerHTML = '<h2 class="text-center text-light align-self-center">Por favor, seleccione una Provincia</h2>'
+        }
+
 
     document.querySelectorAll('.clinic-icon, .clinic-text').forEach(function (element) {
         element.classList.add('d-none');
@@ -26,13 +37,17 @@
     updateDropdown('provinceDropdown', filteredProvincias);
     updateDropdown('provinceLocationDropdown', []);
 
-}
+    }
 
 function provinceHandler(provinceLocations, value) {
 
     var button = document.getElementById('submitter');
     button.classList.add('d-none');
 
+    var container = document.getElementById('clinicContainer');
+
+    var container = document.getElementById('clinicContainer');
+    container.classList.add('clinic-container');
 
     var valueNumber = parseInt(value);
 
@@ -46,6 +61,15 @@ function provinceHandler(provinceLocations, value) {
             title: "Ups...",
             text: "No hay clinicas disponibles en la provincia solicitada! Por favor, elija otra provincia",
         });
+
+        container.innerHTML = '<h2 class="text-center text-light align-self-center">Por favor, seleccione una Provincia</h2>'
+
+    }
+    else {
+
+        container.innerHTML = '<h2 class="text-center text-light align-self-center">Por favor, seleccione una localidad</h2>'
+
+
     }
 
     updateDropdown('provinceLocationDropdown', filteredProvinceLocations);
@@ -81,6 +105,10 @@ function provinceLocationDropdownHandler(clinicLocations, value) {
     var submitButton = document.getElementById('submitter');
     submitButton.classList.add('d-none');
 
+
+    var container = document.getElementById('clinicContainer');
+
+
     var valueInt = parseInt(value);
 
     var filteredClinics = clinicLocations.filter(function (clinic) {
@@ -93,55 +121,62 @@ function provinceLocationDropdownHandler(clinicLocations, value) {
             title: "Ups...",
             text: "No hay clinicas disponibles en la localidad solicitada! Por favor, elija otra localidad",
         });
+
+        container.innerHTML = '<h2 class="text-center text-light align-self-center">Por favor, seleccione otra localidad</h2>'
+
     }
     else {
+
         Swal.fire({
             icon: "info",
             title: "Clinicas disponibles",
             text: "Por favor, seleccione una clinica a continuacion!",
         });
-    }
 
-    var container = document.getElementById('clinicContainer');
+        container.classList.remove('clinic-container');
 
-    container.innerHTML = '';
+        container.innerHTML = '';
 
 
-    var htmlString = '';
+        var htmlString = '';
 
-    //Creates an HTML element for each location
-    filteredClinics.forEach((location) => {
-        htmlString += '<div class="col-4 my-2 d-flex flex-column align-items-center">';
-        htmlString += '<i id="' + location.id + '" class="clinic-icon bi bi-flower1 d-flex"></i>';
-        htmlString += '<p class="clinic-text">' + location.title + '</p>';
-        htmlString += '</div>';
-    });
-
-    container.innerHTML = htmlString;
-
-    document.querySelectorAll('.clinic-icon').forEach(function (icon) {
-
-        icon.classList.add('nonselected-clinic')
-
-        icon.addEventListener('click', function() {
-
-            document.querySelectorAll('.clinic-icon').forEach(function (icon) {
-                icon.classList.remove('selected-clinic');
-                icon.classList.add('nonselected-clinic');
-            })
-
-            this.classList.remove('nonselected-clinic');
-            this.classList.add('selected-clinic');
-
-            var hiddenForIndex = document.getElementById('SelectedLocationIndex');
-            hiddenForIndex.value = this.id;
-
-            var submitButton = document.getElementById('submitter');
-            submitButton.classList.remove('d-none');
-
+        //Creates an HTML element for each location
+        filteredClinics.forEach((location) => {
+            htmlString += '<div class="col-4 my-2 d-flex flex-column align-items-center">';
+            htmlString += '<i id="' + location.id + '" class="clinic-icon bi bi-flower1 d-flex"></i>';
+            htmlString += '<p class="clinic-text">' + location.title + '</p>';
+            htmlString += '</div>';
         });
 
+        container.innerHTML = htmlString;
 
-    })
+        document.querySelectorAll('.clinic-icon').forEach(function (icon) {
+
+            icon.classList.add('nonselected-clinic')
+
+            icon.addEventListener('click', function () {
+
+                document.querySelectorAll('.clinic-icon').forEach(function (icon) {
+                    icon.classList.remove('selected-clinic');
+                    icon.classList.add('nonselected-clinic');
+                })
+
+                this.classList.remove('nonselected-clinic');
+                this.classList.add('selected-clinic');
+
+                var hiddenForIndex = document.getElementById('SelectedLocationIndex');
+                hiddenForIndex.value = this.id;
+
+                var submitButton = document.getElementById('submitter');
+                submitButton.classList.remove('d-none');
+
+            });
+
+
+        })
+    }
+
+
+    
 
 }

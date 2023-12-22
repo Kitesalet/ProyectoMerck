@@ -13,6 +13,9 @@ namespace ProyectoMerck.Models.Interfaces
 
         Task<FertilitySubmitVM> GetLists(FertilitySubmitVM model);
 
+        Task<FertilitySubmitVM> GetListsFromCsv(FertilitySubmitVM model);
+
+
 
     }
 }
