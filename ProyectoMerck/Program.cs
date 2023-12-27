@@ -2,12 +2,11 @@ using Inyection_Layer;
 
 var builder = WebApplication.CreateBuilder(args);
 
-InyectedServices.ServiceInyector(builder.Services,builder.Configuration);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-
+InyectedServices.ServiceInyector(builder.Services, builder.Configuration);
 
 var app = builder.Build();
 
