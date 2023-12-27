@@ -1,15 +1,8 @@
-﻿using AutoMapper;
-using CsvHelper;
-using CsvHelper.Configuration;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
-using ProyectoMerck.DAL;
+﻿using Microsoft.AspNetCore.Mvc;
+using PagedList;
 using ProyectoMerck.Helpers;
 using ProyectoMerck.Models;
 using ProyectoMerck.Models.Interfaces;
-using System.Globalization;
 
 namespace ProyectoMerck.Controllers
 {
@@ -56,8 +49,6 @@ namespace ProyectoMerck.Controllers
         [HttpPost]
         public async Task<IActionResult> CalculateFertility(FertilityVM model)
         {
-
-                var x = HttpContext;
 
                 if (!ModelState.IsValid)
                 {
@@ -114,8 +105,6 @@ namespace ProyectoMerck.Controllers
 
                 TempData["FertError"] = "Ha ocurrido un error!";
 
-                model = await _service.ClinicLocations(model);
-
                 model = await _service.GetLists(model);
 
                 return View("Clinics", model);
@@ -132,14 +121,10 @@ namespace ProyectoMerck.Controllers
                     ModelState["UserEmail"].RawValue = "";
                     ModelState["ConsultMotiveMessage"].RawValue = "";
 
-                    FertilitySubmitVM model1 = new FertilitySubmitVM();
-
-                    model1 = await _service.ClinicLocations(model);
-
-                    model1 = await _service.GetLists(model);
+                    model = await _service.GetLists(model);
 
                     TempData["FertError"] = "Hubo un error, el email no pudo ser enviado!";
-                    return View("Clinics", model1);
+                    return View("Clinics", model);
                 }
 
                 return RedirectToAction("ConsultFinish");
@@ -153,6 +138,8 @@ namespace ProyectoMerck.Controllers
             FertilitySubmitVM model = new FertilitySubmitVM();
 
             model = await _service.GetListsFromCsv(model);
+
+
 
             return View("Clinics",model);
 

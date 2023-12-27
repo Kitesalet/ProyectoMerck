@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,6 +6,7 @@ using System.Threading.Tasks;
 using SendGrid.Helpers.Mail;
 using SendGrid;
 using ProyectoMerck.Models.Interfaces;
+using Microsoft.Extensions.Configuration;
 
 namespace ProyectoMerck.Helpers
 

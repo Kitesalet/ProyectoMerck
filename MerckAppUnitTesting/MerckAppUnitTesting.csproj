@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -18,7 +18,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BL\Busisness Layer.csproj" />
+    <ProjectReference Include="..\CL\Common Layer.csproj" />
+    <ProjectReference Include="..\DAL\Data Access Layer.csproj" />
     <ProjectReference Include="..\ProyectoMerck\ProyectoMerck.csproj" />
+    <ProjectReference Include="..\UL\Utility Layer.csproj" />
   </ItemGroup>
 
 </Project>

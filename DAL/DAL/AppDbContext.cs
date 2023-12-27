@@ -1,7 +1,5 @@
-﻿using EllipticCurve.Utils;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using ProyectoMerck.Models.Entities;
-using System.Runtime.ConstrainedExecution;
 
 namespace ProyectoMerck.DAL
 {

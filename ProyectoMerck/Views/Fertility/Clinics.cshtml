@@ -1,4 +1,6 @@
 ﻿@model ProyectoMerck.Models.FertilitySubmitVM
+@using PagedList.Mvc;
+@using PagedList;
 
 <header style="background-color:#2EBDCD">
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light mb-3">
@@ -120,16 +122,27 @@
         </div>
 
         <div class="container">
-            <div id="clinicContainer" class="row m-2 d-flex clinic-container">
+            <div id="clinicContainer" class="row mx-5 d-flex clinic-container">
 
                 <h2 class="text-center text-light align-self-center">Por favor, seleccione un País</h2>
 
             </div>
 
+            <div id="arrowContainer" class="container d-none">
+                <div class="row justify-content-around">
+
+                    <div id="arrowLeft" class="col">
+                        <i class="bi bi-arrow-left-short" style="font-size: 3rem; cursor:pointer"></i>
+                    </div>
+                    <div id="arrowRight" class="col text-end">
+                            <i class="bi bi-arrow-right-short" style="font-size: 3rem; cursor:pointer;"></i>
+                    </div>
+                </div>
+            </div>
+
             <div id="submitter" class="text-center d-flex justify-content-center d-none">
                 <button id="clinicButton" class="btn form-control p-1 my-5 border-light" style="color:white; border-radius: 50px; background-color:darkcyan;">Enviar</button>
             </div>
-
 
         </div>
 
@@ -150,7 +163,6 @@
     var provinceList = @Html.Raw(Json.Serialize(Model.ProvinceList));
     var locationList = @Html.Raw(Json.Serialize(Model.ProvinceLocationList));
     var clinicLocationList = @Html.Raw(Json.Serialize(Model.LocationsList));
-
 
     document.getElementById('countryDropdown').addEventListener('change', function(){
         countryHandler(provinceList, this.value);

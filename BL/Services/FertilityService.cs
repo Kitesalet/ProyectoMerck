@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
-using Google.Apis.Drive.v3.Data;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using ProyectoMerck.DAL;
 using ProyectoMerck.Helpers;
@@ -88,23 +87,6 @@ namespace ProyectoMerck.Services
             return model;
         }
 
-        public async Task<FertilitySubmitVM> ClinicLocations(FertilitySubmitVM model)
-        {
-
-
-
-            var locations = await _context.LocationRepository.GetAll();
-
-            var locationsDto = _mapper.Map<List<LocationDto>>(locations);
-
-
-
-            model.LocationsList = locationsDto;
-            model.Locations = JsonConvert.SerializeObject(locationsDto, Formatting.Indented);
-
-            return model;
-
-        }
 
         public async Task<bool> ConsultMailAsync(FertilitySubmitVM model)
         {

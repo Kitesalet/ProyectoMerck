@@ -7,8 +7,6 @@ namespace ProyectoMerck.Models.Interfaces
 
         Task<bool> ConsultMailAsync(FertilitySubmitVM model);
 
-        Task<FertilitySubmitVM> ClinicLocations(FertilitySubmitVM model);
-
         FertilityVM CalculateFertility(FertilityVM model);
 
         Task<FertilitySubmitVM> GetLists(FertilitySubmitVM model);

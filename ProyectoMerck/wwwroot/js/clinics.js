@@ -3,6 +3,9 @@
     var submitButton = document.getElementById('submitter');
         submitButton.classList.add('d-none');
 
+    var arrowContainer = document.getElementById('arrowContainer');
+    arrowContainer.classList.add('d-none');
+
     var container = document.getElementById('clinicContainer');
 
     container.classList.add('clinic-container');
@@ -43,6 +46,9 @@ function provinceHandler(provinceLocations, value) {
 
     var button = document.getElementById('submitter');
     button.classList.add('d-none');
+
+    var arrowContainer = document.getElementById('arrowContainer');
+    arrowContainer.classList.add('d-none');
 
     var container = document.getElementById('clinicContainer');
 
@@ -105,6 +111,9 @@ function provinceLocationDropdownHandler(clinicLocations, value) {
     var submitButton = document.getElementById('submitter');
     submitButton.classList.add('d-none');
 
+    var arrowContainer = document.getElementById('arrowContainer');
+    arrowContainer.classList.remove('d-none');
+
 
     var container = document.getElementById('clinicContainer');
 
@@ -133,50 +142,109 @@ function provinceLocationDropdownHandler(clinicLocations, value) {
             text: "Por favor, seleccione una clinica a continuacion!",
         });
 
+        var rightArrow = document.getElementById('arrowRight');
+        var leftArrow = document.getElementById('arrowLeft');
+
+        var currentPage = 1;
+        var itemsPerPage = 1;
+        var totalItems = filteredClinics.length;
+        var maxPage = Math.ceil(totalItems / itemsPerPage);
+
         container.classList.remove('clinic-container');
 
-        container.innerHTML = '';
+        function renderClinics(startIndex, endIndex) {
+            var htmlString = '';
+            for (var i = startIndex; i < endIndex; i++) {
+                var location = filteredClinics[i];
+                htmlString += '<div class="col-4 my-2 d-flex flex-column align-items-center">';
+                htmlString += '<i id="' + location.id + '" class="clinic-icon bi bi-flower1 d-flex"></i>';
+                htmlString += '<p class="clinic-text">' + location.title + '</p>';
+                htmlString += '</div>';
+            }
+            container.innerHTML = htmlString;
+        }
 
+        //Renders everything for a first time
+        paginate(currentPage);
 
-        var htmlString = '';
+        function updatePagination() {
 
-        //Creates an HTML element for each location
-        filteredClinics.forEach((location) => {
-            htmlString += '<div class="col-4 my-2 d-flex flex-column align-items-center">';
-            htmlString += '<i id="' + location.id + '" class="clinic-icon bi bi-flower1 d-flex"></i>';
-            htmlString += '<p class="clinic-text">' + location.title + '</p>';
-            htmlString += '</div>';
-        });
+            var submitButton = document.getElementById('submitter');
+            submitButton.classList.add('d-none');
+            document.querySelectorAll('.clinic-icon').forEach(function (icon) {
 
-        container.innerHTML = htmlString;
+                icon.classList.add('nonselected-clinic')
 
-        document.querySelectorAll('.clinic-icon').forEach(function (icon) {
+                icon.addEventListener('click', function () {
 
-            icon.classList.add('nonselected-clinic')
+                    document.querySelectorAll('.clinic-icon').forEach(function (icon) {
+                        icon.classList.remove('selected-clinic');
+                        icon.classList.add('nonselected-clinic');
+                    })
 
-            icon.addEventListener('click', function () {
+                    this.classList.remove('nonselected-clinic');
+                    this.classList.add('selected-clinic');
 
-                document.querySelectorAll('.clinic-icon').forEach(function (icon) {
-                    icon.classList.remove('selected-clinic');
-                    icon.classList.add('nonselected-clinic');
-                })
+                    var hiddenForIndex = document.getElementById('SelectedLocationIndex');
+                    hiddenForIndex.value = this.id;
 
-                this.classList.remove('nonselected-clinic');
-                this.classList.add('selected-clinic');
+                    var submitButton = document.getElementById('submitter');
+                    submitButton.classList.remove('d-none');
 
-                var hiddenForIndex = document.getElementById('SelectedLocationIndex');
-                hiddenForIndex.value = this.id;
+                });
 
-                var submitButton = document.getElementById('submitter');
-                submitButton.classList.remove('d-none');
 
             });
 
+        }
 
+        function paginate(page) {
+            var startIndex = (page - 1) * itemsPerPage;
+            var endIndex = startIndex + itemsPerPage;
+
+            renderClinics(startIndex, endIndex);
+            updatePagination();
+        }
+
+        rightArrow.addEventListener('click', function () {
+            if (currentPage < Math.ceil(maxPage)) {
+                currentPage++;
+
+                console.log(currentPage);
+
+                paginate(currentPage);
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Ups...",
+                    text: "Usted se encuentra en la ultima pagina!",
+                });
+
+                console.log("Arrombado");
+            }
         })
+
+        leftArrow.addEventListener('click', function () {
+            if (currentPage > 1) {
+                currentPage--;
+
+                paginate(currentPage);
+            } else {
+                Swal.fire({
+                    icon: "error",
+                    title: "Ups...",
+                    text: "Usted se encuentra en la primera pagina",
+                });
+            }
+        })
+
+        
+       
     }
 
 
     
 
 }
+
+

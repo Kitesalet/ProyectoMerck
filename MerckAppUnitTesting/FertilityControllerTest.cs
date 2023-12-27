@@ -335,7 +335,6 @@ namespace MerckAppUnitTesting
 
             var mockService = new Mock<IFertilityService>();
 
-            mockService.Setup(method => method.ClinicLocations(model)).ReturnsAsync(model);
             mockService.Setup(method => method.GetLists(model)).ReturnsAsync(model);
 
 
@@ -386,7 +385,6 @@ namespace MerckAppUnitTesting
 
             var mockService = new Mock<IFertilityService>();
 
-            mockService.Setup(method => method.ClinicLocations(model)).ReturnsAsync(model);
             mockService.Setup(method => method.GetLists(model)).ReturnsAsync(model);
             mockService.Setup(method => method.ConsultMailAsync(model)).ReturnsAsync(false);
 
@@ -436,7 +434,6 @@ namespace MerckAppUnitTesting
 
             var mockService = new Mock<IFertilityService>();
 
-            mockService.Setup(method => method.ClinicLocations(model)).ReturnsAsync(model);
             mockService.Setup(method => method.GetLists(model)).ReturnsAsync(model);
             mockService.Setup(method => method.ConsultMailAsync(model)).ReturnsAsync(true);
 
@@ -473,7 +470,6 @@ namespace MerckAppUnitTesting
 
             var mockService = new Mock<IFertilityService>();
 
-            mockService.Setup(method => method.ClinicLocations(model)).ReturnsAsync(model);
             mockService.Setup(method => method.GetLists(model)).ReturnsAsync(model);
 
             var controller = new FertilityController(mockService.Object);

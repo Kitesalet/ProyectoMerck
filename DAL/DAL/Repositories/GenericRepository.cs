@@ -18,7 +18,7 @@ namespace ProyectoMerck.DAL.Repositories
         public async Task<IEnumerable<T>> GetAll()
         {
 
-            var entities = await _dbSet.ToListAsync();
+            List<T> entities = await _dbSet.ToListAsync();
 
             return entities;
 

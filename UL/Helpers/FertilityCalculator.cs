@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Diagnostics.HealthChecks;
-using ProyectoMerck.Models;
-using System.Reflection;
+﻿using ProyectoMerck.Models;
 
 namespace ProyectoMerck.Helpers
 {
