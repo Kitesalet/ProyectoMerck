@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using ProyectoMerck.Models.Entities;
 
 namespace ProyectoMerck.DAL
@@ -10,8 +11,6 @@ namespace ProyectoMerck.DAL
         {
             
         }
-
-
 
         //Tables
         public DbSet<Location> Locations { get; set; }

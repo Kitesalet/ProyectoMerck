@@ -1,6 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Data_Access_Layer.DAL.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using ProyectoMerck.DAL;
 using ProyectoMerck.DAL.Repositories;
 using ProyectoMerck.Helpers;

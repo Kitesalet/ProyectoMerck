@@ -8,13 +8,6 @@ namespace ProyectoMerck.Models.Interfaces
 
         LocationRepository LocationRepository { get; }
 
-        CountryRepository CountryRepository { get; }
-
-        ProvinceRepository ProvinceRepository { get; }
-
-        ProvinceLocationRepository ProvinceLocationRepository { get; }
-
-        ConsultMotiveRepository ConsultMotiveRepository { get; }
         Task<int> Complete();
 
         void Dispose();

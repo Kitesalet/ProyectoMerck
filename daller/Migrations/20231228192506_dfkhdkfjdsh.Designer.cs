@@ -8,11 +8,11 @@ using ProyectoMerck.DAL;
 
 #nullable disable
 
-namespace ProyectoMerck.Migrations
+namespace daller.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231219205025_djs")]
-    partial class djs
+    [Migration("20231228192506_dfkhdkfjdsh")]
+    partial class dfkhdkfjdsh
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
