@@ -11,9 +11,6 @@
             </button>
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-                        <a style="color:white" class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Login</a>
-                    </li>
                 </ul>
             </div>
         </div>
@@ -22,7 +19,7 @@
 </header>
 
 <div style="background-color:#2EBDCD;">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center mx-0">
         <div class="col-1"><i style="color: white; font-size: 2em; opacity:0.8" class="bi bi-chevron-left"></i></div>
         <div class="col-7 offset-1 text-center align-self-center" style="color: white; font-size: 2em">Formulario</div>
         <div class="col-2">
@@ -68,7 +65,20 @@
                     </div>
                 </row>
                 <row class="d-flex align-self-end">
-                    @Html.DropDownListFor(p => p.SelectedProvince, Enumerable.Empty<SelectListItem>(),"--- Seleccione una opción ---", new { @class = "form-select form-select-lg mb-3", aria_label = ".form-select-lg example", id = "provinceDropdown" })
+                    @if(Model.SubmitError == true)
+                    {
+                        @Html.DropDownListFor(p => p.SelectedProvince, Model.ProvinceList.Select(c =>
+                        new SelectListItem()
+                        {
+                        Value = c.Id.ToString(),
+                        Text = c.Name
+                        }),"--- Seleccione una opción ---",
+                        new { @class = "form-select form-select-lg mb-3", aria_label = ".form-select-lg example", id = "provinceDropdown" })
+                    }
+                    else
+                    {
+                        @Html.DropDownListFor(p => p.SelectedProvince, Enumerable.Empty<SelectListItem>(),"--- Seleccione una opción ---", new { @class = "form-select form-select-lg mb-3", aria_label = ".form-select-lg example", id = "provinceDropdown" })
+                    }
                 </row>
                 <row>
                     <div class="col-6 align-self-bottom" style="color:#583B93">
@@ -76,7 +86,23 @@
                     </div>
                 </row>
                 <row class="d-flex align-self-end">
-                    @Html.DropDownListFor(p => p.SelectedProvinceLocation, Enumerable.Empty<SelectListItem>(),"--- Seleccione una opción ---", new { @class = "form-select form-select-lg mb-3", aria_label = ".form-select-lg example", id = "provinceLocationDropdown" })
+                    @if(Model.SubmitError == true)
+                    {
+                        @Html.DropDownListFor(p => p.SelectedProvinceLocation, Model.ProvinceLocationList.Select(c =>
+                            new SelectListItem(){
+                                Text = c.Name.ToString(),
+                                Value = c.Id.ToString()
+                            }
+                        )
+                        ,"--- Seleccione una opción ---",
+                        new { @class = "form-select form-select-lg mb-3", aria_label = ".form-select-lg example", id = "provinceLocationDropdown" })
+
+                    }
+                    else
+                    {
+                        @Html.DropDownListFor(p => p.SelectedProvinceLocation, Enumerable.Empty<SelectListItem>(),"--- Seleccione una opción ---", new { @class = "form-select form-select-lg mb-3", aria_label = ".form-select-lg example", id = "provinceLocationDropdown" })
+
+                    }
                 </row>
             </div>
         </div>
@@ -121,11 +147,20 @@
         </div>
 
         <div class="container">
-            <div id="clinicContainer" class="row mx-5 d-flex clinic-container">
+            <div id="clinicContainer" class="row mx-5 d-flex @(Model.SubmitError == true ? "clinic-container-error" : "clinic-container")">
 
-                <h2 class="text-center text-light align-self-center">Por favor, seleccione un País</h2>
+                @if(Model.SubmitError == true)
+                {
+                    <h2 class="text-center text-light align-self-center">Por favor, ingrese sus datos de manera correcta</h2>
+                }
+                else
+                {
+                    <h2 class="text-center text-light align-self-center">Por favor, seleccione un País</h2>
+                }
 
             </div>
+
+
 
             <div id="arrowContainer" class="container d-none">
                 <div class="row justify-content-around">
@@ -162,19 +197,7 @@
     var provinceList = @Html.Raw(Json.Serialize(Model.ProvinceList));
     var locationList = @Html.Raw(Json.Serialize(Model.ProvinceLocationList));
     var clinicLocationList = @Html.Raw(Json.Serialize(Model.LocationsList));
-
-    document.getElementById('countryDropdown').addEventListener('change', function(){
-        countryHandler(provinceList, this.value);
-    });
-
-    document.getElementById('provinceDropdown').addEventListener('change', function () {
-        provinceHandler(locationList, this.value);
-    })
-
-    document.getElementById('provinceLocationDropdown').addEventListener('change', function(){
-        provinceLocationDropdownHandler(clinicLocationList, this.value);
-    })
-
+    var errorHappened = '@Model.SubmitError'.toLowerCase() === 'true';
 
 </script>
 

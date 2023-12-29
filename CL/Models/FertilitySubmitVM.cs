@@ -31,6 +31,7 @@ namespace ProyectoMerck.Models
             [Required(ErrorMessage = "Tiene que ingresar un email válido!")]
             public string UserEmail { get; set; }
 
+            public bool SubmitError { get; set; }
         
 
     }

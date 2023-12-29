@@ -85,6 +85,12 @@ body {
     background-color: #583B93;
 }
 
+.clinic-container-error {
+    height: 6rem;
+    border-radius: 10px;
+    background-color: red;
+}
+
 @keyframes spin {
     0% {
         transform: rotate(0deg);

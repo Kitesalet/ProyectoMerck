@@ -65,7 +65,6 @@ namespace ProyectoMerck.Controllers
                 {
 
                     TempData["FertError"] = "Hubo un error inesperado!";
-
                     _logger.LogError("There has been an unexpected error");
 
                     return View("Index");
@@ -79,7 +78,6 @@ namespace ProyectoMerck.Controllers
                     if (model.FirstAge > model.ActualAge)
                     {
                         TempData["FertError"] = "Las edades ingresadas son invalidas!";
-
                         _logger.LogError("Ages introduced were invalid");
 
 
@@ -100,7 +98,6 @@ namespace ProyectoMerck.Controllers
         {
 
             _logger.LogInformation("Access to ConsultFinish View");
-
             return View("ConsultFinish");
         }
 
@@ -108,6 +105,7 @@ namespace ProyectoMerck.Controllers
         public async Task<IActionResult> Consult(FertilitySubmitVM model)
         {
             bool validMail = false;
+            model.SubmitError = false;
 
             if (!String.IsNullOrEmpty(model.UserEmail))
             {
@@ -125,14 +123,13 @@ namespace ProyectoMerck.Controllers
             if (!ModelState.IsValid)
             {
 
-                ModelState["SelectedCountry"].RawValue = 0;
-                ModelState["UserEmail"].RawValue = "";
-                ModelState["ConsultMotiveMessage"].RawValue = "";
+                model.SubmitError = true;
 
                 TempData["FertError"] = "Ha ocurrido un error!";
 
                 model = await _service.GetLists(model);
 
+                _logger.LogError("There has been an error with the form's model state");
                 return View("Clinics", model);
 
             }
@@ -143,9 +140,7 @@ namespace ProyectoMerck.Controllers
                 if (mailSent == false)
                 {
 
-                    ModelState["SelectedCountry"].RawValue = 0;
-                    ModelState["UserEmail"].RawValue = "";
-                    ModelState["ConsultMotiveMessage"].RawValue = "";
+                    model.SubmitError = true;
 
                     model = await _service.GetLists(model);
 
@@ -156,7 +151,7 @@ namespace ProyectoMerck.Controllers
                     return View("Clinics", model);
                 }
 
-
+                _logger.LogInformation("Redirecting to ConsultFinish method, the form submit was successful");
                 return RedirectToAction("ConsultFinish");
             }
         

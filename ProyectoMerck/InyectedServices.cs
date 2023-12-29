@@ -16,7 +16,7 @@ namespace Inyection_Layer
         public static void ServiceInyector(this IServiceCollection services, IConfiguration configuration)
         {
 
-            services.AddDbContext<AppDbContext>(c => c.UseSqlServer(configuration.GetConnectionString("Hosted")));
+            var x = services.AddDbContext<AppDbContext>(c => c.UseSqlServer(configuration.GetConnectionString("Hosted")));          
 
             services.AddScoped<IGenericRepository<Location>, GenericRepository<Location>>();
 

@@ -9,7 +9,7 @@ namespace ProyectoMerck.DAL
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
-            
+
         }
 
         //Tables
@@ -19,7 +19,7 @@ namespace ProyectoMerck.DAL
 
         public DbSet<Province> Provinces { get; set; }
 
-        public DbSet<ProvinceLocation> ProvinceLocations { get; set; }  
+        public DbSet<ProvinceLocation> ProvinceLocations { get; set; }
 
         public DbSet<ConsultMotive> ConsultMotives { get; set; }
 

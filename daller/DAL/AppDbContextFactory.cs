@@ -24,10 +24,9 @@ namespace DataAccess_layer.DAL
                 .AddJsonFile("appsettings.json")
                 .Build();
 
-            Console.WriteLine(path);
 
             var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
-            optionsBuilder.UseSqlServer(configuration.GetConnectionString("Hosted"));
+            optionsBuilder.UseSqlServer(configuration.GetConnectionString("Hostedd"));
 
             return new AppDbContext(optionsBuilder.Options);
         }
