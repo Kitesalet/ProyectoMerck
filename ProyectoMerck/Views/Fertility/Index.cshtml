@@ -1,12 +1,12 @@
 ﻿@model ProyectoMerck.Models.FertilityVM
 
-<header style="background-color:#2EBDCD">
+<header class="blue-color">
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light mb-3">
         <div class="container-fluid">
-            <a href="@Url.Action("Index", "Fertility")" class="btn"><i style="color: white; font-size: 1.5em" class="bi bi-chevron-left"></i></a>
-            <button style="color: white; font-size: 2em" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+            <a href="@Url.Action("Index", "Fertility")" class="btn"><i class="bi bi-chevron-left left-arrow"></i></a>
+            <button  class="navbar-toggler nav-button" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
-                <i class="bi bi-list" style="color:white"></i>
+                <i class="bi bi-list white"></i>
             </button>
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
@@ -14,34 +14,34 @@
             </div>
         </div>
     </nav>
-    <img style="display:block; margin-left:auto; margin-right:auto" src="~/images/MerckFertilidad.JPG" />
+    <img class="merck-img" src="~/images/MerckFertilidad.JPG" />
 </header>
 
 @using (Html.BeginForm("CalculateFertility", "Fertility", FormMethod.Post, new { id = "CalculateFertilityForm" }))
 {
-    <div style="background-color:#2EBDCD;">
+    <div class="blue-color">
         <div class="row justify-content-center mx-0">
-            <div class="col-1"><i style="color: white; font-size: 2em; opacity:0.8" class="bi bi-chevron-left"></i></div>
-            <div class="col-7 offset-1 text-center align-self-center" style="color: white; font-size: 2em">Formulario</div>
+            <div class="col-1"><i class="bi bi-chevron-left chevron-size"></i></div>
+            <div class="col-7 offset-1 text-center align-self-center nav-button">Formulario</div>
             <div class="col-2 text-end">
-                    <i style="color: white; font-size: 2em; opacity:0.8" class="bi bi-chevron-right"></i>
+                    <i class="bi bi-chevron-right chevron-size"></i>
                 </div>
 
-            <div style="background-color:white; border-top-left-radius: 1000px; border-top-right-radius: 1000px; height: 50px">
+            <div class="curved-top-border">
                 </div>
         </div>
     </div>
 
     <div class="container">
 
-    <div style="background-color:white; ">
+    <div class="white">
         <div style="padding-top: 4em" class="row justify-content-center">
             <div class="col-1 d-flex justify-content-center mx-5">
-                <i class="bi bi-person-standing-dress d-flex align-items-center" style="color:#403575; background-color:#E4E7F8; border-radius:3px; font-size:4em"></i>
+                <i class="bi bi-person-standing-dress d-flex align-items-center form-icon-violet"></i>
             </div>
             <div class="col-4">
                 <row>
-                    <p style="color:#403575; text-align:center">Edad actual</p>
+                    <p class="form-violet-text">Edad actual</p>
                 </row>
                 <row>
 
@@ -58,13 +58,13 @@
     </div>
 
 
-    <div style="padding-top: 2em; background-color:white" class="row d-flex justify-content-center">
+    <div class="row d-flex justify-content-center row-white-padding">
         <div class="col-1 d-flex justify-content-center mx-5">
-            <i class="bi bi-calendar-check d-flex align-items-center" style="color:#E26DA2; background-color:#E4E7F8; border-radius:3px; font-size:4em"></i>
+            <i class="bi bi-calendar-check d-flex align-items-center pink-icon"></i>
         </div>
         <div class="col-4">
             <row>
-                <p style="color:#E26DA2; text-align:center">Edad primera menstruacion</p>
+                <p class="pink-text-aligned">Edad primera menstruacion</p>
             </row>
             <row>
                 @Html.DropDownListFor(model => model.FirstAge,
@@ -84,7 +84,7 @@
 
 
     <div class="text-center d-flex justify-content-center">
-        <button id="clinicButton" class="btn col-7 p-1 my-5 border-light" style="color:white; border-radius: 50px; background-color:darkcyan;">Iniciar</button>
+        <button id="clinicButton" class="btn col-7 p-1 my-5 border-light submit-button">Iniciar</button>
     </div>
 }
 

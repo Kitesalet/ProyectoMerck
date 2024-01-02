@@ -1,12 +1,12 @@
 ﻿@model ProyectoMerck.Models.FertilityVM
 
-<header style="background-color:#2EBDCD">
+<header class="blue-color">
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light mb-3">
         <div class="container-fluid">
-            <a href="@Url.Action("Index", "Fertility")" class="btn"><i style="color: white; font-size: 1.5em" class="bi bi-chevron-left"></i></a>
-            <button style="color: white; font-size: 2em" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+            <a href="@Url.Action("Index", "Fertility")" class="btn"><i class="bi bi-chevron-left left-arrow"></i></a>
+            <button class="navbar-toggler nav-button" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
-                <i class="bi bi-list" style="color:white"></i>
+                <i class="bi bi-list white"></i>
             </button>
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
@@ -14,19 +14,19 @@
             </div>
         </div>
     </nav>
-    <img style="display:block; margin-left:auto; margin-right:auto" src="~/images/MerckFertilidad.JPG" />
+    <img class="merck-img" src="~/images/MerckFertilidad.JPG" />
 </header>
 
 
-<div style="background-color:#2EBDCD;">
+<div class="blue-color">
     <div class="row justify-content-center mx-0">
-        <div class="col-1"><i style="color: white; font-size: 2em; opacity:0.8" class="bi bi-chevron-left"></i></div>
-        <div class="col-7 offset-1 text-center align-self-center" style="color: white; font-size: 2em">Indicador</div>
+        <div class="col-1"><i class="bi bi-chevron-left chevron-size"></i></div>
+        <div class="col-7 offset-1 text-center align-self-center nav-button">Indicador</div>
         <div class="col-2">
-            <i style="color: white; font-size: 2em; opacity:0.8" class="bi bi-chevron-right"></i>
+            <i class="bi bi-chevron-right chevron-size"></i>
         </div>
 
-        <div style="background-color:white; border-top-left-radius: 1000px; border-top-right-radius: 1000px; height: 50px">
+        <div class="curved-top-border">
         </div>
     </div>
 </div>
@@ -58,7 +58,7 @@
 
 
     <div class="text-center d-flex justify-content-center">
-        <a id="clinicButton" class="btn col-7 p-1 my-5 border-light" style="color:white; border-radius: 50px; background-color:darkcyan;" href="@Url.Action("Clinics", "Fertility")">Contactar Centro</a>
+        <a id="clinicButton" class="btn col-7 p-1 my-5 border-light submit-button" href="@Url.Action("Clinics", "Fertility")">Contactar Centro</a>
     </div>
 
         <div id="loadingSpinner" class="loading-spinner"></div>

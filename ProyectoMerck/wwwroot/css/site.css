@@ -101,3 +101,118 @@ body {
     }
 }
 
+.blue-color {
+    background-color: #2EBDCD
+}
+
+.left-arrow {
+    color: white;
+    font-size: 1.5em;
+}
+
+.nav-button {
+    color: white;
+    font-size: 2em;
+}
+
+.white{
+    color: white;
+}
+
+.chevron-size {
+    color: white;
+    font-size: 2em;
+    opacity: 0.8;
+}
+
+.curved-top-border {
+    background-color: white;
+    border-top-left-radius: 1000px;
+    border-top-right-radius: 1000px;
+    height: 50px;
+}
+
+.form-icon-violet {
+    color: #403575;
+    background-color: #E4E7F8;
+    border-radius: 3px;
+    font-size: 4em;
+}
+
+.form-violet-text {
+    color: #403575;
+    text-align: center;
+}
+
+.row-white-padding {
+    padding-top: 2em;
+    background-color: white;
+}
+
+.pink-icon {
+    color: #E26DA2;
+    background-color: #E4E7F8;
+    border-radius: 3px;
+    font-size: 4em;
+}
+
+.pink-text-aligned {
+    color: #E26DA2;
+    text-align: center;
+}
+
+.blue-text-aligned {
+    text-align: center;
+    color: #2EBDCD;
+}
+
+.submit-button {
+    color: white;
+    border-radius: 50px;
+    background-color: darkcyan;
+}
+
+.presentation-background {
+    background-color: #2EBDCD;
+    height: 100vh;
+}
+
+.merck-pink-color {
+    background-color: #EC3B96;
+}
+
+.white-center-aligned {
+    color: white;
+    text-align: center;
+}
+
+.bold-text{
+    font-weight:bold;
+}
+
+.pinkish-icon {
+    font-size: 3.6rem;
+    color: #583B93;
+    background-color: #E3E7F8;
+    border-radius: 5px;
+}
+
+.pinkish-color {
+    color: #583B93;
+}
+
+.pinkish-color-v2 {
+    color: #EA3B95;
+}
+
+.pinkish-icon-v2 {
+    font-size: 3.6rem;
+    color: #EA3B95;
+    background-color: #E3E7F8;
+    border-radius: 5px;
+}
+
+.pointer-arrow {
+    font-size: 3rem;
+    cursor: pointer;
+}
