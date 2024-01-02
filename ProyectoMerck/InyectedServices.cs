@@ -1,6 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Data_Access_Layer.DAL.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using ProyectoMerck.DAL;
 using ProyectoMerck.DAL.Repositories;
 using ProyectoMerck.Helpers;
@@ -17,7 +16,7 @@ namespace Inyection_Layer
         public static void ServiceInyector(this IServiceCollection services, IConfiguration configuration)
         {
 
-            services.AddDbContext<AppDbContext>(c => c.UseSqlServer(configuration.GetConnectionString("Hosted")));
+            var x = services.AddDbContext<AppDbContext>(c => c.UseSqlServer(configuration.GetConnectionString("Hosted")));          
 
             services.AddScoped<IGenericRepository<Location>, GenericRepository<Location>>();
 

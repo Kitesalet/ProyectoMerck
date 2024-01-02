@@ -1,7 +1,7 @@
 ﻿using ProyectoMerck.DAL;
 using ProyectoMerck.DAL.Repositories;
 
-namespace ProyectoMerck.Models.Interfaces
+namespace Data_Access_Layer.DAL.Interfaces
 {
     public interface IUnitOfWork
     {

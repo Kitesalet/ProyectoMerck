@@ -2,10 +2,10 @@
 
 #nullable disable
 
-namespace ProyectoMerck.Migrations
+namespace daller.Migrations
 {
     /// <inheritdoc />
-    public partial class m : Migration
+    public partial class dfkhdkfjdfdfsh : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

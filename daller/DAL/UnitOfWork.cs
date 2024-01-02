@@ -1,5 +1,5 @@
-﻿using ProyectoMerck.DAL.Repositories;
-using ProyectoMerck.Models.Interfaces;
+﻿using Data_Access_Layer.DAL.Interfaces;
+using ProyectoMerck.DAL.Repositories;
 
 namespace ProyectoMerck.DAL
 {

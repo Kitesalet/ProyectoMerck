@@ -8,11 +8,11 @@ using ProyectoMerck.DAL;
 
 #nullable disable
 
-namespace ProyectoMerck.Migrations
+namespace daller.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231218191714_fhjd")]
-    partial class fhjd
+    [Migration("20231228235223_878247389329832f3r324rsdadd")]
+    partial class _878247389329832f3r324rsdadd
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,6 +23,75 @@ namespace ProyectoMerck.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("ProyectoMerck.Models.Entities.ConsultMotive", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ConsultMotiveX")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ConsultMotives");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ConsultMotiveX = "Deseo de ser madre"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ConsultMotiveX = "Problemas de fertilidad"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ConsultMotiveX = "Planificación familiar"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ConsultMotiveX = "Tratamientos de reproducción asistida"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            ConsultMotiveX = "Superar dificultades en la concepción"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            ConsultMotiveX = "Consultas preconcepcionales"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            ConsultMotiveX = "Evaluación de la salud reproductiva"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            ConsultMotiveX = "Seguimiento durante el embarazo"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            ConsultMotiveX = "Asesoramiento en técnicas de reproducción"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            ConsultMotiveX = "Preservación de la fertilidad"
+                        });
+                });
 
             modelBuilder.Entity("ProyectoMerck.Models.Entities.Country", b =>
                 {

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
+using Data_Access_Layer.DAL.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using ProyectoMerck.DAL;
 using ProyectoMerck.Helpers;
 using ProyectoMerck.Models;
 using ProyectoMerck.Models.Dtos;

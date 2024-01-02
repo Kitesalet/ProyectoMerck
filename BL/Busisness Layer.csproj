@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CL\Common Layer.csproj" />
-    <ProjectReference Include="..\DAL\Data Access Layer.csproj" />
+    <ProjectReference Include="..\daller\DataAccess layer.csproj" />
     <ProjectReference Include="..\UL\Utility Layer.csproj" />
   </ItemGroup>
 

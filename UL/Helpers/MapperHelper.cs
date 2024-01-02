@@ -12,8 +12,8 @@ namespace ProyectoMerck.Helpers
 
             CreateMap<Location, LocationDto>().ReverseMap();
             CreateMap<Country, CountryDto>().ReverseMap();
-            CreateMap<Province,ProvinceDto>().ReverseMap(); 
-            CreateMap<ProvinceLocation,ProvinceLocationDto>().ReverseMap(); 
+            CreateMap<Province,ProvinceDto>().ReverseMap();
+            CreateMap<ProvinceLocation,ProvinceLocationDto>().ReverseMap();
             CreateMap<ConsultMotive,ConsultMotiveDto>().ReverseMap();
 
         }

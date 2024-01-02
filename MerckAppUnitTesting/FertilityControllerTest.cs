@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Castle.Core.Logging;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.Extensions.Logging;
 using Moq;
 using ProyectoMerck.Controllers;
 using ProyectoMerck.Models;
@@ -27,9 +29,11 @@ namespace MerckAppUnitTesting
 
             string viewString = "Presentation";
 
+            var loggerMock = new Mock<ILogger<FertilityController>>();
+
             Mock<IFertilityService> mockService = new Mock<IFertilityService>();
 
-            var controller = new FertilityController(mockService.Object);
+            var controller = new FertilityController(mockService.Object, loggerMock.Object);
 
             //Act
 
@@ -57,7 +61,10 @@ namespace MerckAppUnitTesting
 
             Mock<IFertilityService> mockService = new Mock<IFertilityService>();
 
-            FertilityController controller = new FertilityController(mockService.Object);
+            var loggerMock = new Mock<ILogger<FertilityController>>();
+
+
+            FertilityController controller = new FertilityController(mockService.Object, loggerMock.Object);
 
             //Act
 
@@ -81,8 +88,10 @@ namespace MerckAppUnitTesting
             string viewName = "Indicator";
 
             Mock<IFertilityService> mockService = new Mock<IFertilityService>();
+            var loggerMock = new Mock<ILogger<FertilityController>>();
 
-            FertilityController controller = new FertilityController(mockService.Object);
+
+            FertilityController controller = new FertilityController(mockService.Object, loggerMock.Object);
             Mock<FertilityVM> mockVM = new Mock<FertilityVM>();
 
             //Act
@@ -107,8 +116,9 @@ namespace MerckAppUnitTesting
             string viewName = "Information";
 
             Mock<IFertilityService> mockService = new Mock<IFertilityService>();
+            var loggerMock = new Mock<ILogger<FertilityController>>();
 
-            FertilityController controller = new FertilityController(mockService.Object);
+            FertilityController controller = new FertilityController(mockService.Object, loggerMock.Object);
             Mock<FertilityVM> mockVM = new Mock<FertilityVM>();
 
             //Act
@@ -139,7 +149,11 @@ namespace MerckAppUnitTesting
             var httpContext = new DefaultHttpContext();
             var tempData = new TempDataDictionary(httpContext, Mock.Of<ITempDataProvider>());
             tempData["FertError"] = "Hubo un error inesperado!";
-            var controller = new FertilityController(mockService.Object)
+
+            var loggerMock = new Mock<ILogger<FertilityController>>();
+
+
+            var controller = new FertilityController(mockService.Object, loggerMock.Object)
             {
                 TempData = tempData
             };
@@ -169,12 +183,12 @@ namespace MerckAppUnitTesting
             };
 
 
-
+            var loggerMock = new Mock<ILogger<FertilityController>>();
             var mockService = new Mock<IFertilityService>();
             var httpContext = new DefaultHttpContext();
             var tempData = new TempDataDictionary(httpContext, Mock.Of<ITempDataProvider>());
             tempData["FertError"] = "Hubo un error inesperado!";
-            var controller = new FertilityController(mockService.Object)
+            var controller = new FertilityController(mockService.Object, loggerMock.Object)
             {
                 TempData = tempData
             };
@@ -200,12 +214,12 @@ namespace MerckAppUnitTesting
             };
 
 
-
+            var loggerMock = new Mock<ILogger<FertilityController>>();
             var mockService = new Mock<IFertilityService>();
             var httpContext = new DefaultHttpContext();
             var tempData = new TempDataDictionary(httpContext, Mock.Of<ITempDataProvider>());
             tempData["FertError"] = "Hubo un error inesperado!";
-            var controller = new FertilityController(mockService.Object)
+            var controller = new FertilityController(mockService.Object, loggerMock.Object)
             {
                 TempData = tempData
             };
@@ -232,11 +246,13 @@ namespace MerckAppUnitTesting
                 ActualAge = 13
             };
 
+
+            var loggerMock = new Mock<ILogger<FertilityController>>();
             var mockService = new Mock<IFertilityService>();
             var httpContext = new DefaultHttpContext();
             var tempData = new TempDataDictionary(httpContext, Mock.Of<ITempDataProvider>());
             tempData["FertError"] = "Las edades ingresadas son invalidas!";
-            var controller = new FertilityController(mockService.Object)
+            var controller = new FertilityController(mockService.Object, loggerMock.Object)
             {
                 TempData = tempData
             };
@@ -265,12 +281,12 @@ namespace MerckAppUnitTesting
             };
 
 
-
+            var loggerMock = new Mock<ILogger<FertilityController>>();
             var mockService = new Mock<IFertilityService>();
             var httpContext = new DefaultHttpContext();
             var tempData = new TempDataDictionary(httpContext, Mock.Of<ITempDataProvider>());
             tempData["FertError"] = "Hubo un error inesperado!";
-            var controller = new FertilityController(mockService.Object)
+            var controller = new FertilityController(mockService.Object, loggerMock.Object)
             {
                 TempData = tempData
             };
@@ -296,8 +312,9 @@ namespace MerckAppUnitTesting
             string viewName = "ConsultFinish";
 
             Mock<IFertilityService> mockService = new Mock<IFertilityService>();
+            var loggerMock = new Mock<ILogger<FertilityController>>();
 
-            FertilityController controller = new FertilityController(mockService.Object);
+            FertilityController controller = new FertilityController(mockService.Object, loggerMock.Object);
             Mock<FertilityVM> mockVM = new Mock<FertilityVM>();
 
             //Act
@@ -334,11 +351,12 @@ namespace MerckAppUnitTesting
 
 
             var mockService = new Mock<IFertilityService>();
+            var loggerMock = new Mock<ILogger<FertilityController>>();
 
             mockService.Setup(method => method.GetLists(model)).ReturnsAsync(model);
 
 
-            var controller = new FertilityController(mockService.Object)
+            var controller = new FertilityController(mockService.Object, loggerMock.Object)
             {
                 TempData = tempData
             };
@@ -384,11 +402,13 @@ namespace MerckAppUnitTesting
 
 
             var mockService = new Mock<IFertilityService>();
+            var loggerMock = new Mock<ILogger<FertilityController>>();
+
 
             mockService.Setup(method => method.GetLists(model)).ReturnsAsync(model);
             mockService.Setup(method => method.ConsultMailAsync(model)).ReturnsAsync(false);
 
-            var controller = new FertilityController(mockService.Object)
+            var controller = new FertilityController(mockService.Object, loggerMock.Object)
             {
                 TempData = tempData
             };
@@ -433,11 +453,12 @@ namespace MerckAppUnitTesting
 
 
             var mockService = new Mock<IFertilityService>();
+            var loggerMock = new Mock<ILogger<FertilityController>>();
 
             mockService.Setup(method => method.GetLists(model)).ReturnsAsync(model);
             mockService.Setup(method => method.ConsultMailAsync(model)).ReturnsAsync(true);
 
-            var controller = new FertilityController(mockService.Object)
+            var controller = new FertilityController(mockService.Object, loggerMock.Object)
             {
                 TempData = tempData
             };
@@ -469,10 +490,11 @@ namespace MerckAppUnitTesting
             var model = new FertilitySubmitVM();
 
             var mockService = new Mock<IFertilityService>();
+            var loggerMock = new Mock<ILogger<FertilityController>>();
 
             mockService.Setup(method => method.GetLists(model)).ReturnsAsync(model);
 
-            var controller = new FertilityController(mockService.Object);
+            var controller = new FertilityController(mockService.Object, loggerMock.Object);
 
             //Act
 

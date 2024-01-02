@@ -4,18 +4,26 @@
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace ProyectoMerck.Migrations
+namespace daller.Migrations
 {
     /// <inheritdoc />
-    public partial class fhjd : Migration
+    public partial class dfkhdkfjdsh : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
-                name: "LocationId",
-                table: "Locations",
-                newName: "ProvinceLocationId");
+            migrationBuilder.CreateTable(
+                name: "ConsultMotives",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ConsultMotiveX = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ConsultMotives", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
                 name: "Countries",
@@ -70,6 +78,46 @@ namespace ProyectoMerck.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Locations",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Latitude = table.Column<double>(type: "float", nullable: false),
+                    Longitude = table.Column<double>(type: "float", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Subtitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProvinceLocationId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Locations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Locations_ProvinceLocations_ProvinceLocationId",
+                        column: x => x.ProvinceLocationId,
+                        principalTable: "ProvinceLocations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "ConsultMotives",
+                columns: new[] { "Id", "ConsultMotiveX" },
+                values: new object[,]
+                {
+                    { 1, "Deseo de ser madre" },
+                    { 2, "Problemas de fertilidad" },
+                    { 3, "Planificación familiar" },
+                    { 4, "Tratamientos de reproducción asistida" },
+                    { 5, "Superar dificultades en la concepción" },
+                    { 6, "Consultas preconcepcionales" },
+                    { 7, "Evaluación de la salud reproductiva" },
+                    { 8, "Seguimiento durante el embarazo" },
+                    { 9, "Asesoramiento en técnicas de reproducción" },
+                    { 10, "Preservación de la fertilidad" }
+                });
+
             migrationBuilder.InsertData(
                 table: "Countries",
                 columns: new[] { "Id", "Name" },
@@ -79,62 +127,6 @@ namespace ProyectoMerck.Migrations
                     { 2, "Argentina" },
                     { 3, "Chile" }
                 });
-
-            migrationBuilder.UpdateData(
-                table: "Locations",
-                keyColumn: "Id",
-                keyValue: 1,
-                column: "ProvinceLocationId",
-                value: 1);
-
-            migrationBuilder.UpdateData(
-                table: "Locations",
-                keyColumn: "Id",
-                keyValue: 2,
-                column: "ProvinceLocationId",
-                value: 2);
-
-            migrationBuilder.UpdateData(
-                table: "Locations",
-                keyColumn: "Id",
-                keyValue: 3,
-                column: "ProvinceLocationId",
-                value: 3);
-
-            migrationBuilder.UpdateData(
-                table: "Locations",
-                keyColumn: "Id",
-                keyValue: 4,
-                column: "ProvinceLocationId",
-                value: 4);
-
-            migrationBuilder.UpdateData(
-                table: "Locations",
-                keyColumn: "Id",
-                keyValue: 5,
-                column: "ProvinceLocationId",
-                value: 5);
-
-            migrationBuilder.UpdateData(
-                table: "Locations",
-                keyColumn: "Id",
-                keyValue: 6,
-                column: "ProvinceLocationId",
-                value: 5);
-
-            migrationBuilder.UpdateData(
-                table: "Locations",
-                keyColumn: "Id",
-                keyValue: 7,
-                column: "ProvinceLocationId",
-                value: 4);
-
-            migrationBuilder.UpdateData(
-                table: "Locations",
-                keyColumn: "Id",
-                keyValue: 8,
-                column: "ProvinceLocationId",
-                value: 3);
 
             migrationBuilder.InsertData(
                 table: "Provinces",
@@ -207,6 +199,21 @@ namespace ProyectoMerck.Migrations
                     { 32, "Cerro Chapelco", 16 }
                 });
 
+            migrationBuilder.InsertData(
+                table: "Locations",
+                columns: new[] { "Id", "Latitude", "Longitude", "ProvinceLocationId", "Subtitle", "Title" },
+                values: new object[,]
+                {
+                    { 1, -34.600677504040895, -58.387263729958455, 1, "Centro Fertilidad", "CEGYR" },
+                    { 2, -34.580702852634481, -58.430260973627661, 2, "Centro Fertilidad", "CER" },
+                    { 3, -34.578846588221204, -58.460103931977983, 3, "Centro Fertilidad", "CIMER" },
+                    { 4, -34.599254733727243, -58.401810339490027, 4, "Centro Fertilidad", "CRECER" },
+                    { 5, -34.597439056459208, -58.397189279473473, 5, "Centro Fertilidad", "HIALITUS" },
+                    { 6, -34.606202223417398, -58.425645264604945, 5, "Centro Fertilidad", "HOSPITAL ITALIANO" },
+                    { 7, -34.596689236707874, -58.399734815343471, 4, "Centro Fertilidad", "IFER" },
+                    { 8, -34.557128982074609, -58.447618128835863, 3, "Centro Fertilidad", "WEFIV" }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Locations_ProvinceLocationId",
                 table: "Locations",
@@ -221,22 +228,16 @@ namespace ProyectoMerck.Migrations
                 name: "IX_Provinces_CountryId",
                 table: "Provinces",
                 column: "CountryId");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Locations_ProvinceLocations_ProvinceLocationId",
-                table: "Locations",
-                column: "ProvinceLocationId",
-                principalTable: "ProvinceLocations",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Locations_ProvinceLocations_ProvinceLocationId",
-                table: "Locations");
+            migrationBuilder.DropTable(
+                name: "ConsultMotives");
+
+            migrationBuilder.DropTable(
+                name: "Locations");
 
             migrationBuilder.DropTable(
                 name: "ProvinceLocations");
@@ -246,71 +247,6 @@ namespace ProyectoMerck.Migrations
 
             migrationBuilder.DropTable(
                 name: "Countries");
-
-            migrationBuilder.DropIndex(
-                name: "IX_Locations_ProvinceLocationId",
-                table: "Locations");
-
-            migrationBuilder.RenameColumn(
-                name: "ProvinceLocationId",
-                table: "Locations",
-                newName: "LocationId");
-
-            migrationBuilder.UpdateData(
-                table: "Locations",
-                keyColumn: "Id",
-                keyValue: 1,
-                column: "LocationId",
-                value: 0);
-
-            migrationBuilder.UpdateData(
-                table: "Locations",
-                keyColumn: "Id",
-                keyValue: 2,
-                column: "LocationId",
-                value: 0);
-
-            migrationBuilder.UpdateData(
-                table: "Locations",
-                keyColumn: "Id",
-                keyValue: 3,
-                column: "LocationId",
-                value: 0);
-
-            migrationBuilder.UpdateData(
-                table: "Locations",
-                keyColumn: "Id",
-                keyValue: 4,
-                column: "LocationId",
-                value: 0);
-
-            migrationBuilder.UpdateData(
-                table: "Locations",
-                keyColumn: "Id",
-                keyValue: 5,
-                column: "LocationId",
-                value: 0);
-
-            migrationBuilder.UpdateData(
-                table: "Locations",
-                keyColumn: "Id",
-                keyValue: 6,
-                column: "LocationId",
-                value: 0);
-
-            migrationBuilder.UpdateData(
-                table: "Locations",
-                keyColumn: "Id",
-                keyValue: 7,
-                column: "LocationId",
-                value: 0);
-
-            migrationBuilder.UpdateData(
-                table: "Locations",
-                keyColumn: "Id",
-                keyValue: 8,
-                column: "LocationId",
-                value: 0);
         }
     }
 }

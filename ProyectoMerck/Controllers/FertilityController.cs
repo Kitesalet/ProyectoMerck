@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PagedList;
 using ProyectoMerck.Helpers;
 using ProyectoMerck.Models;
 using ProyectoMerck.Models.Interfaces;
@@ -12,20 +11,28 @@ namespace ProyectoMerck.Controllers
     {
 
         private readonly IFertilityService _service;
+        private readonly ILogger<FertilityController> _logger;
 
-        public FertilityController(IFertilityService service)
+        public FertilityController(IFertilityService service, ILogger<FertilityController> logger)
         {
             _service = service;
+            _logger = logger;
         }
 
         public IActionResult Presentation()
         {
+
+            _logger.LogInformation("Access to Presentation View");
+
             return View("Presentation");
         }
 
         [HttpGet]
         public IActionResult Index()
         {
+
+            _logger.LogInformation("Access to Index View");
+
 
             FertilityVM model = new FertilityVM();
 
@@ -36,12 +43,16 @@ namespace ProyectoMerck.Controllers
         public IActionResult Indicator(FertilityVM model)
         {
 
+            _logger.LogInformation("Access to Indicator View");
+
             return View("Indicator",model);
         }
 
         [HttpGet]
         public IActionResult Information()
         {
+
+            _logger.LogInformation("Access to Information View");
 
             return View("Information");
         }
@@ -54,6 +65,7 @@ namespace ProyectoMerck.Controllers
                 {
 
                     TempData["FertError"] = "Hubo un error inesperado!";
+                    _logger.LogError("There has been an unexpected error");
 
                     return View("Index");
 
@@ -66,8 +78,14 @@ namespace ProyectoMerck.Controllers
                     if (model.FirstAge > model.ActualAge)
                     {
                         TempData["FertError"] = "Las edades ingresadas son invalidas!";
+                        _logger.LogError("Ages introduced were invalid");
+
+
                         return RedirectToAction("Index");
                     }
+
+
+                    _logger.LogInformation("Ages introduced were invalid");
 
                     return RedirectToAction("Indicator", model);
 
@@ -78,6 +96,8 @@ namespace ProyectoMerck.Controllers
         [HttpGet]
         public IActionResult ConsultFinish()
         {
+
+            _logger.LogInformation("Access to ConsultFinish View");
             return View("ConsultFinish");
         }
 
@@ -85,6 +105,7 @@ namespace ProyectoMerck.Controllers
         public async Task<IActionResult> Consult(FertilitySubmitVM model)
         {
             bool validMail = false;
+            model.SubmitError = false;
 
             if (!String.IsNullOrEmpty(model.UserEmail))
             {
@@ -94,19 +115,21 @@ namespace ProyectoMerck.Controllers
             if (!validMail)
             {
                 ModelState.AddModelError("UserEmail", "El email ingresado tiene un formato incorrecto!");
+
+                _logger.LogError("The entered email had an incorrect format");
+
             }
 
             if (!ModelState.IsValid)
             {
 
-                ModelState["SelectedCountry"].RawValue = 0;
-                ModelState["UserEmail"].RawValue = "";
-                ModelState["ConsultMotiveMessage"].RawValue = "";
+                model.SubmitError = true;
 
                 TempData["FertError"] = "Ha ocurrido un error!";
 
                 model = await _service.GetLists(model);
 
+                _logger.LogError("There has been an error with the form's model state");
                 return View("Clinics", model);
 
             }
@@ -117,16 +140,18 @@ namespace ProyectoMerck.Controllers
                 if (mailSent == false)
                 {
 
-                    ModelState["SelectedCountry"].RawValue = 0;
-                    ModelState["UserEmail"].RawValue = "";
-                    ModelState["ConsultMotiveMessage"].RawValue = "";
+                    model.SubmitError = true;
 
                     model = await _service.GetLists(model);
 
                     TempData["FertError"] = "Hubo un error, el email no pudo ser enviado!";
+
+                    _logger.LogError("There was a mistake in one input in the ConsultMailAsync form");
+
                     return View("Clinics", model);
                 }
 
+                _logger.LogInformation("Redirecting to ConsultFinish method, the form submit was successful");
                 return RedirectToAction("ConsultFinish");
             }
         
@@ -137,9 +162,9 @@ namespace ProyectoMerck.Controllers
         {
             FertilitySubmitVM model = new FertilitySubmitVM();
 
-            model = await _service.GetListsFromCsv(model);
+            model = await _service.GetLists(model);
 
-
+            _logger.LogInformation("Access to Clinics View");
 
             return View("Clinics",model);
 

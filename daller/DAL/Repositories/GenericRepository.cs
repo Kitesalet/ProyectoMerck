@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using ProyectoMerck.Models.Interfaces;
+﻿using Data_Access_Layer.DAL.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace ProyectoMerck.DAL.Repositories
 {

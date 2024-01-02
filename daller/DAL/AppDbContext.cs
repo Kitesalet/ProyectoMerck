@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using ProyectoMerck.Models.Entities;
 
 namespace ProyectoMerck.DAL
@@ -8,10 +9,8 @@ namespace ProyectoMerck.DAL
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
-            
+
         }
-
-
 
         //Tables
         public DbSet<Location> Locations { get; set; }
@@ -20,7 +19,7 @@ namespace ProyectoMerck.DAL
 
         public DbSet<Province> Provinces { get; set; }
 
-        public DbSet<ProvinceLocation> ProvinceLocations { get; set; }  
+        public DbSet<ProvinceLocation> ProvinceLocations { get; set; }
 
         public DbSet<ConsultMotive> ConsultMotives { get; set; }
 
