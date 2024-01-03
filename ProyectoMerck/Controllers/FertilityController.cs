@@ -148,7 +148,6 @@ namespace ProyectoMerck.Controllers
                     return View("Clinics", model);
                 }
 
-
                 model.SentUrl = HttpContext.Request.GetDisplayUrl();
 
                 await _service.AddClinicConsultation(model);

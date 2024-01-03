@@ -1,4 +1,5 @@
-﻿using ProyectoMerck.Models.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using ProyectoMerck.Models.Entities;
 
 namespace ProyectoMerck.DAL.Repositories
 {
@@ -7,5 +8,7 @@ namespace ProyectoMerck.DAL.Repositories
         public ConsultMotiveRepository(AppDbContext context) : base(context)
         {
         }
+
+
     }
 }

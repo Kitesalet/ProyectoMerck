@@ -1,4 +1,5 @@
 ﻿using Busisness_Layer.Interfaces;
+using Common_Layer.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ProyectoMerck.Controllers
@@ -16,7 +17,13 @@ namespace ProyectoMerck.Controllers
         public IActionResult Index()
         {
 
-            return View();
+            UserVM model = new UserVM()
+            {
+                ToDate = DateTime.Now,
+                FromDate = DateTime.Now
+            };
+
+            return View(model);
         }
 
         public async Task<IActionResult> DownloadPdf()
@@ -29,6 +36,19 @@ namespace ProyectoMerck.Controllers
         {
 
             return await _service.CreateCsv();
+
+        }
+
+        public async Task<IActionResult> DownloadPdfInterval(UserVM model)
+        {
+
+            return await _service.CreatePdfInterval(model);
+        }
+
+        public async Task<IActionResult> DownloadExcelInterval(UserVM model)
+        {
+
+            return await _service.CreateCsvInterval(model);
 
         }
 

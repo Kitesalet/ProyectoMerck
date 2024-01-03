@@ -1,4 +1,5 @@
-﻿using Common_Layer.Models.Dtos;
+﻿using Common_Layer.Models;
+using Common_Layer.Models.Dtos;
 using Common_Layer.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -17,6 +18,10 @@ namespace Busisness_Layer.Interfaces
         public Task<FileContentResult> CreatePdf();
 
         public Task<FileContentResult> CreateCsv();
+
+        public Task<FileContentResult> CreatePdfInterval(UserVM model);
+
+        public Task<FileContentResult> CreateCsvInterval(UserVM model);
 
     }
 }

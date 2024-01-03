@@ -5,6 +5,7 @@ using System.Globalization;
 using Common_Layer.Models.Entities;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
+using Common_Layer.Models.Dtos;
 
 namespace ProyectoMerck.Helpers
 {
@@ -22,7 +23,7 @@ namespace ProyectoMerck.Helpers
 
         }
 
-        public static string WriteCsvData(IEnumerable<ClinicConsultation> data)
+        public static string WriteCsvData(IEnumerable<ClinicConsultationDto> data)
         {
             using (var writer = new StringWriter())
             using (var csv = new CsvWriter(writer, new CsvConfiguration(CultureInfo.InvariantCulture)))

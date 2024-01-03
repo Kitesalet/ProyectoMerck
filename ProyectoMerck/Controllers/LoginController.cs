@@ -2,6 +2,7 @@
 using Common_Layer.Models.Dtos;
 using Common_Layer.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace ProyectoMerck.Controllers
 {
@@ -36,6 +37,10 @@ namespace ProyectoMerck.Controllers
                 return RedirectToAction("Login");
 
             }
+
+            var claims = new List<Claim>();
+
+            
 
             return RedirectToAction("Index","User");
 

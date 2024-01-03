@@ -1,22 +1,63 @@
-﻿
+﻿@model Common_Layer.Models.UserVM
 
 
-    <div class="container-fluid presentation-background">
-            <div class="row">    
-                <div class="col-12">
+<div class="container-fluid presentation-background">
+    <div class="row">
+        <div class="col-12">
             <img class="mx-auto d-block" src="~/images/MerckFertPresentation.JPG" />
-                </div>
-                <div class="row col-12">
-                    <h1 class="text-center text-light">Panel de Administradores</h1>
-                </div>
-            </div>
-            <div class="row">
-                <a id="clinicButton" class="btn offset-2 col-3 p-1 my-5 border-light submit-button" href="@Url.Action("DownloadPdf","User")">Download Pdf</a>
-                <a id="clinicButton" class="btn offset-2 col-3 p-1 my-5 border-light submit-button" href="@Url.Action("DownloadExcel","User")">Download Excel</a>
-            </div>
+        </div>
     </div>
 
-    <div id="loadingSpinner" class="loading-spinner"></div>
+    <div class="row">
+        <div class="col-12">
+            <h1 class="text-center text-light">Panel de Administradores</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="offset-3 col-3">
+            <h2 class="text-light">PDF</h2>
+        </div>
+        <div class="col-4 offset-2">
+            <h2 class="text-light">Excel</h2>
+        </div>
+    </div>
+    <div class="row my-5">
+        <div class="offset-3 col-3">
+            @using (Html.BeginForm("DownloadPdfInterval", "User", FormMethod.Get))
+            {
+                <h5>Fecha Inicial</h5>
+                @Html.EditorFor(m => m.FromDate, new { @class = "form-control" })
+                <br />
+                <br />
+                <h5>Fecha Final</h5>
+                @Html.EditorFor(m => m.ToDate)
+                <br />
+                <br />
+                <button type="submit" class="btn btn-primary mx-5">Descargar PDF</button>
+            }
+        </div>
+
+        <div class="offset-2 col-3">
+            @using (Html.BeginForm("DownloadExcelInterval", "User", FormMethod.Get))
+            {
+                <h5>Fecha Inicial</h5>
+                @Html.EditorFor(m => m.FromDate, new { @class = "form-control" })
+                <br />
+                <br />
+                <h5>Fecha Final</h5>
+                @Html.EditorFor(m => m.ToDate)
+                <br />
+                <br />
+                <button type="submit" class="btn btn-primary mx-5">Descargar Excel</button>
+            }
+        </div>
+    </div>
+            <hr />
+            <div class="row">
+                <a id="clinicButton" class="btn offset-2 col-3 p-1 my-5 border-light submit-button" href="@Url.Action("DownloadPdf","User")">Descargar Pdf ( Sin filtrar fecha )</a>
+                <a id="clinicButton" class="btn offset-2 col-3 p-1 my-5 border-light submit-button" href="@Url.Action("DownloadExcel","User")">Descargar Excel ( Sin filtrar fecha )</a>
+            </div>
+ </div>
 
     <script src="/js/site.js"></script>
 
