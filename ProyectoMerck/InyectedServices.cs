@@ -2,6 +2,8 @@
 using Busisness_Layer.Services;
 using Common_Layer.Models.Entities;
 using Data_Access_Layer.DAL.Interfaces;
+using DinkToPdf;
+using DinkToPdf.Contracts;
 using Microsoft.EntityFrameworkCore;
 using ProyectoMerck.DAL;
 using ProyectoMerck.DAL.Repositories;
@@ -9,7 +11,7 @@ using ProyectoMerck.Helpers;
 using ProyectoMerck.Models.Entities;
 using ProyectoMerck.Models.Interfaces;
 using ProyectoMerck.Services;
-
+using Utility_Layer.Helpers;
 
 namespace Inyection_Layer
 {
@@ -27,6 +29,8 @@ namespace Inyection_Layer
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+            services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
+            services.AddScoped<PdfService>();
             services.AddAutoMapper(typeof(MapperHelper));
 
             services.AddScoped<IEmailService, EmailService>();

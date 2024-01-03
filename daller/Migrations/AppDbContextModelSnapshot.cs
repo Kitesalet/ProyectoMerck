@@ -46,8 +46,6 @@ namespace daller.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SelectedLocationIndex");
-
                     b.ToTable("ClinicConsultations");
 
                     b.HasData(
@@ -55,7 +53,7 @@ namespace daller.Migrations
                         {
                             Id = 1,
                             ConsultMotiveMessage = "Stringer",
-                            CreatedTime = new DateTime(2024, 1, 3, 14, 7, 49, 775, DateTimeKind.Local).AddTicks(157),
+                            CreatedTime = new DateTime(2024, 1, 3, 15, 23, 12, 269, DateTimeKind.Local).AddTicks(2066),
                             SelectedLocationIndex = 2,
                             Url = "www.google.com"
                         },
@@ -63,7 +61,7 @@ namespace daller.Migrations
                         {
                             Id = 2,
                             ConsultMotiveMessage = "Inter",
-                            CreatedTime = new DateTime(2024, 1, 3, 14, 7, 49, 775, DateTimeKind.Local).AddTicks(170),
+                            CreatedTime = new DateTime(2024, 1, 3, 15, 23, 12, 269, DateTimeKind.Local).AddTicks(2080),
                             SelectedLocationIndex = 3,
                             Url = "www.google.com"
                         });
@@ -695,17 +693,6 @@ namespace daller.Migrations
                             Name = "Cerro Chapelco",
                             ProvinceId = 16
                         });
-                });
-
-            modelBuilder.Entity("Common_Layer.Models.Entities.ClinicConsultation", b =>
-                {
-                    b.HasOne("ProyectoMerck.Models.Entities.Location", "Location")
-                        .WithMany()
-                        .HasForeignKey("SelectedLocationIndex")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Location");
                 });
 
             modelBuilder.Entity("ProyectoMerck.Models.Entities.Location", b =>

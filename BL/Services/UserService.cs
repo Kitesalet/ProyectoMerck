@@ -3,57 +3,55 @@ using Busisness_Layer.Interfaces;
 using Common_Layer.Models.Dtos;
 using Common_Layer.Models.Entities;
 using Data_Access_Layer.DAL.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using ProyectoMerck.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Utility_Layer.Helpers;
 
 namespace Busisness_Layer.Services
 {
     public class UserService : IUserService
     {
-
+        private readonly PdfService _pdfService;
         private readonly IUnitOfWork _context;
         private readonly IMapper _mapper;
         private readonly IConfiguration _IConfiguration;
 
-        public UserService(IUnitOfWork context, IMapper mapper, IConfiguration configuration)
+        public UserService(IUnitOfWork context, IMapper mapper, IConfiguration configuration, PdfService pdfService)
         {
 
+            _pdfService = pdfService;
             _context = context;
             _mapper = mapper;
             _IConfiguration = configuration;
 
         }
 
-        public async Task<bool> CreateCsv()
+        public async Task<FileContentResult> CreateCsv()
         {
         
             var clinicConsultList = await _context.ClinicConsultationRepository.GetAll();
 
-            try
-            {
-                string consultString = CsvMethodHelper<ClinicConsultation>.WriteCsvData(clinicConsultList);
+            string consultString = CsvMethodHelper<ClinicConsultation>.WriteCsvData(clinicConsultList);
 
-                CsvMethodHelper<ClinicConsultation>.DownloadCsvFile(consultString, _IConfiguration["FileNames:CvsFileName"]);
-
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-
+            return CsvMethodHelper<ClinicConsultation>.DownloadCsvFile(consultString, "Clinicas_consultas.csv");
 
 
         }
 
-        public Task<bool> CreatePdf()
+        public async Task<FileContentResult> CreatePdf()
         {
-            throw new NotImplementedException();
+
+            var clinicConsultList = await _context.ClinicConsultationRepository.GetAll();
+
+
+            Byte[] byteData = _pdfService.GeneratePdf(clinicConsultList.ToList());
+
+            return new FileContentResult(byteData, "application/pdf")
+            {
+                FileDownloadName = "Clinicas_consultas.pdf"
+            };
+
         }
 
         public async Task<UserDto?> GetUserLogin(LoginDto dto)

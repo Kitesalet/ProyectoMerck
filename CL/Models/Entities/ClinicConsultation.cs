@@ -22,6 +22,8 @@ namespace Common_Layer.Models.Entities
 
         [ForeignKey("Location")]
         public int SelectedLocationIndex { get; set; }
+
+        [NotMapped]
         public Location Location { get; set; }
 
     }

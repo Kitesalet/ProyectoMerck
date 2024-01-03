@@ -1,5 +1,6 @@
 ﻿using Common_Layer.Models.Dtos;
 using Common_Layer.Models.Entities;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +14,9 @@ namespace Busisness_Layer.Interfaces
 
         public Task<UserDto?> GetUserLogin(LoginDto dto);
 
-        public Task<bool> CreatePdf();
+        public Task<FileContentResult> CreatePdf();
 
-        public Task<bool> CreateCsv();
+        public Task<FileContentResult> CreateCsv();
 
     }
 }

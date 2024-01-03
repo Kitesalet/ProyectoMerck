@@ -19,19 +19,17 @@ namespace ProyectoMerck.Controllers
             return View();
         }
 
-        public IActionResult DownloadPdf()
+        public async Task<IActionResult> DownloadPdf()
         {
 
-
-            return View();
+            return await _service.CreatePdf();
         }
 
         public async Task<IActionResult> DownloadExcel()
         {
 
-            bool flag = await _service.CreateCsv();
+            return await _service.CreateCsv();
 
-            return View("Index");
         }
 
     }
