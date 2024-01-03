@@ -12,7 +12,21 @@ namespace ProyectoMerck.DAL.Repositories
         public GenericRepository(AppDbContext context)
         {
             _context = context;
-            _dbSet = context.Set<T>();
+            _dbSet = _context.Set<T>();
+        }
+
+        public async Task Create(T entity)
+        {
+            try
+            {
+                var obj = await _dbSet.AddAsync(entity);
+
+            }
+            catch
+            {
+
+            }
+
         }
 
         public async Task<IEnumerable<T>> GetAll()

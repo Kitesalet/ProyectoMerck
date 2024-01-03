@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.Mvc;
 using ProyectoMerck.Helpers;
 using ProyectoMerck.Models;
 using ProyectoMerck.Models.Interfaces;
@@ -80,7 +81,6 @@ namespace ProyectoMerck.Controllers
                         TempData["FertError"] = "Las edades ingresadas son invalidas!";
                         _logger.LogError("Ages introduced were invalid");
 
-
                         return RedirectToAction("Index");
                     }
 
@@ -104,13 +104,10 @@ namespace ProyectoMerck.Controllers
         [HttpPost]
         public async Task<IActionResult> Consult(FertilitySubmitVM model)
         {
-            bool validMail = false;
+
             model.SubmitError = false;
 
-            if (!String.IsNullOrEmpty(model.UserEmail))
-            {
-                validMail = RegexHelper.IsMailValid(model.UserEmail);
-            }
+            bool validMail = RegexHelper.IsMailValid(model.UserEmail);
 
             if (!validMail)
             {
@@ -150,6 +147,11 @@ namespace ProyectoMerck.Controllers
 
                     return View("Clinics", model);
                 }
+
+
+                model.SentUrl = HttpContext.Request.GetDisplayUrl();
+
+                await _service.AddClinicConsultation(model);
 
                 _logger.LogInformation("Redirecting to ConsultFinish method, the form submit was successful");
                 return RedirectToAction("ConsultFinish");

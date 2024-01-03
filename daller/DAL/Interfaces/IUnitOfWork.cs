@@ -1,4 +1,5 @@
-﻿using ProyectoMerck.DAL;
+﻿using DataAccess_layer.DAL.Repositories;
+using ProyectoMerck.DAL;
 using ProyectoMerck.DAL.Repositories;
 
 namespace Data_Access_Layer.DAL.Interfaces
@@ -15,6 +16,10 @@ namespace Data_Access_Layer.DAL.Interfaces
         ProvinceLocationRepository ProvinceLocationRepository { get; }
 
         ConsultMotiveRepository ConsultMotiveRepository { get; }
+
+        ClinicConsultationRepository ClinicConsultationRepository { get; }
+
+        UserRepository UserRepository { get; }
         Task<int> Complete();
 
         void Dispose();

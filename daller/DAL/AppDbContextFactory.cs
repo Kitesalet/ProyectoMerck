@@ -26,7 +26,7 @@ namespace DataAccess_layer.DAL
 
 
             var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
-            optionsBuilder.UseSqlServer(configuration.GetConnectionString("Hostedd"));
+            optionsBuilder.UseSqlServer(configuration.GetConnectionString("Hosted"));
 
             return new AppDbContext(optionsBuilder.Options);
         }

@@ -2,6 +2,9 @@
 using CsvHelper;
 using ProyectoMerck.Models.Dtos;
 using System.Globalization;
+using Common_Layer.Models.Entities;
+using System.Text;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ProyectoMerck.Helpers
 {
@@ -17,6 +20,27 @@ namespace ProyectoMerck.Helpers
                 return csv.GetRecords<T>().ToList();
             }
 
+        }
+
+        public static string WriteCsvData(IEnumerable<ClinicConsultation> data)
+        {
+            using (var writer = new StringWriter())
+            using (var csv = new CsvWriter(writer, new CsvConfiguration(CultureInfo.InvariantCulture)))
+            {
+                csv.WriteRecords(data);
+                return writer.ToString();
+            }
+        }
+
+        public static FileContentResult DownloadCsvFile(string data, string fileName)
+        {
+
+            var byteArray = Encoding.UTF8.GetBytes(data);
+
+            return new FileContentResult(byteArray, "text/csv")
+            {
+                FileDownloadName = fileName
+            };
         }
 
     }

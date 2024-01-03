@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Common_Layer.Models.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using ProyectoMerck.Models.Entities;
 
@@ -23,9 +24,22 @@ namespace ProyectoMerck.DAL
 
         public DbSet<ConsultMotive> ConsultMotives { get; set; }
 
+        public DbSet<ClinicConsultation> ClinicConsultations { get; set; }
+
+        public DbSet<User> Users { get; set; }  
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<ClinicConsultation>().HasData(
+                new ClinicConsultation { Id = 1, ConsultMotiveMessage = "Stringer", SelectedLocationIndex = 2, CreatedTime = DateTime.Now, Url = "www.google.com"},
+               new ClinicConsultation { Id = 2, ConsultMotiveMessage = "Inter", SelectedLocationIndex = 3, CreatedTime = DateTime.Now, Url = "www.google.com" }
+                );
+
+            modelBuilder.Entity<User>().HasData(
+                new User { Id = 1, UserName = "random", Password = "random"}
+                );
 
             modelBuilder.Entity<Country>().HasData(
                 new Country { Id = 1, Name = "Brasil" },

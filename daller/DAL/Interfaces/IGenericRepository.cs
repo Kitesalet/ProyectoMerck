@@ -5,6 +5,7 @@
 
         public Task<IEnumerable<T>> GetAll();
 
+        public Task Create(T entity);
 
     }
 }
