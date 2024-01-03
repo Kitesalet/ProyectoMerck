@@ -1,16 +1,19 @@
 ﻿
 
 
-    <div class="container-fluid d-flex align-items-center justify-content-center m-0 presentation-background">
-            <div class="row my-3">               
-                <img class="mx-auto d-block" src="~/images/MerckFertPresentation.JPG" />
+    <div class="container-fluid presentation-background">
+            <div class="row">    
+                <div class="col-12">
+            <img class="mx-auto d-block" src="~/images/MerckFertPresentation.JPG" />
+                </div>
+                <div class="row col-12">
+                    <h1 class="text-center text-light">Panel de Administradores</h1>
+                </div>
             </div>
             <div class="row">
-                <a id="clinicButton" class="btn col-6 p-1 my-5 border-light submit-button" href="@Url.Action("DownloadPdf","User")">Download Pdf</a>
-                <a id="clinicButton" class="btn col-6 p-1 my-5 border-light submit-button" href="@Url.Action("DownloadExcel","User")">Download Excel</a>
+                <a id="clinicButton" class="btn offset-2 col-3 p-1 my-5 border-light submit-button" href="@Url.Action("DownloadPdf","User")">Download Pdf</a>
+                <a id="clinicButton" class="btn offset-2 col-3 p-1 my-5 border-light submit-button" href="@Url.Action("DownloadExcel","User")">Download Excel</a>
             </div>
-
-
     </div>
 
     <div id="loadingSpinner" class="loading-spinner"></div>

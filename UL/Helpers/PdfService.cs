@@ -50,13 +50,13 @@ namespace Utility_Layer.Helpers
             foreach (var clinicConsultation in data)
             {
 
-                stringer.Append($"<h3>Id Clínica: {clinicConsultation.Id}</h3>" +
-                                $"<br/>" +
+                stringer.Append($"<h3>Id Clinica: {clinicConsultation.Id}</h3>" +
                                 $"<h4>Motivo Consulta: {clinicConsultation.ConsultMotiveMessage}" +
                                 $"<h4>Url: {clinicConsultation.Url}" +
-                                $"<h4>Fecha Creación: {clinicConsultation.CreatedTime}" +
+                                $"<h4>Fecha Creacion: {clinicConsultation.CreatedTime}" +
                                 $"<br/>" +
-                                $"<br/>");
+                                $"<br/>" +
+                                $"<hr/>");
 
             }
 
