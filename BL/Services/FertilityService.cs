@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Common_Layer.Models.Dtos;
+using Common_Layer.Models.Entities;
 using Data_Access_Layer.DAL.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
@@ -88,6 +90,7 @@ namespace ProyectoMerck.Services
         }
 
 
+
         public async Task<bool> ConsultMailAsync(FertilitySubmitVM model)
         {
             try
@@ -121,6 +124,45 @@ namespace ProyectoMerck.Services
 
         }
 
+        public async Task<bool> AddClinicConsultation(FertilitySubmitVM model)
+        {
 
+            var clinicConsultation = new ClinicConsultation()
+            {
+                ConsultMotiveMessage = model.ConsultMotiveMessage,
+                CreatedTime = DateTime.Now,
+                SelectedLocationIndex = model.SelectedLocationIndex,
+                Url = model.SentUrl
+            };
+
+
+
+            try
+            {
+
+                await _context.ClinicConsultationRepository.Create(clinicConsultation);
+
+                await _context.Complete();
+
+                return true;
+              
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }
+
+        }
+
+        public async Task<List<ClinicConsultationDto>> GetClinicConsultations()
+        {
+            
+            var clinicConsultations = await _context.ClinicConsultationRepository.GetAll();   
+
+            var clinicConsultationsDto = _mapper.Map<List<ClinicConsultationDto>>(clinicConsultations);
+
+            return clinicConsultationsDto;
+
+        }
     }
 }

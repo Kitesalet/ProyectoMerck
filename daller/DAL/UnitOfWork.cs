@@ -1,9 +1,10 @@
 ﻿using Data_Access_Layer.DAL.Interfaces;
+using DataAccess_layer.DAL.Repositories;
 using ProyectoMerck.DAL.Repositories;
 
 namespace ProyectoMerck.DAL
 {
-    public class UnitOfWork : IUnitOfWork
+    public class UnitOfWork : IUnitOfWork, IDisposable
     {
         private readonly AppDbContext _context;
         public LocationRepository LocationRepository { get; }
@@ -14,7 +15,12 @@ namespace ProyectoMerck.DAL
 
         public ProvinceLocationRepository ProvinceLocationRepository { get; }
 
-        public ConsultMotiveRepository ConsultMotiveRepository { get; set; }
+        public ConsultMotiveRepository ConsultMotiveRepository { get; }
+
+        public UserRepository UserRepository { get; }
+
+        public ClinicConsultationRepository ClinicConsultationRepository { get; }
+
         public UnitOfWork(AppDbContext context)
         {
 
@@ -25,6 +31,9 @@ namespace ProyectoMerck.DAL
             ProvinceRepository = new ProvinceRepository(context);
             ProvinceLocationRepository = new ProvinceLocationRepository(context);
             ConsultMotiveRepository = new ConsultMotiveRepository(context);
+            UserRepository = new UserRepository(context);
+            CountryRepository = new CountryRepository(context);
+            ClinicConsultationRepository = new ClinicConsultationRepository(context);
 
         }
 

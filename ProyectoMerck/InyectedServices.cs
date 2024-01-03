@@ -1,4 +1,7 @@
-﻿using Data_Access_Layer.DAL.Interfaces;
+﻿using Busisness_Layer.Interfaces;
+using Busisness_Layer.Services;
+using Common_Layer.Models.Entities;
+using Data_Access_Layer.DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using ProyectoMerck.DAL;
 using ProyectoMerck.DAL.Repositories;
@@ -13,12 +16,14 @@ namespace Inyection_Layer
     public static class InyectedServices
     {
 
-        public static void ServiceInyector(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection ServiceInyector(this IServiceCollection services, IConfiguration configuration)
         {
 
-            var x = services.AddDbContext<AppDbContext>(c => c.UseSqlServer(configuration.GetConnectionString("Hosted")));          
+            services.AddDbContext<AppDbContext>(c => c.UseSqlServer(configuration.GetConnectionString("Hosted")));          
 
             services.AddScoped<IGenericRepository<Location>, GenericRepository<Location>>();
+            services.AddScoped<IGenericRepository<User>, GenericRepository<User>>();
+            services.AddScoped<IGenericRepository<ClinicConsultation>, GenericRepository<ClinicConsultation>>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
@@ -26,7 +31,9 @@ namespace Inyection_Layer
 
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IFertilityService, FertilityService>();
+            services.AddScoped<IUserService, UserService>();
 
+            return services;
 
         }
 

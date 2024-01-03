@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace ProyectoMerck.Helpers
 {
@@ -8,6 +9,11 @@ namespace ProyectoMerck.Helpers
 
         public static bool IsMailValid(string mail)
         {
+
+            if (String.IsNullOrEmpty(mail))
+            {
+                return false;
+            }
 
             string regexCode = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
 

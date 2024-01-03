@@ -1,4 +1,5 @@
-﻿using ProyectoMerck.Models.Dtos;
+﻿using Common_Layer.Models.Dtos;
+using ProyectoMerck.Models.Dtos;
 
 namespace ProyectoMerck.Models.Interfaces
 {
@@ -13,7 +14,9 @@ namespace ProyectoMerck.Models.Interfaces
 
         Task<FertilitySubmitVM> GetListsFromCsv(FertilitySubmitVM model);
 
+        Task<bool> AddClinicConsultation(FertilitySubmitVM model);
 
+        Task<List<ClinicConsultationDto>> GetClinicConsultations();
 
     }
 }

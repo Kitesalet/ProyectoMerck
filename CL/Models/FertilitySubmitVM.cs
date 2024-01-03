@@ -18,7 +18,10 @@ namespace ProyectoMerck.Models
             public List<ConsultMotiveDto> ConsultMotiveList { get; set; } = new List<ConsultMotiveDto>();
 
             [Required(ErrorMessage = "Tiene que ingresar una motivo válido")]
-            public string ConsultMotiveMessage { get; set; }
+            public string? ConsultMotiveMessage { get; set; }
+
+            public string? SentUrl { get; set; }    
+
             public int SelectedCountry { get; set; }
 
             public int SelectedProvince { get; set; }
