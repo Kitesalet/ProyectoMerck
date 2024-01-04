@@ -1,11 +1,16 @@
 ﻿using Busisness_Layer.Interfaces;
 using Common_Layer.Models.Dtos;
 using Common_Layer.Models.Entities;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace ProyectoMerck.Controllers
 {
+
+
     public class LoginController : Controller
     {
 
@@ -25,10 +30,11 @@ namespace ProyectoMerck.Controllers
             return View(model);
         }
 
+       
         public async Task<IActionResult> UserAccess(LoginDto dto)
         {
 
-            UserDto userFound = await _service.GetUserLogin(dto);
+            User userFound = await _service.GetUserLogin(dto);
             
             if(userFound == null)
             {
@@ -38,9 +44,17 @@ namespace ProyectoMerck.Controllers
 
             }
 
-            var claims = new List<Claim>();
+            var claims = new List<Claim>()
+            {
 
-            
+                new Claim(ClaimTypes.Name, userFound.UserName),
+                new Claim(ClaimTypes.Role, userFound.RoleId.ToString())
+                
+            };
+
+            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,new ClaimsPrincipal(claimsIdentity));
 
             return RedirectToAction("Index","User");
 

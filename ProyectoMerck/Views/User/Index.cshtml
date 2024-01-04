@@ -13,54 +13,48 @@
             <h1 class="text-center text-light">Panel de Administradores</h1>
         </div>
     </div>
-    <div class="row">
-        <div class="col-xs-12 offset-md-3 col-md-3">
-            <h2 class="text-light">PDF</h2>
-        </div>
-        <div class="col-xs-12 col-md-4 offset-md-2">
-            <h2 class="text-light">Excel</h2>
-        </div>
-    </div>
-    <div class="row my-5">
-        <div class="col-xs-12 offset-md-2 col-md-3">
+    <div class="row my-5 d-flex">
+        <div class="col-xs-6 offset-xs-3 offset-md-2 col-md-3 mx-xs-auto">
             <h2 class="text-light">PDF</h2>
             @using (Html.BeginForm("DownloadPdfInterval", "User", FormMethod.Get))
             {
                 <h5>Fecha Inicial</h5>
-                @Html.EditorFor(m => m.FromDate, new { @class = "form-control" })
+                @Html.TextBoxFor(m => m.FromDate, new { @class = "form-control", type="date", id="pdfFromDate" })
                 <br />
                 <br />
                 <h5>Fecha Final</h5>
-                @Html.EditorFor(m => m.ToDate)
+                @Html.TextBoxFor(m => m.ToDate, new {@class = "form-control", type="date", id="pdfToDate"})
                 <br />
                 <br />
-                <button type="submit" class="btn btn-primary mx-5">Descargar PDF</button>
+                <button id="pdfButton" type="submit" class="btn btn-primary form-control d-none">Descargar PDF</button>
             }
         </div>
 
-        <div class="col-xs-12 offset-md-2 col-md-3">
+        <div class="col-xs-12 offset-md-2 col-md-3 my-3 my-md-0">
+            <h2 class="text-light">Excel</h2>
             @using (Html.BeginForm("DownloadExcelInterval", "User", FormMethod.Get))
             {
                 <h5>Fecha Inicial</h5>
-                @Html.EditorFor(m => m.FromDate, new { @class = "form-control" })
+                @Html.TextBoxFor(m => m.FromDate, new { @class = "form-control", type="date", id = "excelFromDate" })
                 <br />
                 <br />
                 <h5>Fecha Final</h5>
-                @Html.EditorFor(m => m.ToDate)
+                @Html.TextBoxFor(m => m.ToDate, new {@class = "form-control", type="date", id = "excelToDate"})
                 <br />
                 <br />
-                <button type="submit" class="btn btn-primary mx-5">Descargar Excel</button>
+                <button id="excelButton" type="submit" class="btn btn-primary form-control d-none">Descargar Excel</button>
             }
         </div>
     </div>
             <hr />
             <div class="row">
-                <a id="clinicButton" class="btn col-xs-12 offset-md-2 col-md-3 p-1 my-5 border-light submit-button" href="@Url.Action("DownloadPdf","User")">Descargar Pdf ( Sin filtrar fecha )</a>
-                <a id="clinicButton" class="btn col-xs-12 offset-md-2 col-md-3 p-1 my-5 border-light submit-button" href="@Url.Action("DownloadExcel","User")">Descargar Excel ( Sin filtrar fecha )</a>
+                <a id="clinicButton" class="btn col-xs-6 offset-md-2 col-md-3 p-1 my-5 border-light submit-button" href="@Url.Action("DownloadPdf","User")">Descargar Pdf ( Sin filtrar fecha )</a>
+                <a id="clinicButton" class="btn col-xs-6 offset-md-2 col-md-3 p-1 my-5 border-light submit-button" href="@Url.Action("DownloadExcel","User")">Descargar Excel ( Sin filtrar fecha )</a>
             </div>
- </div>
+</div>
 
     <script src="/js/site.js"></script>
+    <script src="/js/user.js"></script>
 
 
 

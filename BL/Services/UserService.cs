@@ -120,7 +120,7 @@ namespace Busisness_Layer.Services
 
         }
 
-        public async Task<UserDto?> GetUserLogin(LoginDto dto)
+        public async Task<User?> GetUserLogin(LoginDto dto)
         {
 
             try
@@ -128,9 +128,7 @@ namespace Busisness_Layer.Services
 
                 User foundUser = await _context.UserRepository.UserLogin(dto);
 
-                UserDto foundUserDto = _mapper.Map<UserDto>(foundUser); 
-
-                return foundUserDto;
+                return foundUser;
 
             }
             catch (Exception ex)

@@ -13,7 +13,7 @@ namespace Busisness_Layer.Interfaces
     public interface IUserService
     {
 
-        public Task<UserDto?> GetUserLogin(LoginDto dto);
+        public Task<User> GetUserLogin(LoginDto dto);
 
         public Task<FileContentResult> CreatePdf();
 

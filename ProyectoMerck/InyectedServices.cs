@@ -4,6 +4,7 @@ using Common_Layer.Models.Entities;
 using Data_Access_Layer.DAL.Interfaces;
 using DinkToPdf;
 using DinkToPdf.Contracts;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using ProyectoMerck.DAL;
 using ProyectoMerck.DAL.Repositories;
@@ -36,6 +37,13 @@ namespace Inyection_Layer
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IFertilityService, FertilityService>();
             services.AddScoped<IUserService, UserService>();
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options =>
+                {
+                    options.Cookie.HttpOnly = true;
+                    options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
+                });
 
             return services;
 

@@ -28,9 +28,23 @@ namespace ProyectoMerck.DAL
 
         public DbSet<User> Users { get; set; }  
 
+        public DbSet<Role> Roles { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Role>().HasData(
+                new Role()
+                {
+                    Id = 1,
+                    RoleName = "Admin"
+                },
+                new Role()
+                {
+                    Id = 2,
+                    RoleName = "User"
+                });
 
             modelBuilder.Entity<ClinicConsultation>().HasData(
                 new ClinicConsultation { Id = 1, ConsultMotiveMessage = "Stringer", SelectedLocationIndex = 2, CreatedTime = DateTime.Now, Url = "www.google.com"},
@@ -38,7 +52,7 @@ namespace ProyectoMerck.DAL
                 );
 
             modelBuilder.Entity<User>().HasData(
-                new User { Id = 1, UserName = "random", Password = "random"}
+                new User { Id = 1, UserName = "random", Password = "random", RoleId = 1}
                 );
 
             modelBuilder.Entity<Country>().HasData(
