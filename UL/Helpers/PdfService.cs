@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Common_Layer.Models.Entities;
+using Common_Layer.Models.Dtos;
 
 namespace Utility_Layer.Helpers
 {
@@ -19,7 +20,7 @@ namespace Utility_Layer.Helpers
             _converter = converter;
         }
 
-        public byte[] GeneratePdf(List<ClinicConsultation> data)
+        public byte[] GeneratePdf(List<ClinicConsultationDto> data)
         {
             var htmlContent = GenerateHtmlFromList(data);
 
@@ -39,7 +40,7 @@ namespace Utility_Layer.Helpers
             return _converter.Convert(doc);
         }
 
-        private string GenerateHtmlFromList(List<ClinicConsultation> data)
+        private string GenerateHtmlFromList(List<ClinicConsultationDto> data)
         {
             var stringer = new StringBuilder();
 
@@ -50,7 +51,7 @@ namespace Utility_Layer.Helpers
             foreach (var clinicConsultation in data)
             {
 
-                stringer.Append($"<h3>Id Clinica: {clinicConsultation.Id}</h3>" +
+                stringer.Append($"<h3>Nombre Clinica: {clinicConsultation.ClinicName}</h3>" +
                                 $"<h4>Motivo Consulta: {clinicConsultation.ConsultMotiveMessage}" +
                                 $"<h4>Url: {clinicConsultation.Url}" +
                                 $"<h4>Fecha Creacion: {clinicConsultation.CreatedTime}" +

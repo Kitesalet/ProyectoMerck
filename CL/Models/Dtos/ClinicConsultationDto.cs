@@ -15,7 +15,8 @@ namespace Common_Layer.Models.Dtos
         public string ConsultMotiveMessage { get; set; }
         public string Url { get; set; }
         public DateTime CreatedTime { get; set; }
-        public int SelectedLocationIndex { get; set; }
+
+        public string ClinicName { get; set; }
 
     }
 }

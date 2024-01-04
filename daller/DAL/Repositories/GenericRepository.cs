@@ -37,5 +37,14 @@ namespace ProyectoMerck.DAL.Repositories
             return entities;
 
         }
+
+        public async Task<T> GetById(int id)
+        {
+
+            T entity = await _dbSet.FindAsync(id);
+
+            return entity;
+
+        }
     }
 }

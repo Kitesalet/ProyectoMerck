@@ -7,5 +7,7 @@
 
         public Task Create(T entity);
 
+        public Task<T> GetById(int id);
+
     }
 }

@@ -36,9 +36,15 @@ namespace Busisness_Layer.Services
 
             var clinicConsultListMin = _mapper.Map<List<ClinicConsultationDto>>(clinicConsultList);
 
+            foreach(var clinic in clinicConsultListMin)
+            {
+                 var clin = await _context.LocationRepository.GetById(clinic.Id);
+
+                 clinic.ClinicName = clin.Title;
+
+            }
+
             string consultString = CsvMethodHelper<ClinicConsultationDto>.WriteCsvData(clinicConsultListMin);
-
-
 
             return CsvMethodHelper<ClinicConsultation>.DownloadCsvFile(consultString, "Clinicas_consultas.csv");
 
@@ -51,6 +57,14 @@ namespace Busisness_Layer.Services
 
             var clinicConsultListMin = _mapper.Map<List<ClinicConsultationDto>>(clinicConsultList);
 
+            foreach (var clinic in clinicConsultListMin)
+            {
+                var clin = await _context.LocationRepository.GetById(clinic.Id);
+
+                clinic.ClinicName = clin.Title;
+
+            }
+
             string consultString = CsvMethodHelper<ClinicConsultationDto>.WriteCsvData(clinicConsultListMin);
 
             return CsvMethodHelper<ClinicConsultation>.DownloadCsvFile(consultString, "Clinicas_consultas_filtradas.csv");
@@ -61,8 +75,18 @@ namespace Busisness_Layer.Services
 
             var clinicConsultList = await _context.ClinicConsultationRepository.GetAll();
 
+            var clinicConsultListMin = _mapper.Map<List<ClinicConsultationDto>>(clinicConsultList);
 
-            Byte[] byteData = _pdfService.GeneratePdf(clinicConsultList.ToList());
+
+            foreach (var clinic in clinicConsultListMin)
+            {
+                var clin = await _context.LocationRepository.GetById(clinic.Id);
+
+                clinic.ClinicName = clin.Title;
+
+            }
+
+            Byte[] byteData = _pdfService.GeneratePdf(clinicConsultListMin);
 
             return new FileContentResult(byteData, "application/pdf")
             {
@@ -76,7 +100,18 @@ namespace Busisness_Layer.Services
 
             var clinicConsultList = await _context.ClinicConsultationRepository.GetDateIntervalFiltered(model.FromDate, model.ToDate);
 
-            Byte[] byteData = _pdfService.GeneratePdf(clinicConsultList.ToList());
+            var clinicConsultListMin = _mapper.Map<List<ClinicConsultationDto>>(clinicConsultList);
+
+
+            foreach (var clinic in clinicConsultListMin)
+            {
+                var clin = await _context.LocationRepository.GetById(clinic.Id);
+
+                clinic.ClinicName = clin.Title;
+
+            }
+
+            Byte[] byteData = _pdfService.GeneratePdf(clinicConsultListMin);
 
             return new FileContentResult(byteData, "application/pdf")
             {
