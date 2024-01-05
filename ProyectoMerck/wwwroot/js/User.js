@@ -6,8 +6,13 @@ var excelButton = document.getElementById('excelButton');
 var excelFromDate = document.getElementById('excelFromDate');
 var excelToDate = document.getElementById('excelToDate');
 
+var pdfRadio = document.getElementById('pdfRadio');
+var csvRadio = document.getElementById('csvRadio');
+
+pdfRadio.checked = true;
+
 pdfFromDate.addEventListener('change', function () {
-    if (pdfToDate.value !== '' && this.value !== '') {
+    if (pdfToDate.value !== '' && this.value !== '' && pdfRadio !== null) {
 
         pdfButton.classList.remove('d-none');
     } else {

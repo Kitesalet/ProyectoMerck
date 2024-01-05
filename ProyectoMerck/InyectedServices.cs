@@ -52,6 +52,21 @@ namespace Inyection_Layer
 
             }).AddEntityFrameworkStores<AppDbContext>();
 
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Events.OnRedirectToLogin = context =>
+                {
+                    context.Response.StatusCode = 401;
+                    return Task.CompletedTask;
+                };
+
+                options.Events.OnRedirectToAccessDenied = context =>
+                {
+                    context.Response.StatusCode = 401;
+                    return Task.CompletedTask;
+                };
+            });
+
             //services.ConfigureApplicationCookie(options =>
             //{
             //    options.ExpireTimeSpan = TimeSpan.FromMinutes(1);

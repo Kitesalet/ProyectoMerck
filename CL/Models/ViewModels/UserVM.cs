@@ -13,6 +13,8 @@ namespace Common_Layer.Models.ViewModels
 
         public DateTime ToDate { get; set; }
 
+        public string DocumentType { get; set; }    
+
 
     }
 }

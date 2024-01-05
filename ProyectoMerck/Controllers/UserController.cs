@@ -8,19 +8,19 @@ using Microsoft.AspNetCore.Mvc;
 namespace ProyectoMerck.Controllers
 {
 
-    //[Authorize(Roles = "1")]
     public class UserController : Controller
     {
 
         private readonly IUserService _service;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
 
-        public UserController(IUserService service, UserManager<IdentityUser> userManager)
+        public UserController(IUserService service, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
             
             _service = service;
             _userManager = userManager;
-
+            _signInManager = signInManager;
         }
 
         [AllowAnonymous]
@@ -65,6 +65,14 @@ namespace ProyectoMerck.Controllers
             return View("Register");
         }
 
+        public async Task<IActionResult> Logout()
+        {
+
+            await _signInManager.SignOutAsync();
+
+            return RedirectToAction("Login","Login");
+        }
+
         [Authorize]
         public IActionResult Index()
         {
@@ -77,6 +85,7 @@ namespace ProyectoMerck.Controllers
 
             return View(model);
         }
+
 
         [Authorize]
         public async Task<IActionResult> DownloadPdf()
@@ -96,32 +105,37 @@ namespace ProyectoMerck.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> DownloadPdfInterval(UserVM model)
-        {
-            if(model.FromDate > model.ToDate)
-            {
-
-                TempData["FertError"] = "Por favor, ingrese una fecha valida!";
-
-                return RedirectToAction(nameof(Index));
-            }
-
-            return await _service.CreatePdfInterval(model);
-        }
-
-        [Authorize]
-        public async Task<IActionResult> DownloadExcelInterval(UserVM model)
+        public async Task<IActionResult> DownloadDocument(UserVM model)
         {
 
-            if (model.FromDate > model.ToDate)
+            if (ModelState.IsValid)
             {
+                if (model.FromDate > model.ToDate)
+                {
 
-                TempData["FertError"] = "Por favor, ingrese una fecha valida!";
+                    TempData["FertError"] = "Por favor, ingrese una fecha valida!";
 
-                return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(Index));
+                }
+
+                if (model.DocumentType == "CSV")
+                {
+
+                    return await _service.CreateCsvInterval(model);
+
+                }
+                else
+                {
+
+                    return await _service.CreatePdfInterval(model);
+                }
+
+            }
+            else
+            {
+                return View("Index");
             }
 
-            return await _service.CreateCsvInterval(model);
 
         }
 

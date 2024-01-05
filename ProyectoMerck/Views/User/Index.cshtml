@@ -3,6 +3,11 @@
 
 <div class="container-fluid presentation-background">
     <div class="row">
+        <div class="col-4 offset-4 mt-4 p-3">
+            <a class="btn btn-danger form-control" href="@Url.Action("Logout","User")">Logout</a>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-12">
             <img class="mx-auto d-block" src="~/images/MerckFertPresentation.JPG" />
         </div>
@@ -13,38 +18,27 @@
             <h1 class="text-center text-light">Panel de Administradores</h1>
         </div>
     </div>
-    <div class="row my-5 d-flex">
-        <div class="col-xs-6 offset-xs-3 offset-md-2 col-md-3 mx-xs-auto">
-            <h2 class="text-light">PDF</h2>
-            @using (Html.BeginForm("DownloadPdfInterval", "User", FormMethod.Get))
+    <div class="row d-flex justify-content-center my-5 d-flex">
+        <div class="col-5">
+            <h2 class="text-light">Descargar Archivos</h2>
+            @using (Html.BeginForm("DownloadDocument", "User", FormMethod.Get))
             {
                 <h5>Fecha Inicial</h5>
-                @Html.TextBoxFor(m => m.FromDate, new { @class = "form-control", type="date", id="pdfFromDate" })
+                @Html.TextBoxFor(m => m.FromDate, new { @class = "form-control", type="date", id="pdfFromDate"})
                 <br />
                 <br />
                 <h5>Fecha Final</h5>
                 @Html.TextBoxFor(m => m.ToDate, new {@class = "form-control", type="date", id="pdfToDate"})
                 <br />
                 <br />
-                <button id="pdfButton" type="submit" class="btn btn-primary form-control d-none">Descargar PDF</button>
+                @Html.RadioButtonFor(m => m.DocumentType,"PDF",new {@class = "form-check-input", id = "pdfRadio"})
+                @Html.LabelFor(m => m.DocumentType,"PDF", new {@class = "mx-2"});
+                @Html.RadioButtonFor(m => m.DocumentType, "CSV", new {@class = "form-check-input", id = "csvRadio"})
+                @Html.LabelFor(m => m.DocumentType, "Excel", new {@class = "mx-2"})
+                <button id="pdfButton" type="submit" class="btn btn-primary form-control d-none my-2">Descargar Documento</button>
             }
         </div>
 
-        <div class="col-xs-12 offset-md-2 col-md-3 my-3 my-md-0">
-            <h2 class="text-light">Excel</h2>
-            @using (Html.BeginForm("DownloadExcelInterval", "User", FormMethod.Get))
-            {
-                <h5>Fecha Inicial</h5>
-                @Html.TextBoxFor(m => m.FromDate, new { @class = "form-control", type="date", id = "excelFromDate" })
-                <br />
-                <br />
-                <h5>Fecha Final</h5>
-                @Html.TextBoxFor(m => m.ToDate, new {@class = "form-control", type="date", id = "excelToDate"})
-                <br />
-                <br />
-                <button id="excelButton" type="submit" class="btn btn-primary form-control d-none">Descargar Excel</button>
-            }
-        </div>
     </div>
             <hr />
             <div class="row">
