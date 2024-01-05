@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProyectoMerck", "ProyectoMe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MerckAppUnitTesting", "MerckAppUnitTesting\MerckAppUnitTesting.csproj", "{99F3C26A-DB5A-4C1C-B118-3544F689633C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Busisness Layer", "BL\Busisness Layer.csproj", "{941F8625-A5F7-4D65-B869-FC7C2C1E4AED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Business Layer", "BL\Business Layer.csproj", "{941F8625-A5F7-4D65-B869-FC7C2C1E4AED}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utility Layer", "UL\Utility Layer.csproj", "{00E6FCB7-FAAB-40A2-BF78-BAA0A490813A}"
 EndProject
