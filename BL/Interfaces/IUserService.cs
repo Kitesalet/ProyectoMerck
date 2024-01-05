@@ -1,6 +1,5 @@
-﻿using Common_Layer.Models;
-using Common_Layer.Models.Dtos;
-using Common_Layer.Models.Entities;
+﻿using Common_Layer.Models.Entities;
+using Common_Layer.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -13,7 +12,7 @@ namespace Busisness_Layer.Interfaces
     public interface IUserService
     {
 
-        public Task<User> GetUserLogin(LoginDto dto);
+        public Task<User> GetUserLogin(LoginVM dto);
 
         public Task<FileContentResult> CreatePdf();
 

@@ -1,10 +1,10 @@
-﻿namespace ProyectoMerck.Models
+﻿namespace Common_Layer.Models.ViewModels
 {
     public enum FertilityLevel
     {
 
         Low,
-        Medium, 
+        Medium,
         High
 
     }

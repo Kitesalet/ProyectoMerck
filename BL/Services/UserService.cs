@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Busisness_Layer.Interfaces;
-using Common_Layer.Models;
 using Common_Layer.Models.Dtos;
 using Common_Layer.Models.Entities;
+using Common_Layer.Models.ViewModels;
 using Data_Access_Layer.DAL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -120,7 +120,7 @@ namespace Busisness_Layer.Services
 
         }
 
-        public async Task<User?> GetUserLogin(LoginDto dto)
+        public async Task<User?> GetUserLogin(LoginVM dto)
         {
 
             try

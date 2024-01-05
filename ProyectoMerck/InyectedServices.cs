@@ -5,6 +5,7 @@ using Data_Access_Layer.DAL.Interfaces;
 using DinkToPdf;
 using DinkToPdf.Contracts;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ProyectoMerck.DAL;
 using ProyectoMerck.DAL.Repositories;
@@ -22,6 +23,8 @@ namespace Inyection_Layer
         public static IServiceCollection ServiceInyector(this IServiceCollection services, IConfiguration configuration)
         {
 
+
+
             services.AddDbContext<AppDbContext>(c => c.UseSqlServer(configuration.GetConnectionString("Hosted")));          
 
             services.AddScoped<IGenericRepository<Location>, GenericRepository<Location>>();
@@ -38,12 +41,28 @@ namespace Inyection_Layer
             services.AddScoped<IFertilityService, FertilityService>();
             services.AddScoped<IUserService, UserService>();
 
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(options =>
-                {
-                    options.Cookie.HttpOnly = true;
-                    options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
-                });
+            services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            {
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireDigit = false;
+
+                options.User.RequireUniqueEmail = true;
+
+
+            }).AddEntityFrameworkStores<AppDbContext>();
+
+            //services.ConfigureApplicationCookie(options =>
+            //{
+            //    options.ExpireTimeSpan = TimeSpan.FromMinutes(1);
+            //});
+
+            //services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            //    .AddCookie(options =>
+            //    {
+            //        options.Cookie.HttpOnly = true;
+            //        options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
+            //    });
 
             return services;
 

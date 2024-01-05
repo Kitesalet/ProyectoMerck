@@ -1,5 +1,5 @@
-﻿using Common_Layer.Models.Dtos;
-using Common_Layer.Models.Entities;
+﻿using Common_Layer.Models.Entities;
+using Common_Layer.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using ProyectoMerck.DAL;
 using ProyectoMerck.DAL.Repositories;
@@ -23,7 +23,7 @@ namespace DataAccess_layer.DAL.Repositories
 
         }
 
-        public async Task<User> UserLogin(LoginDto dto)
+        public async Task<User> UserLogin(LoginVM dto)
         {
 
             User foundUser = await _set.Where(u => dto.UserName == u.UserName && dto.Password == u.Password).FirstOrDefaultAsync();

@@ -1,6 +1,6 @@
 ﻿@using Microsoft.Extensions.Configuration
 @inject IConfiguration Configuration
-@model Common_Layer.Models.ViewModels.LoginVM
+@model Common_Layer.Models.ViewModels.RegisterVM
 
 @{
     Layout = null;
@@ -34,24 +34,23 @@
 
             <img class="mx-auto d-block" src="~/images/MerckFertPresentation.JPG" />
 
-            @using(Html.BeginForm("UserAccess", "Login",FormMethod.Post, new {id = "LoginForm"}))
+            <h2 class="text-center">Registro de usuario</h2>
+
+            @using (Html.BeginForm("RegisterUser", "User", FormMethod.Post, new { id = "LoginForm" }))
             {
-                 <div class="form-group">
+                <div class="form-group">
                     <label for="exampleInputEmail1">Email</label>
-                    @Html.TextBoxFor(m => m.UserName, new {@class="form-control", id="exampleInputEmail1", placeholder="Introduzca su email", required = "true"})
-                    @Html.ValidationMessageFor(m => m.UserName)
+                    @Html.TextBoxFor(m => m.Email, new {@class="form-control", id="exampleInputEmail1", placeholder="Introduzca su email", required = "true"})
                 </div>
                 <br />
                 <div class="form-group">
                     <label for="exampleInputPassword1">Password</label>
                     @Html.TextBoxFor(m => m.Password, new {type = "password", @class = "form-control", id = "exampleInputPassword1", placeholder = "Password", required = "true"})
-                    @Html.ValidationMessageFor(m => m.Password)
                 </div>
                 <br />
-                <div class="form-check">
-                    <label for="exampleInputPassword1">Remember me</label>
-                    @Html.CheckBoxFor(m => m.RememberMe, new {type = "checkbox", @class = "form-check-input"})
-                    @Html.ValidationMessageFor(m => m.RememberMe)
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Vuelva a introducir Password</label>
+                    @Html.TextBoxFor(m => m.ConfirmPassword, new {type = "password", @class = "form-control", id = "exampleInputPassword1", placeholder = "Password", required = "true"})
                 </div>
                 <button type="submit" class="btn p-1 my-5 border-light submit-button form-control">Submit</button>
 

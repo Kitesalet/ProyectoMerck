@@ -1,4 +1,5 @@
 ﻿using Common_Layer.Models.Dtos;
+using Common_Layer.Models.ViewModels;
 using ProyectoMerck.Models.Dtos;
 
 namespace ProyectoMerck.Models.Interfaces

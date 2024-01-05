@@ -1,4 +1,4 @@
-﻿using ProyectoMerck.Models;
+﻿using Common_Layer.Models.ViewModels;
 
 namespace ProyectoMerck.Helpers
 {

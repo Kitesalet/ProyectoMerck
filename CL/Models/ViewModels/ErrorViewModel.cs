@@ -1,4 +1,4 @@
-namespace ProyectoMerck.Models
+namespace Common_Layer.Models.ViewModels
 {
     public class ErrorViewModel
     {

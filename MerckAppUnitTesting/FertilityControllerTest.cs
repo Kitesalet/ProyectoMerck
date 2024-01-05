@@ -1,4 +1,5 @@
 ﻿using Castle.Core.Logging;
+using Common_Layer.Models.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -6,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Logging;
 using Moq;
 using ProyectoMerck.Controllers;
-using ProyectoMerck.Models;
 using ProyectoMerck.Models.Interfaces;
 using System;
 using System.Collections.Generic;

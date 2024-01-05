@@ -2,7 +2,7 @@
 using ProyectoMerck.Models.Dtos;
 using ProyectoMerck.Models.Entities;
 
-namespace ProyectoMerck.Models
+namespace Common_Layer.Models.ViewModels
 {
     public class FertilityVM
     {

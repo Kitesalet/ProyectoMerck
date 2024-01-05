@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Common_Layer.Models
+namespace Common_Layer.Models.ViewModels
 {
     public class UserVM
     {

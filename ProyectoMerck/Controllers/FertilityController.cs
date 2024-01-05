@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Http.Extensions;
+﻿using Common_Layer.Models.ViewModels;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using ProyectoMerck.Helpers;
-using ProyectoMerck.Models;
 using ProyectoMerck.Models.Interfaces;
 
 namespace ProyectoMerck.Controllers

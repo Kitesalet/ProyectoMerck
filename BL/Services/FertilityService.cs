@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using Common_Layer.Models.Dtos;
 using Common_Layer.Models.Entities;
+using Common_Layer.Models.ViewModels;
 using Data_Access_Layer.DAL.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using ProyectoMerck.Helpers;
-using ProyectoMerck.Models;
 using ProyectoMerck.Models.Dtos;
 using ProyectoMerck.Models.Entities;
 using ProyectoMerck.Models.Interfaces;
